@@ -1,12 +1,8 @@
 import { ReactNode } from 'react';
 
-export interface Expenses {
-    descripcion: string;
-    fecha      : string,
+export interface Month {
     id        ?: number;
-    monto      : string,
-    spent_type : string,
-    user       : string,
+    name       : string,
   }
 
   export interface MyContextProviderProps {
@@ -14,13 +10,13 @@ export interface Expenses {
   }
   
   export interface MyContextProps {
-    expensesContext: Expenses[];
-    setExpensesContext: React.Dispatch<React.SetStateAction<Expenses[]>>;
+    monthContext: Month[];
+    setMontContext: React.Dispatch<React.SetStateAction<Month[]>>;
   }
   
   export const defaultContext: MyContextProps = {
-    expensesContext: [],
-    setExpensesContext: () => [],
+    monthContext: [],
+    setMontContext: () => [],
   }
 
 export interface ExpensesResumenItem {

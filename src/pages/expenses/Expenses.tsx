@@ -2,13 +2,14 @@ import { useContext } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Option } from 'antd/es/mentions';
-import { Table, Input, Button, Form, Select, Row, Col } from 'antd';
+import { Table, Input, Button, Form, Select, Row, Col, Tooltip } from 'antd';
 
 import { SpentContext } from '../../context/SpentContextProvider';
 import { PersonContext } from '../../context/PersonContextProvider';
 import { ExpensesContext } from '../../context/ExpensesContextProvider';
 
 import { InputsExpenses } from '../../interface/ExpensesInterface';
+import { DeleteOutlined } from '@ant-design/icons';
 
 export const Expenses: React.FC = () => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<InputsExpenses>();
@@ -19,16 +20,21 @@ export const Expenses: React.FC = () => {
   
   const onSubmitExpenses: SubmitHandler<InputsExpenses> = data => {
     const dataExpense = {
+      id         : Math.floor(Math.random() * 100) + 1,
       descripcion: data.descripcion,
       monto      : `${data.monto}`,
       user       : data.user,
       fecha      : data.fecha,
       spent_type : data.spent_type,
     }
-    console.log(dataExpense)
     setExpensesContext( v => [...v, dataExpense])
     reset();
   };
+
+  const handleDelete = (line) => {
+    setExpensesContext( e =>  e.filter( i => i.id == line.id))
+  }
+
   const columns = [
     {
       title: 'Tipo de Gasto:',
@@ -49,11 +55,28 @@ export const Expenses: React.FC = () => {
       title: 'Fecha:',
       dataIndex: 'fecha',
       key: 'fecha',
-    },{
+    },
+    {
       title: 'Descripción:',
       dataIndex: 'descripcion',
       key: 'descripcion',
     },
+    {
+      title: 'Acción',
+      dataIndex: 'eliminar',
+      key: 'eliminar',
+      render: (text, line) => (
+        <span>
+          <Tooltip title="Eliminar">
+            <Button
+              icon={<DeleteOutlined />}
+              onClick={() => handleDelete(line)}
+            />
+          </Tooltip>  
+        </span>
+      )
+    }
+
   ];
 
   return (

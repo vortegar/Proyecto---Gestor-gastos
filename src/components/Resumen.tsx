@@ -22,9 +22,6 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
       const saldoFormateado = saldo.toLocaleString('es-ES');
   
       setPerson({ user: maxPerson.user, total: saldoFormateado });
-  
-      console.log(maxPerson);
-      console.log(minPerson);
     }
   }, [data, type]);
   

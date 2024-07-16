@@ -7,7 +7,7 @@ export const ExpensesContextProvider: FC<MyContextProviderProps> = ({ children }
 
   const dataDemo:Expenses[] = [
     {
-      key        : 1,
+      id         : 1,
       spent_type : 'Oxxo',
       monto      : '12.500',
       user       : 'Victorio Ortega',
