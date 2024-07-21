@@ -5,17 +5,21 @@ import { MonthContext } from '../context/MonthContextProvider';
 
 export const ModalCreateMes = ({estado, modificador}) => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm();
-  const { monthContext, setMonthContext } = useContext(MonthContext);
+  const { setMonthContext } = useContext(MonthContext);
   
     const handleCancel = () => {
       modificador(false);
       reset();
     };
 
-    const onSubmitMes = (v) => {
-      console.log(v)
+    const onSubmitMes = ({name}) => {
+      const dataMonth = {
+        id       : Math.floor(Math.random() * 100) + 1,
+        name     : name,
+        expenses : [],
+      }
       modificador(false);
-      setMonthContext( m => [...m, v])
+      setMonthContext( m => [...m, dataMonth])
       reset();
     }
 
@@ -44,7 +48,7 @@ export const ModalCreateMes = ({estado, modificador}) => {
     <Form layout="vertical">
       <Form.Item>
         <Controller
-          name="month"
+          name="name"
           control={control}
           render={({ field }) => (
             <Select {...field} placeholder= "Meses">

@@ -2,17 +2,18 @@ import { useContext, useState } from 'react';
 import { Grafico } from '../../components/Grafico';
 
 import { Resumen } from '../../components/Resumen';
-import { ExpensesContext } from '../../context/ExpensesContextProvider';
 import { ExpensesResumenItem } from '../../interface/ExpensesInterface';
 import { Button } from 'antd';
 import { ModalCreateMes } from '../../components/ModalCreateMes';
 import { MonthContext } from '../../context/MonthContextProvider';
 
 export const Home: React.FC = () => {
-  const { expensesContext } = useContext(ExpensesContext);
   const { monthContext } = useContext(MonthContext);
-
-  const acumuladorPerson = expensesContext.reduce((acc: { [key: string]: string }, item) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  
+  const mesActual = monthContext[monthContext.length - 1];
+  
+  const acumuladorPerson = mesActual?.expenses.reduce((acc: { [key: string]: string }, item) => {
     const { user, monto } = item;
     if (!acc[user]) {
       acc[user] = "0";
@@ -27,8 +28,8 @@ export const Home: React.FC = () => {
     user,
     total: acumuladorPerson[user]
   }));
-
-  const acumuladorExpenses = expensesContext.reduce((acc: { [key: string]: string }, item) => {
+  
+  const gruopExpenses = mesActual?.expenses.reduce((acc: { [key: string]: string }, item) => {
     const { spent_type, monto } = item;
     if (!acc[spent_type]) {
       acc[spent_type] = "0";
@@ -37,19 +38,20 @@ export const Home: React.FC = () => {
     acc[spent_type] = sumaActual.toLocaleString('es-ES'); 
     return acc;
   }, {});
-  
-  const expensesResumen: ExpensesResumenItem[] = Object.keys(acumuladorExpenses).map((spent_type, index) => ({
-    id: index,
-    spent_type,
-    total: acumuladorExpenses[spent_type]
-  }));
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  let expensesResumen = []
+  if (gruopExpenses != null) {
+    expensesResumen = Object.keys(gruopExpenses).map((spent_type, index) => ({
+      id: index,
+      spent_type,
+      total: gruopExpenses[spent_type]
+    }));
+  }
 
   const showModal = () => {
     setIsModalVisible(true);
   };
-
+  console.log(monthContext)
   return (
     <>
       <h2>Resumen</h2>
@@ -61,7 +63,7 @@ export const Home: React.FC = () => {
         monthContext.length > 0
         ?
         <>
-          <h3>Mes {monthContext[monthContext.length - 1].month}</h3>
+          <h3>Mes {monthContext[monthContext.length - 1].name}</h3>
           <div style={{ display: 'flex'}}>
             <div style={{ display: 'flex', flexDirection: 'column', padding: '24px' }}>
               <Resumen data={expensesResumen} title={'Total gastos del Mes'} type='gasto'/>

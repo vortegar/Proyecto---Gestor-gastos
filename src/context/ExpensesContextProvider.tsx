@@ -5,17 +5,18 @@ export const ExpensesContext = createContext<MyContextProps>(defaultContext);
 
 export const ExpensesContextProvider: FC<MyContextProviderProps> = ({ children }) => {
 
-  const dataDemo:Expenses[] = [
-    {
-      id         : 1,
-      spent_type : 'Oxxo',
-      monto      : '12.500',
-      user       : 'Victorio Ortega',
-      fecha      : '28/05/1991',
-      descripcion: 'ejemplo',
-    },
-  ];
-  const [expensesContext, setExpensesContext] = useState<Expenses[]>(dataDemo);  
+  // const dataDemo:Expenses[] = [
+  //   {
+  //     id         : 1,
+  //     spent_type : 'Oxxo',
+  //     monto      : '12.500',
+  //     user       : 'Victorio Ortega',
+  //     fecha      : '28/05/1991',
+  //     descripcion: 'ejemplo',
+  //   },
+  // ];
+
+  const [expensesContext, setExpensesContext] = useState<Expenses[]>([]);  
 
   return (
     <ExpensesContext.Provider value={{ expensesContext, setExpensesContext }}>

@@ -2,22 +2,24 @@ import { useContext } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Option } from 'antd/es/mentions';
+import { DeleteOutlined } from '@ant-design/icons';
 import { Table, Input, Button, Form, Select, Row, Col, Tooltip } from 'antd';
 
 import { SpentContext } from '../../context/SpentContextProvider';
 import { PersonContext } from '../../context/PersonContextProvider';
-import { ExpensesContext } from '../../context/ExpensesContextProvider';
 
 import { InputsExpenses } from '../../interface/ExpensesInterface';
-import { DeleteOutlined } from '@ant-design/icons';
+import { MonthContext } from '../../context/MonthContextProvider';
 
 export const Expenses: React.FC = () => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<InputsExpenses>();
   
   const { spentContext } = useContext(SpentContext);
   const { personContext } = useContext(PersonContext);
-  const { expensesContext, setExpensesContext } = useContext(ExpensesContext);
-  
+  const { monthContext, setMonthContext } = useContext(MonthContext);
+
+  const mesActual = monthContext.length - 1;
+
   const onSubmitExpenses: SubmitHandler<InputsExpenses> = data => {
     const dataExpense = {
       id         : Math.floor(Math.random() * 100) + 1,
@@ -27,12 +29,21 @@ export const Expenses: React.FC = () => {
       fecha      : data.fecha,
       spent_type : data.spent_type,
     }
-    setExpensesContext( v => [...v, dataExpense])
+    
+    setMonthContext(m => {
+      return m.map((obj, index) => 
+        index === mesActual ? { ...obj, expenses: [ ...m[mesActual].expenses, dataExpense] } : obj
+      );
+    });    
     reset();
   };
 
-  const handleDelete = (line) => {
-    setExpensesContext( e =>  e.filter( i => i.id == line.id))
+  const handleDelete = (expense) => {
+    setMonthContext(m => {
+      return m.map((obj, index) => 
+        index === mesActual ? { ...obj, expenses: m[mesActual].expenses.filter( e => e.id != expense.id ) } : obj
+      );
+    });    
   }
 
   const columns = [
@@ -65,12 +76,12 @@ export const Expenses: React.FC = () => {
       title: 'Acción',
       dataIndex: 'eliminar',
       key: 'eliminar',
-      render: (text, line) => (
+      render: (text, expense) => (
         <span>
           <Tooltip title="Eliminar">
             <Button
               icon={<DeleteOutlined />}
-              onClick={() => handleDelete(line)}
+              onClick={() => handleDelete(expense)}
             />
           </Tooltip>  
         </span>
@@ -81,7 +92,7 @@ export const Expenses: React.FC = () => {
 
   return (
     <div>
-      <h2>Gastos del mes en curso</h2>
+      <h2>Gastos del mes {monthContext[mesActual]?.name}</h2>
       <Form layout="vertical" onFinish={handleSubmit(onSubmitExpenses)}>
         <Row gutter={16}>
           <Col span={12}>
@@ -183,7 +194,13 @@ export const Expenses: React.FC = () => {
           </Button>
         </Form.Item>
       </Form>
-      <Table columns={columns} dataSource={expensesContext} />
+      <Table 
+        columns={columns} 
+        dataSource={monthContext[mesActual]?.expenses} 
+        locale={{
+          emptyText: <span>Aun no existen gastos en el mes</span> 
+        }}
+        />
     </div>
   );  
 };

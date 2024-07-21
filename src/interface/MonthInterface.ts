@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
+import { Expenses } from './ExpensesInterface';
 
 export interface Month {
     id        ?: number;
     name       : string,
+    expenses   : Expenses[],
   }
 
   export interface MyContextProviderProps {
@@ -18,25 +20,3 @@ export interface Month {
     monthContext: [],
     setMontContext: () => [],
   }
-
-export interface ExpensesResumenItem {
-    id        : number;
-    spent_type: string;
-    total     : number;
-  }
-  
-  export type ExpensesResumen = ExpensesResumenItem[];
-  
-  export interface GraficoProps {
-    resumen: ExpensesResumen;
-  }
-  
-// Interfaces de componentes
-
-export type InputsExpenses = {
-    descripcion: string;
-    monto      : number;
-    user       : string,
-    fecha      : string,
-    spent_type : string,
-  };
