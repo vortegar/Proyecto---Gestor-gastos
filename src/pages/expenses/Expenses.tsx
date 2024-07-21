@@ -3,7 +3,7 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Option } from 'antd/es/mentions';
 import { DeleteOutlined } from '@ant-design/icons';
-import { Table, Input, Button, Form, Select, Row, Col, Tooltip } from 'antd';
+import { Table, Input, Button, Form, Select, Row, Col, Tooltip, Divider } from 'antd';
 
 import { SpentContext } from '../../context/SpentContextProvider';
 import { PersonContext } from '../../context/PersonContextProvider';
@@ -48,27 +48,27 @@ export const Expenses: React.FC = () => {
 
   const columns = [
     {
-      title: 'Tipo de Gasto:',
+      title: 'Tipo de Gasto',
       dataIndex: 'spent_type',
       key: 'spent_type',
     },
     {
-      title: 'Monto:',
+      title: 'Monto',
       dataIndex: 'monto',
       key: 'monto',
     },
     {
-      title: 'Asignado a:',
+      title: 'Asignado a',
       dataIndex: 'user',
       key: 'user',
     },
     {
-      title: 'Fecha:',
+      title: 'Fecha',
       dataIndex: 'fecha',
       key: 'fecha',
     },
     {
-      title: 'Descripción:',
+      title: 'Descripción',
       dataIndex: 'descripcion',
       key: 'descripcion',
     },
@@ -92,8 +92,11 @@ export const Expenses: React.FC = () => {
 
   return (
     <div>
-      <h2>Gastos del mes {monthContext[mesActual]?.name}</h2>
-      <Form layout="vertical" onFinish={handleSubmit(onSubmitExpenses)}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
+        <h2>Gastos del mes {monthContext[mesActual]?.name}</h2>
+      </div>
+      <Divider/>
+      <Form layout="vertical" style={{marginTop: '50px'}} onFinish={handleSubmit(onSubmitExpenses)}>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item>

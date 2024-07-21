@@ -3,7 +3,7 @@ import { Grafico } from '../../components/Grafico';
 
 import { Resumen } from '../../components/Resumen';
 import { ExpensesResumenItem } from '../../interface/ExpensesInterface';
-import { Button } from 'antd';
+import { Button, Divider } from 'antd';
 import { ModalCreateMes } from '../../components/ModalCreateMes';
 import { MonthContext } from '../../context/MonthContextProvider';
 
@@ -23,11 +23,14 @@ export const Home: React.FC = () => {
     return acc;
   }, {});
   
-  const personResumen: ExpensesResumenItem[] = Object.keys(acumuladorPerson).map((user, index) => ({
-    id: index,
-    user,
-    total: acumuladorPerson[user]
-  }));
+  let personResumen = []
+  if(acumuladorPerson != undefined){
+    personResumen = Object.keys(acumuladorPerson).map((user, index) => ({
+      id: index,
+      user,
+      total: acumuladorPerson[user]
+    }));
+  }
   
   const gruopExpenses = mesActual?.expenses.reduce((acc: { [key: string]: string }, item) => {
     const { spent_type, monto } = item;
@@ -51,19 +54,20 @@ export const Home: React.FC = () => {
   const showModal = () => {
     setIsModalVisible(true);
   };
-  console.log(monthContext)
   return (
     <>
-      <h2>Resumen</h2>
-      <Button type="primary" onClick={ () => showModal() }>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
+      <h2>Resumen de gastos del Mes: {mesActual?.name}</h2>
+      <Button type="primary" onClick={() => showModal()}>
         Crear nuevo mes
       </Button>
+    </div>
+    <Divider />
       <ModalCreateMes estado={isModalVisible} modificador={setIsModalVisible} />
       {
         monthContext.length > 0
         ?
         <>
-          <h3>Mes {monthContext[monthContext.length - 1].name}</h3>
           <div style={{ display: 'flex'}}>
             <div style={{ display: 'flex', flexDirection: 'column', padding: '24px' }}>
               <Resumen data={expensesResumen} title={'Total gastos del Mes'} type='gasto'/>

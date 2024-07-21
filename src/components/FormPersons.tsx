@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
-import { Table, Input, Button, Form } from 'antd';
+import { Table, Input, Button, Form, notification } from 'antd';
 import { PersonContext } from '../context/PersonContextProvider';
 
 type Inputs = {name: string};
@@ -12,7 +12,14 @@ export const FormPersons: React.FC = () => {
   const { personContext, setPersonContext } = useContext(PersonContext);
 
   const onSubmitPerson: SubmitHandler<Inputs> = data => {
-    console.log(data.name);
+    const personName = personContext.find( s => s.person_name.toLowerCase() == data.name.toLowerCase())
+    if( personName != undefined) {
+      notification.error({
+        message: 'Error',
+        description: 'Esta persona ya existe.',
+      });
+      return      
+    }
     const indexKey = personContext.length + 1
     const newDataPerson = { key: indexKey, person_name: data.name }
     setPersonContext( v => [...v, newDataPerson])

@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Home } from './pages/home/Home';
 import { Expenses } from './pages/expenses/Expenses';
 import { Configurate } from './pages/configurate/Configurate';
+import { History } from './pages/history/History';
 
 const { Content } = Layout;
 
@@ -20,7 +21,7 @@ export const App: React.FC = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/expenses" element={<Expenses />} />
                 <Route path="/configurate" element={<Configurate />} />
-
+                <Route path="/history" element={<History />} />
               </Routes>
             </div>
           </Content>

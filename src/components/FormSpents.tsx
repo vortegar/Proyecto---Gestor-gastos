@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
-import { Table, Input, Button, Form } from 'antd';
+import { Table, Input, Button, Form, notification } from 'antd';
 import { SpentContext } from '../context/SpentContextProvider';
 
 type Inputs = {spent: string};
@@ -12,10 +12,19 @@ export const FormSpents: React.FC = () => {
   const { spentContext, setSpentContext } = useContext(SpentContext);
 
   const onSubmitSpent: SubmitHandler<Inputs> = data => {
-    console.log(data);
     if (!data.spent) return;
-    
+
+    const spentName = spentContext.find( s => s.spent_name.toLowerCase() == data.spent.toLowerCase())
+    if( spentName != undefined) {
+      notification.error({
+        message: 'Error',
+        description: 'Este gasto ya existe.',
+      });
+      return      
+    }
+
     const indexKey = spentContext.length + 1
+
     const newDataSpent = { key: indexKey, spent_name: data.spent }
     setSpentContext( v => [...v, newDataSpent])
   };
