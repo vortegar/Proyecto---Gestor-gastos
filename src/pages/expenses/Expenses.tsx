@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Option } from 'antd/es/mentions';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Table, Input, Button, Form, Select, Row, Col, Tooltip, Divider } from 'antd';
 
 import { SpentContext } from '../../context/SpentContextProvider';
@@ -194,6 +194,7 @@ export const Expenses: React.FC = () => {
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Agregar Gasto
+            <PlusOutlined />
           </Button>
         </Form.Item>
       </Form>

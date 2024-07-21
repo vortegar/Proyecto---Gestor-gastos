@@ -3,6 +3,7 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Table, Input, Button, Form, notification } from 'antd';
 import { SpentContext } from '../context/SpentContextProvider';
+import { PlusOutlined } from '@ant-design/icons';
 
 type Inputs = {spent: string};
 
@@ -59,7 +60,7 @@ export const FormSpents: React.FC = () => {
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">Agregar Nuevo Gasto</Button>
+          <Button type="primary" htmlType="submit">Agregar Nuevo Gasto <PlusOutlined /></Button>
         </Form.Item>
       </Form>
       <Table columns={spentsColumns} dataSource={spentContext} />

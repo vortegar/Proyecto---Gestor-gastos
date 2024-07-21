@@ -2,10 +2,10 @@ import { useContext, useState } from 'react';
 import { Grafico } from '../../components/Grafico';
 
 import { Resumen } from '../../components/Resumen';
-import { ExpensesResumenItem } from '../../interface/ExpensesInterface';
 import { Button, Divider } from 'antd';
 import { ModalCreateMes } from '../../components/ModalCreateMes';
 import { MonthContext } from '../../context/MonthContextProvider';
+import { PlusOutlined } from '@ant-design/icons';
 
 export const Home: React.FC = () => {
   const { monthContext } = useContext(MonthContext);
@@ -54,12 +54,14 @@ export const Home: React.FC = () => {
   const showModal = () => {
     setIsModalVisible(true);
   };
+  console.log(expensesResumen)
   return (
     <>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
       <h2>Resumen de gastos del Mes: {mesActual?.name}</h2>
       <Button type="primary" onClick={() => showModal()}>
         Crear nuevo mes
+        <PlusOutlined />
       </Button>
     </div>
     <Divider />
@@ -70,10 +72,10 @@ export const Home: React.FC = () => {
         <>
           <div style={{ display: 'flex'}}>
             <div style={{ display: 'flex', flexDirection: 'column', padding: '24px' }}>
-              <Resumen data={expensesResumen} title={'Total gastos del Mes'} type='gasto'/>
-              <Resumen data={personResumen} title={'Monto a cuadar'} type='persona'/>
+              <Resumen data={expensesResumen} title='Total gastos del Mes' type='gasto'/>
+              <Resumen data={personResumen} title='Monto a cuadar' type='persona'/>
             </div>
-            <Grafico resumen={expensesResumen}/>
+            <Grafico resumen={expensesResumen} title='Gasto Mensual'/>
           </div>
         </>
         : 

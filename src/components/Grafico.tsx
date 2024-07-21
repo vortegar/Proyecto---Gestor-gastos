@@ -4,13 +4,12 @@ import { GraficoProps } from '../interface/ExpensesInterface';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend);
 
-export const Grafico: React.FC<GraficoProps> = ({resumen}) => {
+export const Grafico: React.FC<GraficoProps> = ({resumen, title}) => {
   let dataLabelName = resumen.map( v => v.spent_type)
   let dataLabeValue = resumen.map( v => v.total)
 
   // console.log(resumen)
   const data: ChartData<'bar' | 'line'> = {
-    // labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
     labels: dataLabelName,
 
     datasets: [
@@ -42,7 +41,7 @@ export const Grafico: React.FC<GraficoProps> = ({resumen}) => {
       },
       title: {
         display: true,
-        text: 'Resumen Anual',
+        text: title,
       },
     },
   };

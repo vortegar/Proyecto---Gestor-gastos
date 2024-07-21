@@ -3,6 +3,7 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Table, Input, Button, Form, notification } from 'antd';
 import { PersonContext } from '../context/PersonContextProvider';
+import { PlusOutlined } from '@ant-design/icons';
 
 type Inputs = {name: string};
 
@@ -55,7 +56,7 @@ export const FormPersons: React.FC = () => {
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">Agregar Nuevo Nombre</Button>
+          <Button type="primary" htmlType="submit">Agregar Nuevo Nombre <PlusOutlined /></Button>
         </Form.Item>
       </Form>
       <Table columns={namesColums} dataSource={personContext} />

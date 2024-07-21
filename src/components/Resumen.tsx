@@ -1,4 +1,6 @@
+import { FileOutlined, FileTextOutlined, StarOutlined } from "@ant-design/icons";
 import { Card, Space } from "antd"
+import Title from "antd/es/typography/Title";
 import { useEffect, useState } from "react";
 
 interface ResumenProps {
@@ -28,12 +30,17 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
   return (
     <Space direction="vertical" size={16}>
       <Card
-        title={title}
-        // extra={<a href="#">More</a>}
+        title={
+          <div>
+            <FileOutlined style={{ marginRight: '5px'}}/>
+            <Title level={4} style={{ display: 'inline', fontSize:'16px' }}>{title}</Title>
+          </div>
+        }
         style={{ width: 300, textAlign: 'center', marginTop: '20px' }}
       >
-    
         {
+          data.length > 0 
+          ?
           data?.map( v => {
             return(
             <div id={v.id} style={{ display: 'flex', width: '100%' }}>
@@ -46,6 +53,8 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
             </div>
             )
           })
+          :
+          <span>No hay datos</span>
         }
         {type === 'persona' && person.total !== undefined && (
           <div style={{ display: 'flex', width: '100%' }}>
