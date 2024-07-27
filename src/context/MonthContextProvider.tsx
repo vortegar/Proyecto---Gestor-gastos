@@ -5,14 +5,6 @@ export const MonthContext = createContext<MyContextProps>(defaultContext);
 
 export const MonthContextProvider: FC<MyContextProviderProps> = ({ children }) => {
  
-  // const dataDemo:Month = [
-  //   {
-  //     id         : 1,
-  //     name       : '',
-  //     expenses   : []
-  //   },
-  // ];
-  
   const [monthContext, setMonthContext] = useState<Month[]>([]);  
 
   return (

@@ -19,7 +19,7 @@ export const App: React.FC = () => {
       <Layout style={{ minWidth: '100vw'}}>
         {isAuthenticated && <Navbar />}
 
-        <Layout className="site-layout" style={{ marginLeft: 200, minHeight: '100vh' }}>
+        <Layout className="site-layout" style={{ marginLeft: isAuthenticated ? 200 : 0, minHeight: '100vh' }}>
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
     
             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>

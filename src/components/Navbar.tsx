@@ -1,15 +1,26 @@
-import { Layout, Menu } from 'antd';
-import { HomeOutlined, FileTextOutlined, UserOutlined, SettingOutlined, ApiOutlined } from '@ant-design/icons';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContextProvider';
+import { AuthContext, useAuth } from '../context/AuthContextProvider';
 
+import { Layout, Menu, Typography } from 'antd';
+import { HomeOutlined, FileTextOutlined, UserOutlined, SettingOutlined, ApiOutlined } from '@ant-design/icons';
+
+const { Title } = Typography;
 const { Sider } = Layout;
 
 export const Navbar: React.FC = () => {
-  const { logout } = useAuth();
-
+  const useAuth = () => useContext(AuthContext);
+  const { logout, username, clearUsername, isAuthenticated } = useAuth();
+  const handleLogout = () => {
+    clearUsername()
+    logout()
+  }
   return (
-    <Sider  width={200}  style={{ height: '100vh', position: 'fixed', left: 0 }}>
+    <Sider  width={200}  style={{ height: '100vh', position: 'fixed' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+        <Title level={4} style={{ color: 'white' }}>Bienvenido</Title>
+        <Title level={4} style={{ color: 'white', margin: '0px' }}>{username}</Title>
+      </div>
       <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
         <Menu.Item key="1" icon={<HomeOutlined />}>
             <Link to="/home">Inicio</Link>
@@ -24,7 +35,7 @@ export const Navbar: React.FC = () => {
             <Link to="/configurate">Configuración</Link>
         </Menu.Item>
         <Menu.Item key="5" icon={<ApiOutlined />}>
-            <Link onClick={ logout }>Salir</Link>
+            <Link onClick={ handleLogout }>Salir</Link>
         </Menu.Item>
       </Menu>
     </Sider>

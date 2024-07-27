@@ -13,10 +13,10 @@ export interface Month {
   
   export interface MyContextProps {
     monthContext: Month[];
-    setMontContext: React.Dispatch<React.SetStateAction<Month[]>>;
+    setMonthContext: React.Dispatch<React.SetStateAction<Month[]>>;
   }
   
   export const defaultContext: MyContextProps = {
     monthContext: [],
-    setMontContext: () => [],
+    setMonthContext: () => [],
   }

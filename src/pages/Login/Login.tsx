@@ -1,67 +1,65 @@
-import React from 'react';
-import { Form, Input, Button, Checkbox, Card, Typography } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useAuth } from '../../context/AuthContextProvider';
-import { useNavigate } from 'react-router-dom';
-// import 'antd/dist/antd.css';  // Importar los estilos de Ant Design
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContextProvider";
 
-const { Title } = Typography;
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+import { Button, Typography } from 'antd';
+import { GoogleOutlined } from "@ant-design/icons";
+
+import { firebaseConfig } from "../../services/firebase.js";
 
 export const LoginPage = () => {
+  const { login, getUsername, username } = useAuth();
 
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  // console.log(username)
+  const provider = new GoogleAuthProvider();
+  const navigate = useNavigate()
 
-  const onFinish = (values) => {
-    console.log('Received values from form: ', values);
-    login();
-    navigate('/home'); // Redirige al usuario a la página de inicio después de iniciar sesión
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+  
+  const handleLogin = () => {
+  
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      // IdP data available using getAdditionalUserInfo(result)
+      // ...
+      // console.log('user', user)
+      getUsername( user.displayName )
+      login()
+      navigate('/home')
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });
   };
+
+  const { Title } = Typography;
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <Card
-        style={{ width: 300 }}
-        title={
-          <div style={{ textAlign: 'center' }}>
-            <Title level={3}>Iniciar Sesión</Title>
-          </div>
-        }
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Title level={1}>Bienvenido a la App: Gestor de Gastos</Title>
+      <Button
+        type="primary"
+        onClick={handleLogin}
+        style={{ marginTop: '10px' }}
       >
-        <Form
-          name="login"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          style={{ maxWidth: '100%' }}
-        >
-          <Form.Item
-            name="username"
-            rules={[{ required: true, message: 'El usuario es necesario!' }]}
-          >
-            <Input prefix={<UserOutlined />} placeholder="Usuario" />
-          </Form.Item>
-
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'La contraseña es necesaria!' }]}
-          >
-            <Input.Password prefix={<LockOutlined />} placeholder="Contraseña" />
-          </Form.Item>
-
-          <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Recordar</Checkbox>
-            </Form.Item>
-            <a className="login-form-forgot" href="">Olvide mi contraseña</a>
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Iniciar Sesión
-            </Button>
-          </Form.Item>
-        </Form>
-      </Card>
-    </div>
+        Iniciar sesión con Google <GoogleOutlined />
+      </Button>
+      <Title level={4} style={{ marginTop: '50px'}}>Una app creada para llevar tus gastos de forma ordenada!</Title>
+      <p style={{ textAlign: 'center', fontStyle: 'italic' }}>Creado por: Victorio Ortega🏅</p>
+  </div>
   );
 };
 
