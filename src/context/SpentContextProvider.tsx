@@ -1,7 +1,7 @@
 import { createContext, useState, ReactNode, FC } from 'react';
 
 interface Spent {
-    key: string;
+    id: string;
     spent_name: string;
   }
 
@@ -26,17 +26,9 @@ export const SpentContextProvider: FC<MyContextProviderProps> = ({ children }) =
 
     const dataDemo:Spent[] = [
         {
-            key: '1',
-            spent_name: 'Oxxo',
-        },
-        {
-            key: '2',
-            spent_name: 'Mercado',
-        },
-        {
-            key: '3',
-            spent_name: 'Bencina',
-        },
+            id: '1',
+            spent_name: '',
+        }
     ]
   const [spentContext, setSpentContext] = useState<Spent[]>(dataDemo);  
 

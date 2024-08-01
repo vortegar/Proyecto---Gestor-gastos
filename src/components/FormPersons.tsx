@@ -1,9 +1,15 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
-import { Table, Input, Button, Form, notification } from 'antd';
+import { Table, Input, Form, notification } from 'antd';
+
 import { PersonContext } from '../context/PersonContextProvider';
-import { PlusOutlined } from '@ant-design/icons';
+import { addPerson, deletePerson, getDataPerson } from '../services/formPersonServices';
+
+import { useBtnRefresh } from '../hooks/useBtnRefresh';
+
+import { ButtonAdd } from './ButtonAdd';
+import { ButtonDelete } from './ButtonDelete';
 
 type Inputs = {name: string};
 
@@ -11,6 +17,11 @@ export const FormPersons: React.FC = () => {
   const { control, register, handleSubmit, formState: { errors }, setValue } = useForm<Inputs>();
 
   const { personContext, setPersonContext } = useContext(PersonContext);
+  const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
+
+  useEffect(() => {
+    getDataPerson(setPersonContext)
+  }, [refresh])
 
   const onSubmitPerson: SubmitHandler<Inputs> = data => {
     const personName = personContext.find( s => s.person_name.toLowerCase() == data.name.toLowerCase())
@@ -21,9 +32,12 @@ export const FormPersons: React.FC = () => {
       });
       return      
     }
-    const indexKey = personContext.length + 1
-    const newDataPerson = { key: indexKey, person_name: data.name }
-    setPersonContext( v => [...v, newDataPerson])
+    toggleBlockBtn();
+    addPerson(data);
+    toggleRefresh();
+    setTimeout(() => {
+      toggleBlockBtn();
+    }, 300);
   };
 
   const namesColums = [
@@ -31,7 +45,21 @@ export const FormPersons: React.FC = () => {
       title: 'Usuarios',
       dataIndex: 'person_name',
       key: 'person_name',
+      align: 'center',
     },
+    {
+      title: 'Acción',
+      dataIndex: 'eliminar',
+      key: 'eliminar',
+      width: 50,
+      align: 'center',
+      render: (text, name) => (
+        <ButtonDelete 
+          disabled={isBlockBtnDelete} 
+          fn={() => deletePerson(name, toggleBlockBtnDelete, toggleRefresh) } 
+        />
+      )
+    }
   ];
 
   return (
@@ -56,10 +84,16 @@ export const FormPersons: React.FC = () => {
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">Agregar Nuevo Nombre <PlusOutlined /></Button>
+          <ButtonAdd disabled={isBlockBtn} title='Nuevo Nombre'/>
         </Form.Item>
       </Form>
-      <Table columns={namesColums} dataSource={personContext} />
+      <Table 
+        columns={namesColums} 
+        dataSource={personContext} 
+        locale={{
+          emptyText: <span>Sin información</span> 
+        }}
+        />
     </>
   );  
 };

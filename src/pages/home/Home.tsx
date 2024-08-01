@@ -1,11 +1,18 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Grafico } from '../../components/Grafico';
 
-import { Resumen } from '../../components/Resumen';
-import { Button, Divider } from 'antd';
-import { ModalCreateMes } from '../../components/ModalCreateMes';
 import { MonthContext } from '../../context/MonthContextProvider';
+
+import { Button, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+
+import { Resumen } from '../../components/Resumen';
+import { ModalCreateMes } from '../../components/ModalCreateMes';
+
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from '../../services/firebase';
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+// import { collection, addDoc } from "firebase/firestore";
 
 export const Home: React.FC = () => {
   const { monthContext } = useContext(MonthContext);
@@ -54,7 +61,7 @@ export const Home: React.FC = () => {
   const showModal = () => {
     setIsModalVisible(true);
   };
-  console.log(expensesResumen)
+
   return (
     <>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
