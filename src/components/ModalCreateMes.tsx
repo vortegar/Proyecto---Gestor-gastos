@@ -2,51 +2,19 @@ import { useContext } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { Form, Modal, Select } from 'antd';
-// import { firebaseConfig } from '../services/firebase';
-import { getFirestore, collection, addDoc } from "firebase/firestore";
 
-import { MonthContext } from '../context/MonthContextProvider';
-
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from '../services/firebase';
+import { addMonth } from '../services/monthServides';
 
 export const ModalCreateMes = ({estado, modificador}) => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm();
-  const { setMonthContext } = useContext(MonthContext);
   
     const handleCancel = () => {
       modificador(false);
       reset();
     };
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-
-
-  // Initialize Cloud Firestore and get a reference to the service
-  const db = getFirestore(app);
-
-    const addMonth = async (name) => {
-      try {
-        const docRef = await addDoc(collection(db, "month"), {
-          // id       : Math.floor(Math.random() * 100) + 1,
-          name     : name,
-          expenses : [],
-        });
-        console.log("Document written with ID: ", docRef.id);
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
-    };
-
     const onSubmitMes = ({name}) => {
-      const dataMonth = {
-        id       : Math.floor(Math.random() * 100) + 1,
-        name     : name,
-        expenses : [],
-      }
       modificador(false);
-      setMonthContext( m => [...m, dataMonth])
       addMonth(name);
       reset();
     }

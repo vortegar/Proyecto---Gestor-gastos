@@ -1,50 +1,42 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Option } from 'antd/es/mentions';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { Table, Input, Button, Form, Select, Row, Col, Tooltip, Divider } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Table, Input, Button, Form, Select, Row, Col, Divider } from 'antd';
 
 import { SpentContext } from '../../context/SpentContextProvider';
+import { MonthContext } from '../../context/MonthContextProvider';
 import { PersonContext } from '../../context/PersonContextProvider';
 
 import { InputsExpenses } from '../../interface/ExpensesInterface';
-import { MonthContext } from '../../context/MonthContextProvider';
+
+import { getDataMonth } from '../../services/monthServides';
+import { deleteExpense, updateExpenses } from '../../services/expensesServices';
+
+import { useBtnRefresh } from '../../hooks/useBtnRefresh';
+import { ButtonDelete } from '../../components/ButtonDelete';
+import { ButtonAdd } from '../../components/ButtonAdd';
 
 export const Expenses: React.FC = () => {
-  const { control, handleSubmit, formState: { errors }, reset } = useForm<InputsExpenses>();
+  const { control, handleSubmit, formState: { errors }, reset, getValues } = useForm<InputsExpenses>();
+  const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
   
   const { spentContext } = useContext(SpentContext);
   const { personContext } = useContext(PersonContext);
   const { monthContext, setMonthContext } = useContext(MonthContext);
 
-  const mesActual = monthContext.length - 1;
+  const mesActual = monthContext[monthContext.length - 1].name;
+  
+  useEffect(() => {
+    getDataMonth(setMonthContext)
+  }, [refresh])
 
   const onSubmitExpenses: SubmitHandler<InputsExpenses> = data => {
-    const dataExpense = {
-      id         : Math.floor(Math.random() * 100) + 1,
-      descripcion: data.descripcion,
-      monto      : `${data.monto}`,
-      user       : data.user,
-      fecha      : data.fecha,
-      spent_type : data.spent_type,
-    }
-    
-    setMonthContext(m => {
-      return m.map((obj, index) => 
-        index === mesActual ? { ...obj, expenses: [ ...m[mesActual].expenses, dataExpense] } : obj
-      );
-    });    
+    updateExpenses(data, mesActual)
+    toggleRefresh();
     reset();
   };
-
-  const handleDelete = (expense) => {
-    setMonthContext(m => {
-      return m.map((obj, index) => 
-        index === mesActual ? { ...obj, expenses: m[mesActual].expenses.filter( e => e.id != expense.id ) } : obj
-      );
-    });    
-  }
 
   const columns = [
     {
@@ -77,17 +69,12 @@ export const Expenses: React.FC = () => {
       dataIndex: 'eliminar',
       key: 'eliminar',
       render: (text, expense) => (
-        <span>
-          <Tooltip title="Eliminar">
-            <Button
-              icon={<DeleteOutlined />}
-              onClick={() => handleDelete(expense)}
-            />
-          </Tooltip>  
-        </span>
+        <ButtonDelete 
+          disabled={isBlockBtnDelete} 
+          fn={() => deleteExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual) } 
+        />
       )
     }
-
   ];
 
   return (
@@ -192,15 +179,12 @@ export const Expenses: React.FC = () => {
           </Col>
         </Row>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Agregar Gasto
-            <PlusOutlined />
-          </Button>
+          <ButtonAdd disabled={isBlockBtn} title='Agregar Gasto'/>
         </Form.Item>
       </Form>
       <Table 
         columns={columns} 
-        dataSource={monthContext[mesActual]?.expenses} 
+        dataSource={monthContext[0]?.expenses} 
         locale={{
           emptyText: <span>Aun no existen gastos en el mes</span> 
         }}

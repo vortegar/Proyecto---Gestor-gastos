@@ -8,18 +8,21 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import { Resumen } from '../../components/Resumen';
 import { ModalCreateMes } from '../../components/ModalCreateMes';
-
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from '../../services/firebase';
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-// import { collection, addDoc } from "firebase/firestore";
+import { useBtnRefresh } from '../../hooks/useBtnRefresh';
+import { getDataMonth } from '../../services/monthServides';
 
 export const Home: React.FC = () => {
-  const { monthContext } = useContext(MonthContext);
+  const { monthContext, setMonthContext } = useContext(MonthContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
   
+  const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
+    
+  useEffect(() => {
+    getDataMonth(setMonthContext)
+  }, [refresh])
+
   const mesActual = monthContext[monthContext.length - 1];
-  
+  console.log(mesActual)
   const acumuladorPerson = mesActual?.expenses.reduce((acc: { [key: string]: string }, item) => {
     const { user, monto } = item;
     if (!acc[user]) {
