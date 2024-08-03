@@ -16,6 +16,7 @@ import { deleteExpense, updateExpenses } from '../../services/expensesServices';
 import { ButtonAdd } from '../../components/ButtonAdd';
 import { useBtnRefresh } from '../../hooks/useBtnRefresh';
 import { ButtonDelete } from '../../components/ButtonDelete';
+import { FormFixedExpenses } from '../../components/FormFixedExpenses';
 
 export const Expenses: React.FC = () => {
   const { control, handleSubmit, formState: { errors }, reset, getValues } = useForm<InputsExpenses>();
@@ -25,23 +26,24 @@ export const Expenses: React.FC = () => {
   const { personContext } = useContext(PersonContext);
   const { monthContext, setMonthContext } = useContext(MonthContext);
 
-  const mesActual = monthContext[monthContext.length - 1].name;
+  const mesActual = monthContext[monthContext.length - 1];
   
   useEffect(() => {
     getDataMonth(setMonthContext)
   }, [refresh])
 
   const onSubmitExpenses: SubmitHandler<InputsExpenses> = data => {
-    updateExpenses(data, mesActual)
+    updateExpenses(data, mesActual.name)
     toggleRefresh();
     reset();
   };
 
   const columns = [
     {
-      title: 'Tipo de Gasto',
+      title: 'Gasto',
       dataIndex: 'spent_type',
       key: 'spent_type',
+      with: '20px',
     },
     {
       title: 'Monto',
@@ -53,11 +55,11 @@ export const Expenses: React.FC = () => {
       dataIndex: 'user',
       key: 'user',
     },
-    {
-      title: 'Fecha',
-      dataIndex: 'fecha',
-      key: 'fecha',
-    },
+    // {
+    //   title: 'Fecha',
+    //   dataIndex: 'fecha',
+    //   key: 'fecha',
+    // },
     {
       title: 'Descripción',
       dataIndex: 'descripcion',
@@ -70,21 +72,46 @@ export const Expenses: React.FC = () => {
       render: (text, expense) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
-          fn={() => deleteExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual) } 
+          fn={() => deleteExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual.name) } 
         />
       )
     }
   ];
-
+  const fixedExpenseColumns = [
+    {
+      title: 'Gasto',
+      dataIndex: 'fixed_expense_name',
+      key: 'fixed_expense_name',
+    },
+    {
+      title: 'Monto',
+      dataIndex: 'fixed_monto',
+      key: 'fixed_monto',
+    },
+    {
+      title: 'Acción',
+      dataIndex: 'eliminar',
+      key: 'eliminar',
+      render: (text, expense) => (
+        <ButtonDelete 
+          disabled={isBlockBtnDelete} 
+          fn={() => deleteExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual.name) } 
+        />
+      )
+    }
+  ];
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
-        <h2>Gastos del mes {monthContext[mesActual]?.name}</h2>
+        <h2>Gastos del mes {mesActual.name}</h2>
       </div>
       <Divider/>
-      <Form layout="vertical" style={{marginTop: '50px'}} onFinish={handleSubmit(onSubmitExpenses)}>
-        <Row gutter={16}>
-          <Col span={12}>
+      <Row gutter={16}>
+        <Col span={12}>
+          <FormFixedExpenses/>
+        </Col>
+        <Col span={12}>
+        <Form layout="vertical" onFinish={handleSubmit(onSubmitExpenses)}>
             <Form.Item>
               <Controller
                 name="spent_type"
@@ -99,7 +126,7 @@ export const Expenses: React.FC = () => {
                     }
                   </Select>
                 )}
-              />
+                />
             </Form.Item>
             <Form.Item
               validateStatus={errors.user ? 'error' : ''}
@@ -123,12 +150,10 @@ export const Expenses: React.FC = () => {
                 )}
               />
             </Form.Item>
-          </Col>
-          <Col span={12}>
             <Form.Item 
               validateStatus={errors.monto ? 'error' : ''}
               help={errors.monto ? errors.monto.message : ''}
-            >
+              >
               <Controller
                 name="monto"
                 control={control}
@@ -173,21 +198,48 @@ export const Expenses: React.FC = () => {
                 render={({ field }) => (
                   <Input {...field} placeholder= "Descripcion (opcional)"/>
                 )}
-              />
+                />
             </Form.Item>
-          </Col>
-        </Row>
         <Form.Item>
           <ButtonAdd disabled={isBlockBtn} title='Agregar Gasto'/>
         </Form.Item>
       </Form>
-      <Table 
-        columns={columns} 
-        dataSource={monthContext[0]?.expenses} 
-        locale={{
-          emptyText: <span>Aun no existen gastos en el mes</span> 
-        }}
-        />
+      </Col>
+
+      </Row>
+      <Row gutter={16}>
+        <Col span={10}>
+        <Table 
+            columns={fixedExpenseColumns} 
+            dataSource={mesActual?.fixed_expenses} 
+            title={() => (
+              <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}>
+                Gastos Fijos
+              </h4>
+            )}
+            locale={{
+              emptyText: <span>Aun no existen gastos en el mes</span> 
+            }}
+            style={{ marginTop: '20px' }}
+            />
+            </Col>
+            <Col span={14}>
+          <Table 
+            columns={columns} 
+            dataSource={mesActual?.expenses} 
+            title={() => (
+              <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}>
+                Gastos Variables
+              </h4>
+            )}
+            locale={{
+              emptyText: <span>Aun no existen gastos en el mes</span> 
+            }}
+            style={{ marginTop: '20px' }}
+            />
+        </Col>
+      </Row>
+
     </div>
   );  
 };

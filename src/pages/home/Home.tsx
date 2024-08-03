@@ -65,6 +65,7 @@ export const Home: React.FC = () => {
     setIsModalVisible(true);
   };
 
+  console.log(mesActual?.fixed_expenses)
   return (
     <>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
@@ -82,8 +83,10 @@ export const Home: React.FC = () => {
         <>
           <div style={{ display: 'flex'}}>
             <div style={{ display: 'flex', flexDirection: 'column', padding: '24px' }}>
-              <Resumen data={expensesResumen} title='Total gastos del Mes' type='gasto'/>
+              <Resumen data={mesActual?.fixed_expenses} title='Total Gasto Fijo' type='gastos fijos'/>
+              <Resumen data={expensesResumen} title='Total Gasto Variable' type='gastos varios'/>
               <Resumen data={personResumen} title='Monto a cuadar' type='persona'/>
+
             </div>
             <Grafico resumen={expensesResumen} title='Gasto Mensual'/>
           </div>

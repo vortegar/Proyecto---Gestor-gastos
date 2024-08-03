@@ -46,9 +46,25 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
             return(
             <div id={v.id} style={{ display: 'flex', width: '100%' }}>
               {
-                (type=='persona') 
-                ?<span style={{ flexGrow: 1, textAlign: 'left' }}>{v.user}:</span>
-                :<span style={{ flexGrow: 1, textAlign: 'left' }}>{v.spent_type}:</span>
+                (type=='persona') && 
+                <>
+                  <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.user}:</span>
+                  <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.spent_type}</span>
+                </>
+              }
+              {
+                (type=='gastos fijos') && 
+                <>
+                  <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.fixed_expense_name}:</span>
+                  <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.fixed_monto}</span>
+                </>
+              }
+              {
+                (type=='gastos varios') && 
+                  <>
+                    <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.user}:</span>
+                    <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.spent_type}</span> 
+                  </>
               }
               <span style={{ textAlign: 'right' }}>$ {v.total}</span>
             </div>

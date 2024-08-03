@@ -1,7 +1,38 @@
 import { collection, getDocs, deleteDoc, doc, where, query, updateDoc } from "firebase/firestore";
 import { db } from './cloudDatabase';
 
-// Crear
+// Actualizar
+export const updateFixedExpenses = async (data, month) => {
+    try {
+      const q = query(collection(db, 'month'), where('name', '==', month));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        console.error('No se encontró el documento del mes');
+        return;
+      }
+
+      const monthDoc = querySnapshot.docs[0];
+      const monthData = monthDoc.data();
+      
+      const transformData = Object.entries(data).map(([key, value]) => ({
+        fixed_expense_name: key,
+        fixed_monto: value
+      }));
+
+      // const updatedExpenses = [
+      //   ...monthData.fixed_expenses,
+      //   transformData
+      // ];
+      console.log(transformData)
+      const monthRef = doc(db, 'month', monthDoc.id);
+      await updateDoc(monthRef, {
+        fixed_expenses: transformData
+      });
+    } catch (e) {
+      console.error("Error añadiendo a: ", e);
+    }
+  };
 export const updateExpenses = async (data, month) => {
     try {
       const q = query(collection(db, 'month'), where('name', '==', month));

@@ -8,17 +8,20 @@ import { PersonContextProvider } from './context/PersonContextProvider'
 import { ExpensesContextProvider } from './context/ExpensesContextProvider'
 import { MonthContextProvider } from './context/MonthContextProvider'
 import { AuthProvider } from './context/AuthContextProvider'
+import { FixedSpentContextProvider } from './context/FixedSpentContextProvider'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider>
       <MonthContextProvider>
         <PersonContextProvider>  
-          <SpentContextProvider>
-            <ExpensesContextProvider>
-              <App />
-            </ExpensesContextProvider>
-          </SpentContextProvider> 
+          <FixedSpentContextProvider>
+            <SpentContextProvider>
+              <ExpensesContextProvider>
+                <App />
+              </ExpensesContextProvider>
+            </SpentContextProvider> 
+          </FixedSpentContextProvider>
         </PersonContextProvider>
       </MonthContextProvider>
     </AuthProvider>

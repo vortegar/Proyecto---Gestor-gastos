@@ -1,6 +1,8 @@
 import { Row, Col, Divider } from 'antd';
+
 import { FormSpents } from '../../components/FormSpents';
 import { FormPersons } from '../../components/FormPersons';
+import { FormFixedSpents } from '../../components/FormFixedSpents';
 
 export const Configurate: React.FC = () => {
 
@@ -11,11 +13,14 @@ export const Configurate: React.FC = () => {
       </div>
       <Divider/>
       <Row gutter={16} style={{marginTop: '50px'}}>
-        <Col span={12}>
+        <Col span={8}>
           <FormSpents/>
         </Col>
-          <Col span={12}>
-      <FormPersons/>     
+        <Col span={8}>
+          <FormPersons/>     
+        </Col>
+        <Col span={8}>
+          <FormFixedSpents/>     
         </Col>
       </Row>
     </>

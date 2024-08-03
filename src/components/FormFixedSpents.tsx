@@ -3,32 +3,31 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Table, Input, Form, notification } from 'antd';
 
-import { SpentContext } from '../context/SpentContextProvider';
-
 import { useBtnRefresh } from '../hooks/useBtnRefresh';
-
-import { addSpent, deleteSpent, getDataSpent } from '../services/spentsServices';
 
 import { ButtonAdd } from './ButtonAdd';
 import { ButtonDelete } from './ButtonDelete';
 
-type Inputs = {spent_name: string};
+import { FixedSpentContext } from '../context/FixedSpentContextProvider';
+import { addFixedSpent, deleteFixedSpent, getDataFixedSpent } from '../services/fixedExpensesServices';
 
-export const FormSpents: React.FC = () => {
-  const { control, handleSubmit, formState: { errors } } = useForm<Inputs>();
+type Inputs = {fixed_spent_name: string};
+
+export const FormFixedSpents: React.FC = () => {
+  const { control, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
   
-  const { spentContext, setSpentContext } = useContext(SpentContext);
+  const { fixedSpentContext, setFixedSpentContext } = useContext(FixedSpentContext);
   const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
 
   useEffect(() => {
-    getDataSpent(setSpentContext)
+    getDataFixedSpent(setFixedSpentContext)
   }, [refresh])
 
   const onSubmitSpent: SubmitHandler<Inputs> = async(data) => {
-    if (!data.spent_name) return;
-
-    const spentName = spentContext.find( s => s.spent_name?.toLowerCase() == data.spent_name.toLowerCase())
-    if( spentName != undefined) {
+    if (!data.fixed_spent_name) return;
+    console.log('hola')
+    const fixedSpentName = fixedSpentContext.find( s => s.fixed_spent_name?.toLowerCase() == data.fixed_spent_name.toLowerCase())
+    if( fixedSpentName != undefined) {
       notification.error({
         message: 'Error',
         description: 'Este gasto ya existe.',
@@ -37,20 +36,21 @@ export const FormSpents: React.FC = () => {
     }
     toggleBlockBtn();
     try {
-      await addSpent(data);
+      await addFixedSpent(data);
       toggleRefresh();
       toggleBlockBtn();
-
+      reset();
     } catch (error) {
-     console.log('error', error) 
+      console.log('error', error)      
     }
   };
 
-  const spentsColumns = [
+  
+  const fixedSpentsColumns = [
     {
-      title: 'Gastos definidos',
-      dataIndex: 'spent_name',
-      key: 'spent_name',
+      title: 'Gastos Fijos',
+      dataIndex: 'fixed_spent_name',
+      key: 'fixed_spent_name',
       align: 'center',
     },
     {
@@ -62,7 +62,7 @@ export const FormSpents: React.FC = () => {
       render: (text, name) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
-          fn={() => deleteSpent(name, toggleBlockBtnDelete, toggleRefresh) } 
+          fn={() => deleteFixedSpent(name, toggleBlockBtnDelete, toggleRefresh) } 
         />
       )
     }
@@ -72,30 +72,30 @@ export const FormSpents: React.FC = () => {
     <>
       <Form layout="vertical" onFinish={handleSubmit(onSubmitSpent)}>
         <Form.Item
-          validateStatus={errors.spent_name ? 'error' : ''}
-          help={errors.spent_name ? errors.spent_name.message : ''}
+          validateStatus={errors.fixed_spent_name ? 'error' : ''}
+          help={errors.fixed_spent_name ? errors.fixed_spent_name.message : ''}
         >
           <Controller
-            name="spent_name"
+            name="fixed_spent_name"
             control={control}
             rules={{ required: "Este campo es obligatorio" }}
             render={({ field }) => (
               <>
                 <Input 
                   {...field} 
-                  placeholder="Introduce el nombre del gasto"
+                  placeholder="Introduce el nombre del gasto fijo"
                 />
               </>
             )}
           />
         </Form.Item>
         <Form.Item>
-          <ButtonAdd disabled={isBlockBtn} title='Nuevo Gasto'/>
+          <ButtonAdd disabled={isBlockBtn} title='Nuevo Gasto Fijo'/>
         </Form.Item>
       </Form>
       <Table 
-        columns={spentsColumns} 
-        dataSource={spentContext} 
+        columns={fixedSpentsColumns} 
+        dataSource={fixedSpentContext} 
         locale={{
           emptyText: <span>Sin información</span> 
         }}
