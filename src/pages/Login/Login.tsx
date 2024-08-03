@@ -33,7 +33,7 @@ export const LoginPage = () => {
       // console.log('user', user)
       getUsername( user.displayName )
       login()
-      navigate('/home')
+      navigate('/load')
     }).catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
@@ -53,7 +53,7 @@ export const LoginPage = () => {
       <Button
         type="primary"
         onClick={handleLogin}
-        style={{ marginTop: '10px' }}
+        className="custom-button"
       >
         Iniciar sesión con Google <GoogleOutlined />
       </Button>

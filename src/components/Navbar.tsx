@@ -1,27 +1,31 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext, useAuth } from '../context/AuthContextProvider';
+
+import { AuthContext } from '../context/AuthContextProvider';
 
 import { Layout, Menu, Typography } from 'antd';
 import { HomeOutlined, FileTextOutlined, UserOutlined, SettingOutlined, ApiOutlined } from '@ant-design/icons';
 
-const { Title } = Typography;
 const { Sider } = Layout;
+const { Title } = Typography;
 
 export const Navbar: React.FC = () => {
   const useAuth = () => useContext(AuthContext);
-  const { logout, username, clearUsername, isAuthenticated } = useAuth();
+  const { logout, username, clearUsername, cleanData } = useAuth();
+
   const handleLogout = () => {
-    clearUsername()
-    logout()
+    clearUsername();
+    cleanData();
+    logout();
   }
+
   return (
-    <Sider  width={200}  style={{ height: '100vh', position: 'fixed' }}>
+    <Sider  width={200}  style={{ height: '100vh', position: 'fixed', backgroundColor: 'var(--primary-color)' }}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-        <Title level={4} style={{ color: 'white' }}>Bienvenido</Title>
-        <Title level={4} style={{ color: 'white', margin: '0px' }}>{username}</Title>
+        <Title level={4} style={{ color: 'white', paddingTop: '40px', marginBottom: '0' }}>Bienvenido</Title>
+        <Title level={4} style={{ color: 'white', marginTop: '0' }}>{username}</Title>
       </div>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{ backgroundColor: 'var(--primary-color)', marginTop: '30px'}}>
         <Menu.Item key="1" icon={<HomeOutlined />}>
             <Link to="/home">Inicio</Link>
         </Menu.Item>

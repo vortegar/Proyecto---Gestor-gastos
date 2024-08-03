@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { Grafico } from '../../components/Grafico';
 
 import { MonthContext } from '../../context/MonthContextProvider';
 
@@ -7,9 +6,11 @@ import { Button, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { Resumen } from '../../components/Resumen';
-import { ModalCreateMes } from '../../components/ModalCreateMes';
-import { useBtnRefresh } from '../../hooks/useBtnRefresh';
+import { Grafico } from '../../components/Grafico';
 import { getDataMonth } from '../../services/monthServides';
+import { ModalCreateMes } from '../../components/ModalCreateMes';
+
+import { useBtnRefresh } from '../../hooks/useBtnRefresh';
 
 export const Home: React.FC = () => {
   const { monthContext, setMonthContext } = useContext(MonthContext);
@@ -22,7 +23,6 @@ export const Home: React.FC = () => {
   }, [refresh])
 
   const mesActual = monthContext[monthContext.length - 1];
-  console.log(mesActual)
   const acumuladorPerson = mesActual?.expenses.reduce((acc: { [key: string]: string }, item) => {
     const { user, monto } = item;
     if (!acc[user]) {
@@ -69,7 +69,7 @@ export const Home: React.FC = () => {
     <>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
       <h2>Resumen de gastos del Mes: {mesActual?.name}</h2>
-      <Button type="primary" onClick={() => showModal()}>
+      <Button onClick={() => showModal()} className="custom-button">
         Crear nuevo mes
         <PlusOutlined />
       </Button>

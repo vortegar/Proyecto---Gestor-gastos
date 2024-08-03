@@ -8,8 +8,7 @@ export const Grafico: React.FC<GraficoProps> = ({resumen, title}) => {
   let dataLabelName = resumen.map( v => v.spent_type)
   let dataLabeValue = resumen.map( v => v.total)
 
-  // console.log(resumen)
-  const data: ChartData<'bar' | 'line'> = {
+  const data: ChartData<'bar'> = {
     labels: dataLabelName,
 
     datasets: [
@@ -17,23 +16,14 @@ export const Grafico: React.FC<GraficoProps> = ({resumen, title}) => {
         type: 'bar',
         label: 'Gasto',
         data: dataLabeValue,
-        // backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(255, 214, 10, 0.6)',
+        borderColor: 'rgba(255, 214, 10, 1)',
         borderWidth: 1,
       },
-      // {
-      //   type: 'line',
-      //   label: 'Promedio',
-      //   data: [2, 6, 9, 14, 18, 22, 2, 6, 9, 14, 18, 22],
-      //   fill: false,
-      //   // backgroundColor: 'rgba(255, 99, 132, 0.6)',
-      //   borderColor: 'rgba(255, 99, 132, 1)',
-      //   tension: 0.1,
-      // },
     ],
   };
 
-  const options: ChartOptions<'bar' | 'line'> = {
+  const options: ChartOptions<'bar'> = {
     responsive: true,
     plugins: {
       legend: {

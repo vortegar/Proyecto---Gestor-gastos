@@ -1,8 +1,9 @@
-import { FileOutlined, FileTextOutlined, StarOutlined } from "@ant-design/icons";
-import { Card, Space } from "antd"
-import Title from "antd/es/typography/Title";
 import { useEffect, useState } from "react";
 
+import { Card, Space } from "antd"
+import { FileOutlined } from "@ant-design/icons";
+
+import Title from "antd/es/typography/Title";
 interface ResumenProps {
   data: any;
   title: string;

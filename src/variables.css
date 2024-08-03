@@ -1,0 +1,29 @@
+:root {
+  --primary-color: #000814;
+  --secondary-color: #001d3d;
+  --tertiary-color: #003566;
+  --quaternary-color: #ffd60a;
+  --quinary-color: #ffc300;
+}
+
+/* Estilos para el item seleccionado */
+.ant-menu-item-selected {
+  background-color: var(--quinary-color) !important;
+}
+
+/* Estilos para el botón */
+.custom-button {
+  background-color: var(--primary-color) ; 
+  color: var(--quaternary-color);
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilos para el botón al hacer hover */
+.custom-button:hover {
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+
+}

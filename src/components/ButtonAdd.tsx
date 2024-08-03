@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 export const ButtonAdd = ({disabled, title}) => {
   return (
-    <Button disabled={disabled} type="primary" htmlType="submit">
+    <Button disabled={disabled} htmlType="submit" className="custom-button">
     {
       disabled 
       ? "Cargando"
