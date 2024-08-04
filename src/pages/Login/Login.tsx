@@ -49,7 +49,7 @@ export const LoginPage = () => {
   const { Title } = Typography;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <Title level={1}>Bienvenido a la App: Gestor de Gastos</Title>
+      <Title level={1}>Bienvenido a: Tus Gastos App</Title>
       <Button
         type="primary"
         onClick={handleLogin}

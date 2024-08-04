@@ -1,6 +1,9 @@
-import { Divider } from 'antd';
-import { MonthContext } from '../../context/MonthContextProvider';
 import { useContext } from 'react';
+
+import { Divider } from 'antd';
+
+import { MonthContext } from '../../context/MonthContextProvider';
+
 import { Resumen } from '../../components/Resumen';
 import { Grafico } from '../../components/Grafico';
 
@@ -18,8 +21,6 @@ export const History = () => {
     }
   })
   
-  console.log(expensesHistory)
-    
   return (
     <>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
@@ -28,7 +29,7 @@ export const History = () => {
         <Divider />
           <div style={{ display: 'flex'}}>
             <div style={{ display: 'flex', flexDirection: 'column', padding: '24px' }}>
-                <Resumen data={expensesHistory} title='Totales de Gastos por Mes' type='gasto'/>
+                <Resumen data={expensesHistory} title='Totales de Gastos por Mes' type='gasto historico'/>
             </div>
                 <Grafico resumen={expensesHistory} title='Historico de Gastos Mensuales'/>
           </div>

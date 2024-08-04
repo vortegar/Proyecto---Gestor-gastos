@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { Form, Modal, Select } from 'antd';
@@ -6,7 +5,7 @@ import { Form, Modal, Select } from 'antd';
 import { addMonth } from '../services/monthServides';
 
 export const ModalCreateMes = ({estado, modificador}) => {
-  const { control, handleSubmit, formState: { errors }, reset } = useForm();
+  const { control, handleSubmit, reset } = useForm();
   
     const handleCancel = () => {
       modificador(false);
@@ -39,6 +38,8 @@ export const ModalCreateMes = ({estado, modificador}) => {
       open={estado}
       onOk={handleSubmit(onSubmitMes)}
       onCancel={handleCancel}
+      okButtonProps={{ className: 'custom-button' }}
+
     >
     <h2>Selecciona el Mes</h2>
     <Form layout="vertical">

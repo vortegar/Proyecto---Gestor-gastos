@@ -10,6 +10,7 @@ export const ButtonDelete = ({disabled, fn}) => {
                 disabled={disabled}
                 icon={<DeleteOutlined />}
                 onClick={() => fn()}
+                className="custom-button"
             />
         </Tooltip>  
     </span>

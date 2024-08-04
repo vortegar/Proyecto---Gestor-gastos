@@ -16,8 +16,8 @@ export const updateFixedExpenses = async (data, month) => {
       const monthData = monthDoc.data();
       
       const transformData = Object.entries(data).map(([key, value]) => ({
-        fixed_expense_name: key,
-        fixed_monto: value
+        spent_type: key,
+        total: value
       }));
 
       // const updatedExpenses = [

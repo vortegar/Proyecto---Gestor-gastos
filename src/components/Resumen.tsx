@@ -11,7 +11,8 @@ interface ResumenProps {
 }
 
 export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
-  const [person, setPerson] = useState({})
+  const [person, setPerson] = useState({});
+  const [fixedExpense, setFixedExpense] = useState();
 
   useEffect(() => {
     if (type === 'persona' && data.length > 0) {
@@ -27,17 +28,28 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
       setPerson({ user: maxPerson.user, total: saldoFormateado });
     }
   }, [data, type]);
+
+  useEffect(() => {
+    if (type=='gastos fijos') {
+
+      const totalFixedExpense = data.reduce((prev, curr) => {
+        return Number(prev) + Number(curr.total);
+      }, 0);
+      setFixedExpense(totalFixedExpense);
+    }
+  }, [])
   
   return (
     <Space direction="vertical" size={16}>
       <Card
+      className="custom-card-head"
         title={
           <div>
             <FileOutlined style={{ marginRight: '5px'}}/>
-            <Title level={4} style={{ display: 'inline', fontSize:'16px' }}>{title}</Title>
+            <Title level={4} style={{ display: 'inline', fontSize:'16px', color: 'var(--quaternary-color)' }}>{title}</Title>
           </div>
         }
-        style={{ width: 300, textAlign: 'center', marginTop: '20px' }}
+        style={{ textAlign: 'center', marginTop: '20px' }}
       >
         {
           data.length > 0 
@@ -53,20 +65,19 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
                 </>
               }
               {
-                (type=='gastos fijos') && 
+                (type=='gastos fijos' || type=='gasto historico') && 
                 <>
-                  <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.fixed_expense_name}:</span>
-                  <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.fixed_monto}</span>
+                  <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.spent_type}:</span>
+                  <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.total}</span>
                 </>
               }
               {
                 (type=='gastos varios') && 
                   <>
-                    <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.user}:</span>
-                    <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.spent_type}</span> 
+                    <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.spent_type}:</span>
+                    <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.total}</span> 
                   </>
               }
-              <span style={{ textAlign: 'right' }}>$ {v.total}</span>
             </div>
             )
           })
@@ -79,6 +90,13 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
             <span style={{ textAlign: 'right' }}>$ {person.total}</span>
           </div>
         )}
+        {
+          (type=='gastos fijos') && 
+          <div style={{ display: 'flex', width: '100%' }}>
+            <span style={{ flexGrow: 1, textAlign: 'left' }}>Total Gastos Fijos:</span>
+            <span style={{ flexGrow: 1, textAlign: 'right' }}> $ {fixedExpense}</span>
+          </div>
+        }
       </Card>
     </Space>
   )

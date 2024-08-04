@@ -25,7 +25,6 @@ export const FormFixedSpents: React.FC = () => {
 
   const onSubmitSpent: SubmitHandler<Inputs> = async(data) => {
     if (!data.fixed_spent_name) return;
-    console.log('hola')
     const fixedSpentName = fixedSpentContext.find( s => s.fixed_spent_name?.toLowerCase() == data.fixed_spent_name.toLowerCase())
     if( fixedSpentName != undefined) {
       notification.error({

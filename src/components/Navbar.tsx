@@ -30,10 +30,10 @@ export const Navbar: React.FC = () => {
             <Link to="/home">Inicio</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<UserOutlined />}>
-            <Link to="/expenses">Gastos</Link>
+            <Link to="/expenses">Gastos Fijos/Vbles</Link>
         </Menu.Item>
         <Menu.Item key="3" icon={<FileTextOutlined/>}>
-            <Link to="/history">Historial</Link>
+            <Link to="/history">Historico</Link>
         </Menu.Item>
         <Menu.Item key="4" icon={<SettingOutlined />}>
             <Link to="/configurate">Configuración</Link>

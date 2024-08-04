@@ -11,6 +11,8 @@ import { MonthContext } from '../context/MonthContextProvider';
 import { PersonContext } from '../context/PersonContextProvider';
 
 import { useAuth } from '../context/AuthContextProvider';
+import { getDataFixedSpent } from '../services/fixedExpensesServices';
+import { FixedSpentContext } from '../context/FixedSpentContextProvider';
 
 const { Title } = Typography;
 
@@ -19,8 +21,9 @@ export const LoadingScreen = () => {
     const { uploaded } = useAuth();
 
     const { setSpentContext } = useContext(SpentContext);
-    const { setPersonContext } = useContext(PersonContext);
     const { setMonthContext } = useContext(MonthContext);
+    const { setPersonContext } = useContext(PersonContext);
+    const { setFixedSpentContext } = useContext(FixedSpentContext);
     
     const navigate = useNavigate()
     
@@ -29,6 +32,7 @@ export const LoadingScreen = () => {
           await Promise.all([
             getDataSpent(setSpentContext),
             getDataPerson(setPersonContext),
+            getDataFixedSpent(setFixedSpentContext),
             getDataMonth(setMonthContext)
           ]);
           navigate('/home')

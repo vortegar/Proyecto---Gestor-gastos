@@ -43,17 +43,19 @@ export const Expenses: React.FC = () => {
       title: 'Gasto',
       dataIndex: 'spent_type',
       key: 'spent_type',
-      with: '20px',
+      align: 'center',
     },
     {
       title: 'Monto',
       dataIndex: 'monto',
       key: 'monto',
+      align: 'center',
     },
     {
       title: 'Asignado a',
       dataIndex: 'user',
       key: 'user',
+      align: 'center',
     },
     // {
     //   title: 'Fecha',
@@ -64,11 +66,13 @@ export const Expenses: React.FC = () => {
       title: 'Descripción',
       dataIndex: 'descripcion',
       key: 'descripcion',
+      align: 'center',
     },
     {
       title: 'Acción',
       dataIndex: 'eliminar',
       key: 'eliminar',
+      align: 'center',
       render: (text, expense) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
@@ -80,18 +84,21 @@ export const Expenses: React.FC = () => {
   const fixedExpenseColumns = [
     {
       title: 'Gasto',
-      dataIndex: 'fixed_expense_name',
-      key: 'fixed_expense_name',
+      dataIndex: 'spent_type',
+      key: 'spent_type',
+      align: 'center',
     },
     {
       title: 'Monto',
-      dataIndex: 'fixed_monto',
-      key: 'fixed_monto',
+      dataIndex: 'total',
+      key: 'total',
+      align: 'center',
     },
     {
       title: 'Acción',
       dataIndex: 'eliminar',
       key: 'eliminar',
+      align: 'center',
       render: (text, expense) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
@@ -100,17 +107,19 @@ export const Expenses: React.FC = () => {
       )
     }
   ];
+
+  console.log(mesActual?.fixed_expenses)
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
-        <h2>Gastos del mes {mesActual.name}</h2>
+        <h2>Gastos del mes {mesActual?.name}</h2>
       </div>
       <Divider/>
       <Row gutter={16}>
-        <Col span={12}>
+        <Col span={10}>
           <FormFixedExpenses/>
         </Col>
-        <Col span={12}>
+        <Col span={14}>
         <Form layout="vertical" onFinish={handleSubmit(onSubmitExpenses)}>
             <Form.Item>
               <Controller
@@ -220,7 +229,6 @@ export const Expenses: React.FC = () => {
             locale={{
               emptyText: <span>Aun no existen gastos en el mes</span> 
             }}
-            style={{ marginTop: '20px' }}
             />
             </Col>
             <Col span={14}>
@@ -235,7 +243,6 @@ export const Expenses: React.FC = () => {
             locale={{
               emptyText: <span>Aun no existen gastos en el mes</span> 
             }}
-            style={{ marginTop: '20px' }}
             />
         </Col>
       </Row>

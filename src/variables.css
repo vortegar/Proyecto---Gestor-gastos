@@ -13,7 +13,7 @@
 
 /* Estilos para el botón */
 .custom-button {
-  background-color: var(--primary-color) ; 
+  background-color: var(--primary-color); 
   color: var(--quaternary-color);
   border: none;
   padding: 8px 16px;
@@ -25,5 +25,21 @@
 .custom-button:hover {
   background-color: var(--secondary-color) !important;
   color: white !important;
+}
 
+/* Estilos del Card */
+.custom-card-head .ant-card-head {
+  background-color: var(--primary-color);
+  color: var(--quaternary-color);
+  width: 300px; 
+  text-align: center; 
+}
+
+/*  Estilos de tabla */
+.ant-table-title {
+  background-color: var(--primary-color);
+  color: var(--quaternary-color);
+  margin-top: '20px' ;
+  /* width: 300px;  */
+  /* text-align: center */
 }
