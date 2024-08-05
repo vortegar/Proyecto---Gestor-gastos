@@ -89,7 +89,7 @@ export const FormFixedSpents: React.FC = () => {
           />
         </Form.Item>
         <Form.Item>
-          <ButtonAdd disabled={isBlockBtn} title='Nuevo Gasto Fijo'/>
+          <ButtonAdd disabled={isBlockBtn} title='Agregar Gasto Fijo'/>
         </Form.Item>
       </Form>
       <Table 

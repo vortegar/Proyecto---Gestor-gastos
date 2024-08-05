@@ -15,11 +15,12 @@ import { ButtonDelete } from './ButtonDelete';
 type Inputs = {spent_name: string};
 
 export const FormSpents: React.FC = () => {
-  const { control, handleSubmit, formState: { errors } } = useForm<Inputs>();
+  const { control, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
   
   const { spentContext, setSpentContext } = useContext(SpentContext);
   const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
 
+  console.log(spentContext)
   useEffect(() => {
     getDataSpent(setSpentContext)
   }, [refresh])
@@ -40,7 +41,7 @@ export const FormSpents: React.FC = () => {
       await addSpent(data);
       toggleRefresh();
       toggleBlockBtn();
-
+      reset();
     } catch (error) {
      console.log('error', error) 
     }
@@ -90,7 +91,7 @@ export const FormSpents: React.FC = () => {
           />
         </Form.Item>
         <Form.Item>
-          <ButtonAdd disabled={isBlockBtn} title='Nuevo Gasto'/>
+          <ButtonAdd disabled={isBlockBtn} title='Agregar Gasto'/>
         </Form.Item>
       </Form>
       <Table 

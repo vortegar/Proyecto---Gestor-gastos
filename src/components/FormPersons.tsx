@@ -14,7 +14,7 @@ import { ButtonDelete } from './ButtonDelete';
 type Inputs = {name: string};
 
 export const FormPersons: React.FC = () => {
-  const { control, register, handleSubmit, formState: { errors }, setValue } = useForm<Inputs>();
+  const { control, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
 
   const { personContext, setPersonContext } = useContext(PersonContext);
   const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
@@ -23,7 +23,7 @@ export const FormPersons: React.FC = () => {
     getDataPerson(setPersonContext)
   }, [refresh])
 
-  const onSubmitPerson: SubmitHandler<Inputs> = data => {
+  const onSubmitPerson: SubmitHandler<Inputs> = async(data) => {
     const personName = personContext.find( s => s.person_name.toLowerCase() == data.name.toLowerCase())
     if( personName != undefined) {
       notification.error({
@@ -33,11 +33,14 @@ export const FormPersons: React.FC = () => {
       return      
     }
     toggleBlockBtn();
-    addPerson(data);
-    toggleRefresh();
-    setTimeout(() => {
+    try {
+      await addPerson(data);
+      toggleRefresh();
       toggleBlockBtn();
-    }, 300);
+      reset();
+    } catch (error) {
+      console.log('error', error)      
+    }
   };
 
   const namesColums = [
@@ -84,7 +87,7 @@ export const FormPersons: React.FC = () => {
           />
         </Form.Item>
         <Form.Item>
-          <ButtonAdd disabled={isBlockBtn} title='Nuevo Nombre'/>
+          <ButtonAdd disabled={isBlockBtn} title='Agregar Nombre'/>
         </Form.Item>
       </Form>
       <Table 

@@ -1,8 +1,11 @@
 import { db } from './cloudDatabase';
 import { collection, addDoc, getDocs } from "firebase/firestore";
 
+import { formatArrayMonth } from '../helpers/formatData';
+
 // Crear
 export const addMonth = async (data) => {
+  
     try {
       const docRef = await addDoc(collection(db, "month"), {
         name     : data,
@@ -19,7 +22,7 @@ export const addMonth = async (data) => {
 export const getDataMonth = async (fn) => {
     try {
       const querySnapshot = await getDocs(collection(db, "month"));
-      const namesArray = querySnapshot.docs.map(doc => {
+      const monthArrays = querySnapshot.docs.map(doc => {
         return {
           id: doc.id,
           name: doc.data().name,
@@ -28,7 +31,8 @@ export const getDataMonth = async (fn) => {
           }
         }
       );
-      fn(namesArray)
+      const formatData = formatArrayMonth(monthArrays, 'name')
+      fn(formatData)
     } catch (e) {
       console.error("Error fetching documents: ", e);
     }

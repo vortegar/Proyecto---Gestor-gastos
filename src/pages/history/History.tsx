@@ -6,6 +6,7 @@ import { MonthContext } from '../../context/MonthContextProvider';
 
 import { Resumen } from '../../components/Resumen';
 import { Grafico } from '../../components/Grafico';
+import { formatArrayMonth } from '../../helpers/formatData';
 
 export const History = () => {
   const { monthContext } = useContext(MonthContext);
@@ -20,7 +21,8 @@ export const History = () => {
         total: expensesTotal,
     }
   })
-  
+  const formatExpenseHistory = formatArrayMonth(expensesHistory, 'spent_type')
+  console.log(formatExpenseHistory)
   return (
     <>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
@@ -31,7 +33,7 @@ export const History = () => {
             <div style={{ display: 'flex', flexDirection: 'column', padding: '24px' }}>
                 <Resumen data={expensesHistory} title='Totales de Gastos por Mes' type='gasto historico'/>
             </div>
-                <Grafico resumen={expensesHistory} title='Historico de Gastos Mensuales'/>
+                <Grafico resumen={formatExpenseHistory} title='Historico de Gastos Mensuales'/>
           </div>
 
     </>

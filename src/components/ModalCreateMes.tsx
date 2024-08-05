@@ -1,11 +1,14 @@
 import { Controller, useForm } from 'react-hook-form';
 
-import { Form, Modal, Select } from 'antd';
+import { Form, Modal, notification, Select } from 'antd';
 
 import { addMonth } from '../services/monthServides';
+import { MonthContext } from '../context/MonthContextProvider';
+import { useContext } from 'react';
 
-export const ModalCreateMes = ({estado, modificador}) => {
+export const ModalCreateMes = ({estado, modificador, fn}) => {
   const { control, handleSubmit, reset } = useForm();
+  const { monthContext } = useContext(MonthContext);
   
     const handleCancel = () => {
       modificador(false);
@@ -13,8 +16,17 @@ export const ModalCreateMes = ({estado, modificador}) => {
     };
 
     const onSubmitMes = ({name}) => {
+      const monthName = monthContext.find( s => s.name?.toLowerCase() == name.toLowerCase())
+      if( monthName != undefined) {
+        notification.error({
+          message: 'Error',
+          description: 'Este gasto ya existe.',
+        });
+        return
+      }
       modificador(false);
       addMonth(name);
+      fn();
       reset();
     }
 

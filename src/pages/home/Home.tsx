@@ -15,14 +15,15 @@ import { useBtnRefresh } from '../../hooks/useBtnRefresh';
 export const Home: React.FC = () => {
   const { monthContext, setMonthContext } = useContext(MonthContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  
+  const [mesActual, setMesActual] = useState(monthContext[monthContext.length - 1])
+
   const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
-    
+  
   useEffect(() => {
     getDataMonth(setMonthContext)
+    setMesActual(monthContext[monthContext.length - 1])
   }, [refresh])
-
-  const mesActual = monthContext[monthContext.length - 1];
+  
   const acumuladorPerson = mesActual?.expenses.reduce((acc: { [key: string]: string }, item) => {
     const { user, monto } = item;
     if (!acc[user]) {
@@ -77,14 +78,14 @@ export const Home: React.FC = () => {
   return (
     <>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
-      <h2>Resumen de gastos del Mes: {mesActual?.name}</h2>
+      <h2>Resumen del gastos mes actual: {mesActual?.name}</h2>
       <Button onClick={() => showModal()} className="custom-button">
-        Crear nuevo mes
+        Crear nuevo Mes
         <PlusOutlined />
       </Button>
     </div>
     <Divider />
-      <ModalCreateMes estado={isModalVisible} modificador={setIsModalVisible} />
+      <ModalCreateMes estado={isModalVisible} modificador={setIsModalVisible} fn={toggleRefresh} />
       {
         monthContext.length > 0
         ?

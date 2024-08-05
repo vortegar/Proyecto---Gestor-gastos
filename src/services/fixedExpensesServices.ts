@@ -1,11 +1,13 @@
-import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { formatToUpperCase } from '../helpers/formatData';
 import { db } from './cloudDatabase';
+import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 
 // Crear
 export const addFixedSpent = async (data) => {
+  const formData = formatToUpperCase(data.fixed_spent_name,)
     try {
       const docRef = await addDoc(collection(db, "fixedspent"), {
-        fixed_spent_name: data.fixed_spent_name,
+        fixed_spent_name: formData,
       });
       // console.log("Documento Agregado: ", docRef.id);
     } catch (e) {
@@ -17,14 +19,15 @@ export const addFixedSpent = async (data) => {
 export const getDataFixedSpent = async (fn) => {
     try {
       const querySnapshot = await getDocs(collection(db, "fixedspent"));
-      const namesArray = querySnapshot.docs.map(doc => {
+      const fixedSpentsArray = querySnapshot.docs.map(doc => {
         return{
           id: doc.id,
           fixed_spent_name: doc.data().fixed_spent_name
           }
         }
       );
-      fn(namesArray)
+      fixedSpentsArray.sort((a, b) => a.fixed_spent_name.localeCompare(b.fixed_spent_name));
+      fn(fixedSpentsArray)
     } catch (e) {
       console.error("Error fetching documents: ", e);
     }
