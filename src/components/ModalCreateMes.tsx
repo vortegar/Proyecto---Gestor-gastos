@@ -5,8 +5,11 @@ import { Form, Modal, notification, Select } from 'antd';
 import { addMonth } from '../services/monthServides';
 import { MonthContext } from '../context/MonthContextProvider';
 import { useContext } from 'react';
+import { useAuth } from '../context/AuthContextProvider';
 
 export const ModalCreateMes = ({estado, modificador, fn}) => {
+  const { userUid } = useAuth();
+
   const { control, handleSubmit, reset } = useForm();
   const { monthContext } = useContext(MonthContext);
   
@@ -17,13 +20,13 @@ export const ModalCreateMes = ({estado, modificador, fn}) => {
 
     const onSubmitMes = ({name}) => {
       const monthName = monthContext.find( s => s.name?.toLowerCase() == name.toLowerCase())
-      if( monthName != undefined) {
-        notification.error({
-          message: 'Error',
-          description: 'Este gasto ya existe.',
-        });
-        return
-      }
+      // if( monthName != undefined) {
+      //   notification.error({
+      //     message: 'Error',
+      //     description: 'Este Mes ya existe.',
+      //   });
+      //   return
+      // }
       modificador(false);
       addMonth(name);
       fn();

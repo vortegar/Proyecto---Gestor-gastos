@@ -17,12 +17,11 @@ export const History = () => {
         return acc + sumaActual;
       }, 0);
     return{
-        spent_type: m.name,
+        spent_type: m.month,
         total: expensesTotal,
     }
   })
   const formatExpenseHistory = formatArrayMonth(expensesHistory, 'spent_type')
-  console.log(formatExpenseHistory)
   return (
     <>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>

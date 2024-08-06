@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContextProvider";
 
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 import { Button, Typography } from 'antd';
 import { GoogleOutlined } from "@ant-design/icons";
 
-import { firebaseConfig } from "../../services/firebase.js";
+import { auth, db } from "../../services/firebase.js";
+import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 
 export const LoginPage = () => {
   const { login, getUsername, username } = useAuth();
@@ -16,10 +16,33 @@ export const LoginPage = () => {
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate()
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
+  const handleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
   
-  const handleLogin = () => {
+      // Verificar si el usuario es nuevo
+      const userRef = doc(db, 'users', user.uid);
+      const userSnap = await getDoc(userRef);
+  
+      if (!userSnap.exists()) {
+        // Guardar datos del usuario en Firestore
+        await setDoc(userRef, {
+          displayName: user.displayName,
+          email: user.email,
+          createdAt: Timestamp.fromDate(new Date()),
+        });
+      }
+  
+      // Navegar a la pantalla de carga
+      getUsername( user.displayName )
+      login()
+      navigate('/load');
+    } catch (error) {
+      console.error("Error during login", error);
+    }
+  };
+  const handleLogin_dos = () => {
   
     signInWithPopup(auth, provider)
     .then((result) => {
@@ -31,6 +54,7 @@ export const LoginPage = () => {
       // IdP data available using getAdditionalUserInfo(result)
       // ...
       // console.log('user', user)
+      
       getUsername( user.displayName )
       login()
       navigate('/load')

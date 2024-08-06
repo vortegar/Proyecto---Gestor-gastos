@@ -59,7 +59,7 @@ export const FormPersons: React.FC = () => {
       render: (text, name) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
-          fn={() => deletePerson(name, toggleBlockBtnDelete, toggleRefresh) } 
+          fn={() => deletePerson(name?.id, toggleBlockBtnDelete, toggleRefresh) } 
         />
       )
     }

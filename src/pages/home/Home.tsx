@@ -18,7 +18,6 @@ export const Home: React.FC = () => {
   const [mesActual, setMesActual] = useState(monthContext[monthContext.length - 1])
 
   const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
-  
   useEffect(() => {
     getDataMonth(setMonthContext)
     setMesActual(monthContext[monthContext.length - 1])
@@ -62,7 +61,7 @@ export const Home: React.FC = () => {
     }));
   }
 
- const fixedExpenses = mesActual.fixed_expenses.map( (f, i) => {
+ const fixedExpenses = mesActual?.fixed_expenses.map( (f, i) => {
   return{
     id: ( i + expensesResumen.length),
     ...f
@@ -78,7 +77,7 @@ export const Home: React.FC = () => {
   return (
     <>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
-      <h2>Resumen del gastos mes actual: {mesActual?.name}</h2>
+      <h2>Resumen del gastos mes actual: {mesActual?.month}</h2>
       <Button onClick={() => showModal()} className="custom-button">
         Crear nuevo Mes
         <PlusOutlined />

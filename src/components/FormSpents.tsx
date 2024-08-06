@@ -63,7 +63,7 @@ export const FormSpents: React.FC = () => {
       render: (text, name) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
-          fn={() => deleteSpent(name, toggleBlockBtnDelete, toggleRefresh) } 
+          fn={() => deleteSpent(name.id, toggleBlockBtnDelete, toggleRefresh) } 
         />
       )
     }

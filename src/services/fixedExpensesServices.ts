@@ -1,50 +1,72 @@
-import { formatToUpperCase } from '../helpers/formatData';
-import { db } from './cloudDatabase';
+import { auth, db } from './firebase';
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 
+import { validateUser } from '../helpers/validarUser';
+import { formatToUpperCase } from '../helpers/formatData';
+
 // Crear
-export const addFixedSpent = async (data) => {
-  const formData = formatToUpperCase(data.fixed_spent_name,)
+  export const addFixedSpent = async (data) => {
+    const user = auth.currentUser;
+    const formData = formatToUpperCase(data.fixed_spent_name)
     try {
-      const docRef = await addDoc(collection(db, "fixedspent"), {
+      validateUser(user);
+      const userRef = doc(db, 'users', user?.uid);
+  
+      const personCollectionRef = collection(userRef, 'fixedspent');
+      await addDoc(personCollectionRef, {
         fixed_spent_name: formData,
-      });
-      // console.log("Documento Agregado: ", docRef.id);
-    } catch (e) {
-      console.error("Error añadiendo a: ", e);
-    }
-  };
+        });
+        console.log("Documento Agregado: ");
+      } catch (e) {
+        console.error("Error añadiendo a: ", e);
+      }
+    };
 
 // Leer 
 export const getDataFixedSpent = async (fn) => {
-    try {
-      const querySnapshot = await getDocs(collection(db, "fixedspent"));
-      const fixedSpentsArray = querySnapshot.docs.map(doc => {
+  try {
+    const user = auth.currentUser;
+    validateUser(user);
+
+    const userUid = user.uid;
+    const userRef = doc(db, "users", userUid);
+    const personCollectionRef = collection(userRef, "fixedspent");
+
+    const querySnapshot = await getDocs(personCollectionRef);
+      const fixedSpentArray = querySnapshot.docs.map(doc => {
         return{
           id: doc.id,
           fixed_spent_name: doc.data().fixed_spent_name
           }
         }
       );
-      fixedSpentsArray.sort((a, b) => a.fixed_spent_name.localeCompare(b.fixed_spent_name));
-      fn(fixedSpentsArray)
+      fixedSpentArray.sort((a, b) => a.fixed_spent_name.localeCompare(b.fixed_spent_name));
+      fn(fixedSpentArray)
     } catch (e) {
       console.error("Error fetching documents: ", e);
     }
   };
 
 //   Eliminar
-  export const deleteFixedSpent = async (name, fnBlock, fnRefresh) => {
+  export const deleteFixedSpent = async (personId, fnBlock, fnRefresh) => {
     try {
-        fnBlock();
-      const docRef = doc(db, "fixedspent", name.id); 
+      const user = auth.currentUser;
+      validateUser(user);
+      fnBlock();
+  
+      const userUid = user.uid;
+      const docRef = doc(db, "users", userUid, "fixedspent", personId);
+  
       await deleteDoc(docRef);
+  
       fnRefresh();
       setTimeout(() => {
-        fnBlock()
+        fnBlock();
       }, 300);
-      // console.log("Document successfully deleted!");
+  
+      console.log("Document successfully deleted!");
     } catch (error) {
       console.error("Error removing document: ", error);
     }
   };
+  

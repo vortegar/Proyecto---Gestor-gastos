@@ -61,7 +61,7 @@ export const FormFixedSpents: React.FC = () => {
       render: (text, name) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
-          fn={() => deleteFixedSpent(name, toggleBlockBtnDelete, toggleRefresh) } 
+          fn={() => deleteFixedSpent(name?.id, toggleBlockBtnDelete, toggleRefresh) } 
         />
       )
     }

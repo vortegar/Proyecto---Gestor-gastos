@@ -6,7 +6,9 @@ export const AuthContext = createContext(defaultContextAuth);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider: FC<MyAuthContextProviderProps> = ({ children }) => {
-  const [username, setUsername] = useState('');
+  const [userUid, setUserUid] = useState();
+  const [username, setUsername] = useState();
+
   const [uploadedData, setUploadedData] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -15,11 +17,27 @@ export const AuthProvider: FC<MyAuthContextProviderProps> = ({ children }) => {
   const uploaded = () => setUploadedData(true);
   const cleanData = () => setUploadedData(false);
 
+  const clearUserUid = () => setUserUid('');
+  const getUserUid = (u:string) => setUserUid(u);
+
   const clearUsername = () => setUsername('');
   const getUsername = (u:string) => setUsername(u);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, username, getUsername, clearUsername, uploaded, uploadedData, cleanData }}>
+    <AuthContext.Provider value={{ 
+      isAuthenticated, 
+      login, 
+      logout, 
+      username, 
+      userUid,
+      getUsername, 
+      clearUsername, 
+      uploaded, 
+      uploadedData, 
+      cleanData, 
+      getUserUid, 
+      clearUserUid }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -14,10 +14,10 @@ export const Configurate: React.FC = () => {
       <Divider/>
       <Row gutter={16} style={{marginTop: '50px'}}>
         <Col span={8}>
-          <FormSpents/>
+         <FormPersons/>     
         </Col>
         <Col span={8}>
-          <FormPersons/>     
+         <FormSpents/>
         </Col>
         <Col span={8}>
           <FormFixedSpents/>     

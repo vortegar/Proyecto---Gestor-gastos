@@ -1,5 +1,5 @@
 import { collection, getDocs, deleteDoc, doc, where, query, updateDoc } from "firebase/firestore";
-import { db } from './cloudDatabase';
+import { db } from "./firebase";
 
 // Actualizar
 export const updateFixedExpenses = async (data, month) => {

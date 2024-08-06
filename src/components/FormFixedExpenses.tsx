@@ -16,7 +16,7 @@ export const FormFixedExpenses = () => {
   
   const { monthContext } = useContext(MonthContext);
   
-  const mesActual = monthContext[monthContext.length - 1].name;
+  const mesActual = monthContext[monthContext.length - 1]?.name;
 
     const onSubmitFixedSpent: SubmitHandler<Inputs> = async(data) => {
         // console.log(data)

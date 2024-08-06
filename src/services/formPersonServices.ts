@@ -1,16 +1,22 @@
-import { db } from '../services/cloudDatabase';
+import { auth, db } from './firebase';
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 
+import { validateUser } from "../helpers/validarUser";
 import { formatToUpperCase } from "../helpers/formatData";
 
 // Crear
 export const addPerson = async (data) => {
+  const user = auth.currentUser;
   const formData = formatToUpperCase(data.name)
-    try {
-      const docRef = await addDoc(collection(db, "person"), {
+  try {
+    validateUser(user);
+    const userRef = doc(db, 'users', user?.uid);
+
+    const personCollectionRef = collection(userRef, 'person');
+    await addDoc(personCollectionRef, {
         name: formData
       });
-      // console.log("Documento Agregado: ", docRef.id);
+      console.log("Documento Agregado: ");
     } catch (e) {
       console.error("Error añadiendo a: ", e);
     }
@@ -18,8 +24,16 @@ export const addPerson = async (data) => {
 
 // Leer 
 export const getDataPerson = async (fn) => {
-    try {
-      const querySnapshot = await getDocs(collection(db, "person"));
+  
+  try {
+    const user = auth.currentUser;
+    validateUser(user);
+
+    const userUid = user.uid;
+    const userRef = doc(db, "users", userUid);
+    const personCollectionRef = collection(userRef, "person");
+
+    const querySnapshot = await getDocs(personCollectionRef);
       const personsArray = querySnapshot.docs.map(doc => {
         return{
           id: doc.id,
@@ -35,17 +49,25 @@ export const getDataPerson = async (fn) => {
   };
 
 //   Eliminar
-  export const deletePerson = async (name, fnBlock, fnRefresh) => {
+  export const deletePerson = async (personId, fnBlock, fnRefresh) => {
     try {
-        fnBlock();
-      const docRef = doc(db, "person", name.id); 
+      const user = auth.currentUser;
+      validateUser(user);
+      fnBlock();
+  
+      const userUid = user.uid;
+      const docRef = doc(db, "users", userUid, "person", personId);
+  
       await deleteDoc(docRef);
+  
       fnRefresh();
       setTimeout(() => {
-        fnBlock()
+        fnBlock();
       }, 300);
-      // console.log("Document successfully deleted!");
+  
+      console.log("Document successfully deleted!");
     } catch (error) {
       console.error("Error removing document: ", error);
     }
   };
+  
