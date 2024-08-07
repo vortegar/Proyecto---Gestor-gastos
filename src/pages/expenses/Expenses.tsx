@@ -11,7 +11,7 @@ import { PersonContext } from '../../context/PersonContextProvider';
 import { InputsExpenses } from '../../interface/ExpensesInterface';
 
 import { getDataMonth } from '../../services/monthServides';
-import { deleteExpense, updateExpenses } from '../../services/expensesServices';
+import { deleteExpense, deleteFixedExpense, updateExpenses } from '../../services/expensesServices';
 
 import { ButtonAdd } from '../../components/ButtonAdd';
 import { useBtnRefresh } from '../../hooks/useBtnRefresh';
@@ -33,7 +33,7 @@ export const Expenses: React.FC = () => {
   }, [refresh])
 
   const onSubmitExpenses: SubmitHandler<InputsExpenses> = data => {
-    updateExpenses(data, mesActual.name)
+    updateExpenses(data, mesActual.month)
     toggleRefresh();
     reset();
   };
@@ -76,7 +76,7 @@ export const Expenses: React.FC = () => {
       render: (text, expense) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
-          fn={() => deleteExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual.name) } 
+          fn={() => deleteExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual.month) } 
         />
       )
     }
@@ -102,17 +102,17 @@ export const Expenses: React.FC = () => {
       render: (text, expense) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
-          fn={() => deleteExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual.name) } 
+          fn={() => deleteFixedExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual.month) } 
         />
       )
     }
   ];
 
-  console.log(mesActual?.fixed_expenses)
+  console.log(mesActual)
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
-        <h2>Gastos del mes {mesActual?.name}</h2>
+        <h2>Gastos del mes: {mesActual?.month}</h2>
       </div>
       <Divider/>
       <Row gutter={16}>
@@ -120,7 +120,7 @@ export const Expenses: React.FC = () => {
           <FormFixedExpenses/>
         </Col>
         <Col span={14}>
-        <Form layout="vertical" onFinish={handleSubmit(onSubmitExpenses)}>
+          <Form layout="vertical" onFinish={handleSubmit(onSubmitExpenses)}>
             <Form.Item>
               <Controller
                 name="spent_type"

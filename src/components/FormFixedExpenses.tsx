@@ -1,11 +1,16 @@
 import { useContext } from "react";
-import { FixedSpentContext } from "../context/FixedSpentContextProvider";
-import { Form, Input } from "antd";
 import { Controller, useForm } from "react-hook-form";
-import { ButtonAdd } from "./ButtonAdd";
-import { useBtnRefresh } from "../hooks/useBtnRefresh";
-import { updateFixedExpenses } from "../services/expensesServices";
+
+import { Form, Input } from "antd";
+
 import { MonthContext } from "../context/MonthContextProvider";
+import { FixedSpentContext } from "../context/FixedSpentContextProvider";
+
+import { ButtonAdd } from "./ButtonAdd";
+
+import { useBtnRefresh } from "../hooks/useBtnRefresh";
+
+import { updateFixedExpenses } from "../services/expensesServices";
 
 type Inputs = {spent_name: string};
 
@@ -16,7 +21,7 @@ export const FormFixedExpenses = () => {
   
   const { monthContext } = useContext(MonthContext);
   
-  const mesActual = monthContext[monthContext.length - 1]?.name;
+  const mesActual = monthContext[monthContext.length - 1]?.month;
 
     const onSubmitFixedSpent: SubmitHandler<Inputs> = async(data) => {
         // console.log(data)
