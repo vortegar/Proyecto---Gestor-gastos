@@ -20,7 +20,6 @@ export const FormSpents: React.FC = () => {
   const { spentContext, setSpentContext } = useContext(SpentContext);
   const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
 
-  console.log(spentContext)
   useEffect(() => {
     getDataSpent(setSpentContext)
   }, [refresh])

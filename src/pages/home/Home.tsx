@@ -20,8 +20,11 @@ export const Home: React.FC = () => {
   const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
   useEffect(() => {
     getDataMonth(setMonthContext)
-    setMesActual(monthContext[monthContext.length - 1])
   }, [refresh])
+  
+  useEffect(() => {
+    setMesActual(monthContext[monthContext.length - 1])
+  }, [monthContext.length])
   
   const acumuladorPerson = mesActual?.expenses.reduce((acc: { [key: string]: string }, item) => {
     const { user, monto } = item;

@@ -12,7 +12,6 @@ import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 export const LoginPage = () => {
   const { login, getUsername, username } = useAuth();
 
-  // console.log(username)
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate()
 
@@ -53,7 +52,6 @@ export const LoginPage = () => {
       const user = result.user;
       // IdP data available using getAdditionalUserInfo(result)
       // ...
-      // console.log('user', user)
       
       getUsername( user.displayName )
       login()

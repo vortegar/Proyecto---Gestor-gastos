@@ -108,7 +108,6 @@ export const Expenses: React.FC = () => {
     }
   ];
 
-  console.log(mesActual)
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>

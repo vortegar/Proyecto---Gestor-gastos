@@ -2,12 +2,15 @@ import { auth, db } from './firebase';
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 
 import { formatArrayMonth } from '../helpers/formatData';
+import { validateUser } from '../helpers/validarUser';
 
 // Crear
 export const addMonth = async (data) => {
-  const userUid = auth.currentUser;
+  const user = auth.currentUser;
     try {
-      const userRef = doc(db, 'users', userUid?.uid);
+      validateUser(user);
+
+      const userRef = doc(db, 'users', user?.uid);
   
       const monthCollectionRef = collection(userRef, 'month');
       await addDoc(monthCollectionRef, {
