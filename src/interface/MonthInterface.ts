@@ -3,7 +3,7 @@ import { Expenses } from './ExpensesInterface';
 
 export interface Month {
     id        ?: number;
-    name       : string,
+    month       : string,
     expenses   : Expenses[],
   }
 

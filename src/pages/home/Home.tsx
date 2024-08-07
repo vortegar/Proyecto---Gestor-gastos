@@ -11,20 +11,22 @@ import { getDataMonth } from '../../services/monthServides';
 import { ModalCreateMes } from '../../components/ModalCreateMes';
 
 import { useBtnRefresh } from '../../hooks/useBtnRefresh';
+import { PersonResumen } from './interfaceHome';
+import { ExpensesResumen } from '../../interface/ExpensesInterface';
 
 export const Home: React.FC = () => {
   const { monthContext, setMonthContext } = useContext(MonthContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [mesActual, setMesActual] = useState(monthContext[monthContext.length - 1])
 
-  const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
+  const { refresh, toggleRefresh} = useBtnRefresh()
   useEffect(() => {
     getDataMonth(setMonthContext)
-  }, [refresh])
+  }, [refresh, setMonthContext])
   
   useEffect(() => {
     setMesActual(monthContext[monthContext.length - 1])
-  }, [monthContext.length])
+  }, [monthContext])
   
   const acumuladorPerson = mesActual?.expenses.reduce((acc: { [key: string]: string }, item) => {
     const { user, monto } = item;
@@ -36,7 +38,7 @@ export const Home: React.FC = () => {
     return acc;
   }, {});
   
-  let personResumen = []
+  let personResumen: PersonResumen[] = []
   if(acumuladorPerson != undefined){
     personResumen = Object.keys(acumuladorPerson).map((user, index) => ({
       id: index,
@@ -55,7 +57,7 @@ export const Home: React.FC = () => {
     return acc;
   }, {});
 
-  let expensesResumen = []
+  let expensesResumen: ExpensesResumen[] = []
   if (gruopExpenses != null) {
     expensesResumen = Object.keys(gruopExpenses).map((spent_type, index) => ({
       id: index,
@@ -70,6 +72,8 @@ export const Home: React.FC = () => {
     ...f
   }
  })
+
+ console.log(mesActual)
 
  const combineExpenses = expensesResumen.concat(fixedExpenses);
 

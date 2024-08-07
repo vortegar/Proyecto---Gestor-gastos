@@ -6,10 +6,12 @@ import { Form, Modal, notification, Select } from 'antd';
 import { MonthContext } from '../context/MonthContextProvider';
 
 import { addMonth } from '../services/monthServides';
+import { ModalCreateMesProps, OnSubmitMesParams } from './intercafeComponents';
 
-export const ModalCreateMes = ({estado, modificador, fn}) => {
+const { Option } = Select;
+export const ModalCreateMes:React.FC<ModalCreateMesProps> = ({estado, modificador, fn}) => {
 
-  const { control, handleSubmit, reset } = useForm();
+  const { control, handleSubmit, reset } = useForm<OnSubmitMesParams>();
   const { monthContext } = useContext(MonthContext);
   
     const handleCancel = () => {
@@ -17,7 +19,7 @@ export const ModalCreateMes = ({estado, modificador, fn}) => {
       reset();
     };
 
-    const onSubmitMes = ({name}) => {
+    const onSubmitMes = ({name}: OnSubmitMesParams) => {
       const monthName = monthContext.find( s => s.month?.toLowerCase() == name.toLowerCase())
       if( monthName != undefined) {
         notification.error({
