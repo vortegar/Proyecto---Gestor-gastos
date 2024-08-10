@@ -27,6 +27,7 @@ export interface ExpensesResumenItem {
     id        : number;
     spent_type: string;
     total     : string;
+    user     ?: string;
   }
   
   

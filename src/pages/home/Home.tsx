@@ -66,14 +66,14 @@ export const Home: React.FC = () => {
     }));
   }
 
- const fixedExpenses = mesActual?.fixed_expenses.map( (f, i) => {
-  return{
-    id: ( i + expensesResumen.length),
-    ...f
-  }
- })
+//  const fixedExpenses = mesActual?.fixed_expenses.map( (f, i) => {
+//   return{
+//     id: ( i + expensesResumen.length),
+//     ...f
+//   }
+//  })
 
- const combineExpenses = expensesResumen.concat(fixedExpenses);
+//  const combineExpenses = expensesResumen.concat(fixedExpenses);
 
  const showModal = () => {
     setIsModalVisible(true);
@@ -100,7 +100,7 @@ export const Home: React.FC = () => {
               <Resumen data={expensesResumen} title='Total Gasto Variable' type='gastos varios'/>
               <Resumen data={personResumen} title='Monto a cuadar' type='persona'/>
             </div>
-            <Grafico resumen={combineExpenses} title='Gasto Mensual'/>
+            <Grafico resumen={expensesResumen} title='Gasto Mensual'/>
           </div>
         </>
         : 

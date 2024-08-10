@@ -4,7 +4,12 @@ interface Person {
     id: string;
     person_name: string;
   }
-
+  
+export  interface PersonState {
+    user?: string;
+    total?: string;
+  }
+  
   interface MyContextProviderProps {
     children: ReactNode;
   }

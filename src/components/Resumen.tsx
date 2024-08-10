@@ -5,10 +5,12 @@ import { FileOutlined } from "@ant-design/icons";
 
 import Title from "antd/es/typography/Title";
 import { ResumenProps } from "./intercafeComponents";
+import { PersonState } from "../context/PersonContextProvider";
+
 
 export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
-  const [person, setPerson] = useState({});
-  const [fixedExpense, setFixedExpense] = useState();
+  const [person, setPerson] = useState<PersonState>({});
+  const [fixedExpense, setFixedExpense] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     if (type === 'persona' && data.length > 0) {
@@ -33,7 +35,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
       }, 0);
       setFixedExpense(totalFixedExpense);
     }
-  }, [])
+  }, [type, data])
   
   return (
     <Space direction="vertical" size={16}>
@@ -52,7 +54,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
           ?
           data?.map( v => {
             return(
-            <div id={v.id} style={{ display: 'flex', width: '100%' }}>
+            <div id={v.id.toString()} style={{ display: 'flex', width: '100%' }}>
               {
                 (type=='persona') && 
                 <>

@@ -28,7 +28,8 @@ export interface TotalPerson {
 }
 
 export type FixedExpenseInputs = {
-  fixed_spent_name: string
+  fixed_spent_name: string;
+  total: string;
   [key: string]: string
 };
 
