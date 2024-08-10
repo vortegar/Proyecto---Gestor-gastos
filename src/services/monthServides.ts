@@ -5,7 +5,7 @@ import { formatArrayMonth } from '../helpers/formatData';
 import { validateUser } from '../helpers/validarUser';
 
 // Crear
-export const addMonth = async (data) => {
+export const addMonth = async (data: string) => {
   const user = auth.currentUser;
     try {
       validateUser(user);

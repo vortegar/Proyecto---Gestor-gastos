@@ -17,10 +17,12 @@ import { ButtonAdd } from '../../components/ButtonAdd';
 import { useBtnRefresh } from '../../hooks/useBtnRefresh';
 import { ButtonDelete } from '../../components/ButtonDelete';
 import { FormFixedExpenses } from '../../components/FormFixedExpenses';
+import { ColumnsType } from 'antd/es/table';
+import { FixedExpense } from '../../interface/ComponentsInterface';
 
 export const Expenses: React.FC = () => {
-  const { control, handleSubmit, formState: { errors }, reset, getValues } = useForm<InputsExpenses>();
-  const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
+  const { control, handleSubmit, formState: { errors }, reset } = useForm<InputsExpenses>();
+  const {isBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
   
   const { spentContext } = useContext(SpentContext);
   const { personContext } = useContext(PersonContext);
@@ -30,7 +32,7 @@ export const Expenses: React.FC = () => {
   
   useEffect(() => {
     getDataMonth(setMonthContext)
-  }, [refresh])
+  }, [refresh, setMonthContext])
 
   const onSubmitExpenses: SubmitHandler<InputsExpenses> = data => {
     updateExpenses(data, mesActual.month)
@@ -73,7 +75,7 @@ export const Expenses: React.FC = () => {
       dataIndex: 'eliminar',
       key: 'eliminar',
       align: 'center',
-      render: (text, expense) => (
+      render: (_, expense) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
           fn={() => deleteExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual.month) } 
@@ -81,7 +83,7 @@ export const Expenses: React.FC = () => {
       )
     }
   ];
-  const fixedExpenseColumns = [
+  const fixedExpenseColumns: ColumnsType<FixedExpense> = [
     {
       title: 'Gasto',
       dataIndex: 'spent_type',
@@ -99,7 +101,7 @@ export const Expenses: React.FC = () => {
       dataIndex: 'eliminar',
       key: 'eliminar',
       align: 'center',
-      render: (text, expense) => (
+      render: (_, expense) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
           fn={() => deleteFixedExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual.month) } 

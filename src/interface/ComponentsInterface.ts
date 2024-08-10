@@ -23,3 +23,9 @@ export interface Spent {
     id: string;
     spent_name: string;
 } 
+
+export interface FixedExpense {
+  spent_type: string;
+  total: string;
+  eliminar?: string; // Esto es opcional si solo estás usando para las acciones de eliminar
+}

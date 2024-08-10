@@ -1,6 +1,5 @@
-export const validateUser = (user) => {
-    if (!user) {
-        throw new Error("Usuario no autenticado!!!");
-        return;
-      }
+export const validateUser = (user: unknown): void => {
+  if (!user) {
+    throw new Error("Usuario no autenticado!!!");
+  }
 }

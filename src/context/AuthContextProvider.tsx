@@ -2,12 +2,25 @@ import { createContext, FC, useContext, useState } from 'react';
 import { defaultContextAuth, MyAuthContextProviderProps } from '../interface/AuthInterface';
 
 export const AuthContext = createContext(defaultContextAuth);
-
-export const useAuth = () => useContext(AuthContext);
+interface AuthContextType {
+  isAuthenticated: boolean;
+  login: () => void;
+  logout: () => void;
+  username?: string;
+  userUid?: string;
+  getUsername: (u: string) => void;
+  clearUsername: () => void;
+  uploaded: () => void;
+  uploadedData: boolean;
+  cleanData: () => void;
+  getUserUid: (u: string) => void;
+  clearUserUid: () => void;
+}
+export const useAuth = () => useContext<AuthContextType>(AuthContext);
 
 export const AuthProvider: FC<MyAuthContextProviderProps> = ({ children }) => {
-  const [userUid, setUserUid] = useState();
-  const [username, setUsername] = useState();
+  const [userUid, setUserUid] = useState<string | undefined>(undefined);
+  const [username, setUsername] = useState<string | undefined>(undefined);
 
   const [uploadedData, setUploadedData] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -17,10 +30,10 @@ export const AuthProvider: FC<MyAuthContextProviderProps> = ({ children }) => {
   const uploaded = () => setUploadedData(true);
   const cleanData = () => setUploadedData(false);
 
-  const clearUserUid = () => setUserUid('');
+  const clearUserUid = () => setUserUid(undefined);
   const getUserUid = (u:string) => setUserUid(u);
 
-  const clearUsername = () => setUsername('');
+  const clearUsername = () => setUsername(undefined);
   const getUsername = (u:string) => setUsername(u);
 
   return (
