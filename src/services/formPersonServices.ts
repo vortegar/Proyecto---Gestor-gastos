@@ -3,14 +3,17 @@ import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore"
 
 import { validateUser } from "../helpers/validarUser";
 import { formatToUpperCase } from "../helpers/formatData";
+import { FnState, PersonInputs } from '../components/intercafeComponents';
+import { Dispatch, SetStateAction } from 'react';
+import { Person } from '../interface/ComponentsInterface';
 
 // Crear
-export const addPerson = async (data) => {
+export const addPerson = async (data: PersonInputs) => {
   const user = auth.currentUser;
-  const formData = formatToUpperCase(data.name)
   try {
     validateUser(user);
-    const userRef = doc(db, 'users', user?.uid);
+    const formData = formatToUpperCase(data!.name)
+    const userRef = doc(db, 'users', user!.uid);
 
     const personCollectionRef = collection(userRef, 'person');
     await addDoc(personCollectionRef, {
@@ -23,13 +26,13 @@ export const addPerson = async (data) => {
   };
 
 // Leer 
-export const getDataPerson = async (fn) => {
+export const getDataPerson = async (fn: Dispatch<SetStateAction<Person[]>>) => {
   
   try {
     const user = auth.currentUser;
     validateUser(user);
 
-    const userUid = user.uid;
+    const userUid = user!.uid;
     const userRef = doc(db, "users", userUid);
     const personCollectionRef = collection(userRef, "person");
 
@@ -49,13 +52,13 @@ export const getDataPerson = async (fn) => {
   };
 
 //   Eliminar
-  export const deletePerson = async (personId, fnBlock, fnRefresh) => {
+  export const deletePerson = async (personId: string, fnBlock: FnState, fnRefresh: FnState) => {
     try {
       const user = auth.currentUser;
       validateUser(user);
       fnBlock();
   
-      const userUid = user.uid;
+      const userUid = user!.uid;
       const docRef = doc(db, "users", userUid, "person", personId);
   
       await deleteDoc(docRef);

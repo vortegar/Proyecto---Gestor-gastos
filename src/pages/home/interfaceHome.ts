@@ -10,3 +10,8 @@ export interface PersonResumen {
     spent_type  : string;
     total       : string;
   }
+  export interface HistoryResumen {
+    // id          : number;
+    spent_type  : string;
+    total       : string;
+  }

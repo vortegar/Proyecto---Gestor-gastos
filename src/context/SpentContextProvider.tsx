@@ -1,6 +1,6 @@
 import { createContext, useState, ReactNode, FC } from 'react';
 
-interface Spent {
+export interface Spent {
     id: string;
     spent_name: string;
   }

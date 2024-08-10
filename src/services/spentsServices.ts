@@ -1,17 +1,20 @@
+import { Dispatch, SetStateAction } from "react";
 
 import { auth, db } from "./firebase";
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 
 import { validateUser } from "../helpers/validarUser";
 import { formatToUpperCase } from "../helpers/formatData";
+import { Spent } from "../context/SpentContextProvider";
+import { FnState, SpentsInputs } from "../components/intercafeComponents";
 
 // Crear
-  export const addSpent = async (data) => {
+  export const addSpent = async (data: SpentsInputs) => {
     const user = auth.currentUser;
-    const formData = formatToUpperCase(data.spent_name)
     try {
       validateUser(user);
-      const userRef = doc(db, 'users', user?.uid);
+      const formData = formatToUpperCase(data.spent_name)
+      const userRef = doc(db, 'users', user!.uid);
   
       const spentCollectionRef = collection(userRef, 'spent');
       await addDoc(spentCollectionRef, {
@@ -24,12 +27,12 @@ import { formatToUpperCase } from "../helpers/formatData";
     };
 
 // Leer 
-  export const getDataSpent = async (fn) => {
+  export const getDataSpent = async (fn: Dispatch<SetStateAction<Spent[]>>) => {
     try {
       const user = auth.currentUser;
       validateUser(user);
   
-      const userUid = user.uid;
+      const userUid = user!.uid;
       const userRef = doc(db, "users", userUid);
       const personCollectionRef = collection(userRef, "spent");
   
@@ -48,13 +51,13 @@ import { formatToUpperCase } from "../helpers/formatData";
       }
     };
 //   Eliminar
-  export const deleteSpent = async (personId, fnBlock, fnRefresh) => {
+  export const deleteSpent = async (personId: string, fnBlock: FnState, fnRefresh: FnState) => {
     try {
       const user = auth.currentUser;
       validateUser(user);
       fnBlock();
   
-      const userUid = user.uid;
+      const userUid = user!.uid;
       const docRef = doc(db, "users", userUid, "spent", personId);
   
       await deleteDoc(docRef);

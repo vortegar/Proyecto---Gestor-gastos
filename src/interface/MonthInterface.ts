@@ -3,7 +3,7 @@ import { Expenses } from './ExpensesInterface';
 import { FixedExpenseInputs } from '../components/intercafeComponents';
 
 export interface Month {
-    id           ?: number;
+    id           ?: string;
     month         : string;
     expenses      : Expenses[];
     fixed_expenses: FixedExpenseInputs[];

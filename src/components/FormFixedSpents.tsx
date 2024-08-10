@@ -12,11 +12,10 @@ import { FixedSpentContext } from '../context/FixedSpentContextProvider';
 import { addFixedSpent, deleteFixedSpent, getDataFixedSpent } from '../services/fixedExpensesServices';
 import { FixedSpent } from '../interface/ComponentsInterface';
 import { ColumnsType } from 'antd/es/table';
-
-type Inputs = {fixed_spent_name: string};
+import { FixedSpentInputs } from './intercafeComponents';
 
 export const FormFixedSpents: React.FC = () => {
-  const { control, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
+  const { control, handleSubmit, formState: { errors }, reset } = useForm<FixedSpentInputs>();
   
   const { fixedSpentContext, setFixedSpentContext } = useContext(FixedSpentContext);
   const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
@@ -25,7 +24,7 @@ export const FormFixedSpents: React.FC = () => {
     getDataFixedSpent(setFixedSpentContext)
   }, [refresh, setFixedSpentContext])
 
-  const onSubmitSpent: SubmitHandler<Inputs> = async(data) => {
+  const onSubmitSpent: SubmitHandler<FixedSpentInputs> = async(data) => {
     if (!data.fixed_spent_name) return;
     const fixedSpentName = fixedSpentContext.find( s => s.fixed_spent_name?.toLowerCase() == data.fixed_spent_name.toLowerCase())
     if( fixedSpentName != undefined) {

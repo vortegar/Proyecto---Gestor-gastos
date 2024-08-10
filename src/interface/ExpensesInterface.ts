@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { HistoryResumen } from '../pages/home/interfaceHome';
 
 export interface Expenses {
     descripcion: string;
@@ -34,7 +35,7 @@ export interface ExpensesResumenItem {
   export type ExpensesResumen = ExpensesResumenItem[];
   
   export interface GraficoProps {
-    resumen: ExpensesResumen;
+    resumen: ExpensesResumen | HistoryResumen[] ;
     title: string;
   }
   

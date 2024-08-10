@@ -12,11 +12,10 @@ import { ButtonAdd } from './ButtonAdd';
 import { ButtonDelete } from './ButtonDelete';
 import { ColumnsType } from 'antd/es/table';
 import { Person } from '../interface/ComponentsInterface';
-
-type Inputs = {name: string};
+import { PersonInputs } from './intercafeComponents';
 
 export const FormPersons: React.FC = () => {
-  const { control, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
+  const { control, handleSubmit, formState: { errors }, reset } = useForm<PersonInputs>();
 
   const { personContext, setPersonContext } = useContext(PersonContext);
   const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
@@ -25,7 +24,7 @@ export const FormPersons: React.FC = () => {
     getDataPerson(setPersonContext)
   }, [refresh, setPersonContext])
 
-  const onSubmitPerson: SubmitHandler<Inputs> = async(data) => {
+  const onSubmitPerson: SubmitHandler<PersonInputs> = async(data) => {
     const personName = personContext.find( s => s.person_name.toLowerCase() == data.name.toLowerCase())
     if( personName != undefined) {
       notification.error({

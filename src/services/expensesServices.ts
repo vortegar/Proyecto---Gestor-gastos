@@ -1,15 +1,17 @@
 import { auth, db } from "./firebase";
-import { collection, getDocs, deleteDoc, doc, where, query, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, where, query, updateDoc } from "firebase/firestore";
 
 import { validateUser } from "../helpers/validarUser";
+import { FixedExpenseInputs, FnState } from "../components/intercafeComponents";
+import { InputsExpenses } from "../interface/ExpensesInterface";
 
 // Actualizar
-export const updateFixedExpenses = async (data, month) => {
+export const updateFixedExpenses = async (data : FixedExpenseInputs, month: string) => {
   try {
     const user = auth.currentUser;
     validateUser(user);
 
-    const userUid = user.uid;
+    const userUid = user!.uid;
     const userRef = doc(db, "users", userUid);
     const monthCollectionRef = collection(userRef, "month");
 
@@ -40,12 +42,12 @@ export const updateFixedExpenses = async (data, month) => {
 };
 
 
-export const updateExpenses = async (data, month) => {
+export const updateExpenses = async (data: InputsExpenses, month: string) => {
   try {
     const user = auth.currentUser;
     validateUser(user);
 
-    const userUid = user.uid;
+    const userUid = user!.uid;
     const userRef = doc(db, "users", userUid);
     const monthCollectionRef = collection(userRef, "month");
 
@@ -83,12 +85,12 @@ export const updateExpenses = async (data, month) => {
 };
 
 //   Eliminar
-  export const deleteExpense = async (dataToDelete, fnBlock, fnRefresh, month) => {
+  export const deleteExpense = async (dataToDelete: string, fnBlock: FnState, fnRefresh: FnState, month: string) => {
     try {
       const user = auth.currentUser;
       validateUser(user);
   
-      const userUid = user.uid;
+      const userUid = user!.uid;
       const userRef = doc(db, "users", userUid);
       const monthCollectionRef = collection(userRef, "month");
   
@@ -125,12 +127,12 @@ export const updateExpenses = async (data, month) => {
     }
   };
 
-  export const deleteFixedExpense = async (dataToDelete, fnBlock, fnRefresh, month) => {
+  export const deleteFixedExpense = async (dataToDelete: string, fnBlock: FnState, fnRefresh: FnState, month: string) => {
     try {
       const user = auth.currentUser;
       validateUser(user);
   
-      const userUid = user.uid;
+      const userUid = user!.uid;
       const userRef = doc(db, "users", userUid);
       const monthCollectionRef = collection(userRef, "month");
   

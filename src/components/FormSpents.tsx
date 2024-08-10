@@ -14,10 +14,10 @@ import { ButtonDelete } from './ButtonDelete';
 import { Spent } from '../interface/ComponentsInterface';
 import { ColumnsType } from 'antd/es/table';
 
-type Inputs = {spent_name: string};
+import { SpentsInputs } from './intercafeComponents';
 
 export const FormSpents: React.FC = () => {
-  const { control, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
+  const { control, handleSubmit, formState: { errors }, reset } = useForm<SpentsInputs>();
   
   const { spentContext, setSpentContext } = useContext(SpentContext);
   const {isBlockBtn, toggleBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
@@ -26,7 +26,7 @@ export const FormSpents: React.FC = () => {
     getDataSpent(setSpentContext)
   }, [refresh, setSpentContext])
 
-  const onSubmitSpent: SubmitHandler<Inputs> = async(data) => {
+  const onSubmitSpent: SubmitHandler<SpentsInputs> = async(data) => {
     if (!data.spent_name) return;
 
     const spentName = spentContext.find( s => s.spent_name?.toLowerCase() == data.spent_name.toLowerCase())

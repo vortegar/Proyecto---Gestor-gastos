@@ -11,16 +11,28 @@ import { formatArrayMonth } from '../../helpers/formatData';
 export const History = () => {
   const { monthContext } = useContext(MonthContext);
 
-  const expensesHistory = monthContext.map( m => {
-    const expensesTotal = m.expenses.reduce((acc, current) => {
-        const sumaActual = parseFloat(acc) + Number(current.monto.replace(/\./g, '').replace(',', '.'));
-        return acc + sumaActual;
-      }, 0);
-    return{
-        spent_type: m.month,
-        total: expensesTotal,
-    }
-  })
+  // const expensesHistory = monthContext.map( m => {
+  //   const expensesTotal = m.expenses.reduce<number>((acc, current) => {
+  //       const sumaActual = parseFloat(acc) + Number(current.monto.replace(/\./g, '').replace(',', '.'));
+  //       return acc + sumaActual;
+  //     }, 0);
+  //   return{
+  //       spent_type: m.month,
+  //       total: String(expensesTotal),
+  //   }
+  // })
+
+  const expensesHistory = monthContext.map(m => {
+    const expensesTotal = m.expenses.reduce<number>((acc, current) => {
+      const monto = parseFloat(current.monto.replace(/\./g, '').replace(',', '.'));
+      return acc + monto;
+    }, 0);
+    
+    return {
+      spent_type: m.month,
+      total: expensesTotal.toString(),
+    };
+  });
   const formatExpenseHistory = formatArrayMonth(expensesHistory, 'spent_type')
   return (
     <>

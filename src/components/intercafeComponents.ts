@@ -1,7 +1,7 @@
 // MODAL CREAR MES
 
 import { ExpensesResumen } from "../interface/ExpensesInterface";
-import { PersonResumen } from "../pages/home/interfaceHome";
+import { HistoryResumen, PersonResumen } from "../pages/home/interfaceHome";
 
 export interface ModalCreateMesProps {
     estado: boolean;     
@@ -18,7 +18,7 @@ export interface OptionItem {
     name: string;
 }
 export interface ResumenProps {
-  data: ExpensesResumen | FixedExpenseInputs[] | PersonResumen[];
+  data: ExpensesResumen | FixedExpenseInputs[] | PersonResumen[] | HistoryResumen[];
   title: string;
   type?: string;
 }
@@ -33,3 +33,10 @@ export type FixedExpenseInputs = {
   [key: string]: string
 };
 
+export type SpentsInputs = {spent_name: string};
+
+export type PersonInputs = {name: string};
+
+export type FnState = () => void;
+
+export type FixedSpentInputs = {fixed_spent_name: string};

@@ -3,14 +3,17 @@ import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore"
 
 import { validateUser } from '../helpers/validarUser';
 import { formatToUpperCase } from '../helpers/formatData';
+import { FixedSpentInputs, FnState } from '../components/intercafeComponents';
+import { Dispatch, SetStateAction } from 'react';
+import { FixedSpent } from '../interface/ComponentsInterface';
 
 // Crear
-  export const addFixedSpent = async (data) => {
+  export const addFixedSpent = async (data: FixedSpentInputs) => {
     const user = auth.currentUser;
     const formData = formatToUpperCase(data.fixed_spent_name)
     try {
       validateUser(user);
-      const userRef = doc(db, 'users', user?.uid);
+      const userRef = doc(db, 'users', user!.uid);
   
       const personCollectionRef = collection(userRef, 'fixedspent');
       await addDoc(personCollectionRef, {
@@ -23,12 +26,12 @@ import { formatToUpperCase } from '../helpers/formatData';
     };
 
 // Leer 
-export const getDataFixedSpent = async (fn) => {
+export const getDataFixedSpent = async (fn: Dispatch<SetStateAction<FixedSpent[]>>) => {
   try {
     const user = auth.currentUser;
     validateUser(user);
 
-    const userUid = user.uid;
+    const userUid = user!.uid;
     const userRef = doc(db, "users", userUid);
     const personCollectionRef = collection(userRef, "fixedspent");
 
@@ -48,13 +51,13 @@ export const getDataFixedSpent = async (fn) => {
   };
 
 //   Eliminar
-  export const deleteFixedSpent = async (personId, fnBlock, fnRefresh) => {
+  export const deleteFixedSpent = async (personId: string, fnBlock: FnState, fnRefresh: FnState) => {
     try {
       const user = auth.currentUser;
       validateUser(user);
       fnBlock();
   
-      const userUid = user.uid;
+      const userUid = user!.uid;
       const docRef = doc(db, "users", userUid, "fixedspent", personId);
   
       await deleteDoc(docRef);

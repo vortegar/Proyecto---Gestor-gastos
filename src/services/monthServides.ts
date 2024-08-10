@@ -1,8 +1,12 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { auth, db } from './firebase';
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 
 import { formatArrayMonth } from '../helpers/formatData';
 import { validateUser } from '../helpers/validarUser';
+
+import { Month } from '../interface/MonthInterface';
 
 // Crear
 export const addMonth = async (data: string) => {
@@ -10,7 +14,7 @@ export const addMonth = async (data: string) => {
     try {
       validateUser(user);
 
-      const userRef = doc(db, 'users', user?.uid);
+      const userRef = doc(db, "users", user!.uid); 
   
       const monthCollectionRef = collection(userRef, 'month');
       await addDoc(monthCollectionRef, {
@@ -24,11 +28,12 @@ export const addMonth = async (data: string) => {
     }
   };
 
-  export const getDataMonth = async (fn) => {
+  export const getDataMonth = async (fn: Dispatch<SetStateAction<Month[]>>) => {
     try {
       const user = auth.currentUser;
+      validateUser(user);
       
-      const userUid = user.uid;
+      const userUid = user!.uid;
       const userRef = doc(db, "users", userUid);
       const monthCollectionRef = collection(userRef, "month");
   
