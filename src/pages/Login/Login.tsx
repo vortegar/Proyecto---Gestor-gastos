@@ -10,7 +10,7 @@ import { auth, db } from "../../services/firebase.js";
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 
 export const LoginPage = () => {
-  const { login, getUsername, username } = useAuth();
+  const { login, getUsername } = useAuth();
 
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate()
@@ -33,39 +33,13 @@ export const LoginPage = () => {
         });
       }
   
-      // Navegar a la pantalla de carga
-      getUsername( user.displayName )
+      const displayName = user.displayName || "Nombre desconocido";
+      getUsername( displayName )
       login()
       navigate('/load');
     } catch (error) {
       console.error("Error during login", error);
     }
-  };
-  const handleLogin_dos = () => {
-  
-    signInWithPopup(auth, provider)
-    .then((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
-      
-      getUsername( user.displayName )
-      login()
-      navigate('/load')
-    }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-    });
   };
 
   const { Title } = Typography;

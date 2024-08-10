@@ -26,13 +26,15 @@ export interface Expenses {
 export interface ExpensesResumenItem {
     id        : number;
     spent_type: string;
-    total     : number;
+    total     : string;
   }
+  
   
   export type ExpensesResumen = ExpensesResumenItem[];
   
   export interface GraficoProps {
     resumen: ExpensesResumen;
+    title: string;
   }
   
 // Interfaces de componentes

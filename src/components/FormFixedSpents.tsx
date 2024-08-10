@@ -10,6 +10,8 @@ import { ButtonDelete } from './ButtonDelete';
 
 import { FixedSpentContext } from '../context/FixedSpentContextProvider';
 import { addFixedSpent, deleteFixedSpent, getDataFixedSpent } from '../services/fixedExpensesServices';
+import { FixedSpent } from '../interface/ComponentsInterface';
+import { ColumnsType } from 'antd/es/table';
 
 type Inputs = {fixed_spent_name: string};
 
@@ -21,7 +23,7 @@ export const FormFixedSpents: React.FC = () => {
 
   useEffect(() => {
     getDataFixedSpent(setFixedSpentContext)
-  }, [refresh])
+  }, [refresh, setFixedSpentContext])
 
   const onSubmitSpent: SubmitHandler<Inputs> = async(data) => {
     if (!data.fixed_spent_name) return;
@@ -44,8 +46,7 @@ export const FormFixedSpents: React.FC = () => {
     }
   };
 
-  
-  const fixedSpentsColumns = [
+  const fixedSpentsColumns: ColumnsType<FixedSpent> = [
     {
       title: 'Gastos Fijos',
       dataIndex: 'fixed_spent_name',
@@ -58,7 +59,7 @@ export const FormFixedSpents: React.FC = () => {
       key: 'eliminar',
       width: 50,
       align: 'center',
-      render: (text, name) => (
+      render: (_: string, name: FixedSpent) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
           fn={() => deleteFixedSpent(name?.id, toggleBlockBtnDelete, toggleRefresh) } 

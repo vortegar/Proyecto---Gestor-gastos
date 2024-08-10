@@ -11,6 +11,8 @@ import { addSpent, deleteSpent, getDataSpent } from '../services/spentsServices'
 
 import { ButtonAdd } from './ButtonAdd';
 import { ButtonDelete } from './ButtonDelete';
+import { Spent } from '../interface/ComponentsInterface';
+import { ColumnsType } from 'antd/es/table';
 
 type Inputs = {spent_name: string};
 
@@ -22,7 +24,7 @@ export const FormSpents: React.FC = () => {
 
   useEffect(() => {
     getDataSpent(setSpentContext)
-  }, [refresh])
+  }, [refresh, setSpentContext])
 
   const onSubmitSpent: SubmitHandler<Inputs> = async(data) => {
     if (!data.spent_name) return;
@@ -46,7 +48,7 @@ export const FormSpents: React.FC = () => {
     }
   };
 
-  const spentsColumns = [
+  const spentsColumns: ColumnsType<Spent> = [
     {
       title: 'Gastos definidos',
       dataIndex: 'spent_name',
@@ -59,7 +61,7 @@ export const FormSpents: React.FC = () => {
       key: 'eliminar',
       width: 50,
       align: 'center',
-      render: (text, name) => (
+      render: (_, name) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
           fn={() => deleteSpent(name.id, toggleBlockBtnDelete, toggleRefresh) } 

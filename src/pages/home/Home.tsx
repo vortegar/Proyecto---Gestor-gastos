@@ -57,7 +57,7 @@ export const Home: React.FC = () => {
     return acc;
   }, {});
 
-  let expensesResumen: ExpensesResumen[] = []
+  let expensesResumen: ExpensesResumen = []
   if (gruopExpenses != null) {
     expensesResumen = Object.keys(gruopExpenses).map((spent_type, index) => ({
       id: index,
@@ -72,8 +72,6 @@ export const Home: React.FC = () => {
     ...f
   }
  })
-
- console.log(mesActual)
 
  const combineExpenses = expensesResumen.concat(fixedExpenses);
 

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, SubmitHandler } from "react-hook-form";
 
 import { Form, Input } from "antd";
 
@@ -11,11 +11,10 @@ import { ButtonAdd } from "./ButtonAdd";
 import { useBtnRefresh } from "../hooks/useBtnRefresh";
 
 import { updateFixedExpenses } from "../services/expensesServices";
+import { FixedExpenseInputs } from "./intercafeComponents";
 
-type Inputs = {spent_name: string};
-
-export const FormFixedExpenses = () => {
-  const { control, handleSubmit } = useForm();
+export const FormFixedExpenses:  React.FC = () => {
+  const { control, handleSubmit } = useForm<FixedExpenseInputs>();
   const { fixedSpentContext } = useContext(FixedSpentContext);
   const {isBlockBtn, toggleBlockBtn, toggleRefresh} = useBtnRefresh()
   
@@ -23,7 +22,7 @@ export const FormFixedExpenses = () => {
   
   const mesActual = monthContext[monthContext.length - 1]?.month;
 
-    const onSubmitFixedSpent: SubmitHandler<Inputs> = async(data) => {
+    const onSubmitFixedSpent: SubmitHandler<FixedExpenseInputs> = async(data) => {
         // console.log(data)
         // if (!data.spent_name) return;
     
@@ -38,36 +37,33 @@ export const FormFixedExpenses = () => {
         }
       };
   return (
-        <Form layout="vertical" onFinish={handleSubmit(onSubmitFixedSpent)}>
-            {
-                fixedSpentContext.map((f) => (                    
-                    <Form.Item
-                    // validateStatus={errors.spent_name ? 'error' : ''}
-                    // help={errors.spent_name ? errors.spent_name.message : ''}
-                    >
-            {/* <Input>hola</Input> */}
-            <Input disabled={true} defaultValue={f.fixed_spent_name} />
-
-          <Controller
-            name={f.fixed_spent_name}
-            control={control}
-            rules={{ required: "Este campo es obligatorio" }}
-            render={({ field }) => (
-                <>
-                <Input 
-                  {...field} 
-                  placeholder={`Introduce el Gasto de: ${f.fixed_spent_name}`}
+    <Form layout="vertical" onFinish={handleSubmit(onSubmitFixedSpent)}>
+      {
+        fixedSpentContext.map((f) => (                    
+            <Form.Item
+            // validateStatus={errors.spent_name ? 'error' : ''}
+            // help={errors.spent_name ? errors.spent_name.message : ''}
+            >
+              <Input disabled={true} defaultValue={f.fixed_spent_name} />
+                <Controller
+                  name={f.fixed_spent_name}
+                  control={control}
+                  rules={{ required: "Este campo es obligatorio" }}
+                  render={({ field }) => (
+                    <>
+                      <Input 
+                        {...field} 
+                        placeholder={`Introduce el Gasto de: ${f.fixed_spent_name}`}
+                      />
+                    </>
+                  )}
                 />
-              </>
-            )}
-          />
-        </Form.Item>
-        ))
-        }
-        <Form.Item>
-          <ButtonAdd disabled={isBlockBtn} title='Agregar Gasto Fijo'/>
-        </Form.Item>
-      </Form>
-    
+              </Form.Item>
+           ))
+          }
+          <Form.Item>
+            <ButtonAdd disabled={isBlockBtn} title='Agregar Gasto Fijo'/>
+            </Form.Item>
+          </Form>    
   )
 }

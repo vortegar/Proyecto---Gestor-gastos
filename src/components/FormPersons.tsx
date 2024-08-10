@@ -10,6 +10,8 @@ import { useBtnRefresh } from '../hooks/useBtnRefresh';
 
 import { ButtonAdd } from './ButtonAdd';
 import { ButtonDelete } from './ButtonDelete';
+import { ColumnsType } from 'antd/es/table';
+import { Person } from '../interface/ComponentsInterface';
 
 type Inputs = {name: string};
 
@@ -21,7 +23,7 @@ export const FormPersons: React.FC = () => {
 
   useEffect(() => {
     getDataPerson(setPersonContext)
-  }, [refresh])
+  }, [refresh, setPersonContext])
 
   const onSubmitPerson: SubmitHandler<Inputs> = async(data) => {
     const personName = personContext.find( s => s.person_name.toLowerCase() == data.name.toLowerCase())
@@ -43,7 +45,7 @@ export const FormPersons: React.FC = () => {
     }
   };
 
-  const namesColums = [
+  const namesColums: ColumnsType<Person> = [
     {
       title: 'Usuarios',
       dataIndex: 'person_name',
@@ -56,7 +58,7 @@ export const FormPersons: React.FC = () => {
       key: 'eliminar',
       width: 50,
       align: 'center',
-      render: (text, name) => (
+      render: (_:string, name) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
           fn={() => deletePerson(name?.id, toggleBlockBtnDelete, toggleRefresh) } 

@@ -1,10 +1,12 @@
 import { ReactNode } from 'react';
 import { Expenses } from './ExpensesInterface';
+import { FixedExpenseInputs } from '../components/intercafeComponents';
 
 export interface Month {
-    id        ?: number;
-    month       : string,
-    expenses   : Expenses[],
+    id           ?: number;
+    month         : string;
+    expenses      : Expenses[];
+    fixed_expenses: FixedExpenseInputs[];
   }
 
   export interface MyContextProviderProps {

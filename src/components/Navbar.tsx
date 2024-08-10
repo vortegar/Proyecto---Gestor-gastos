@@ -39,7 +39,7 @@ export const Navbar: React.FC = () => {
             <Link to="/configurate">Configuración</Link>
         </Menu.Item>
         <Menu.Item key="5" icon={<ApiOutlined />}>
-            <Link onClick={ handleLogout }>Salir</Link>
+            <a onClick={handleLogout} style={{ color: 'white', textDecoration: 'none' }}>Salir</a>
         </Menu.Item>
       </Menu>
     </Sider>

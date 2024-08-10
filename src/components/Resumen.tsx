@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { Card, Space } from "antd"
+import { Card, Space } from "antd";
 import { FileOutlined } from "@ant-design/icons";
 
 import Title from "antd/es/typography/Title";
-interface ResumenProps {
-  data: any;
-  title: string;
-  type?: string,
-}
+import { ResumenProps } from "./intercafeComponents";
 
 export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
   const [person, setPerson] = useState({});
@@ -16,7 +12,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
 
   useEffect(() => {
     if (type === 'persona' && data.length > 0) {
-      const cleanNumber = (value) => Number(value.replace(/\./g, '').replace(',', '.'));
+      const cleanNumber = (value: string) => Number(value.replace(/\./g, '').replace(',', '.'));
   
       const maxPerson = data.reduce((prev, curr) => (cleanNumber(prev.total) > cleanNumber(curr.total) ? prev : curr));
       const minPerson = data.reduce((prev, curr) => (cleanNumber(prev.total) < cleanNumber(curr.total) ? prev : curr));
