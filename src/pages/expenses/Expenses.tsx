@@ -8,7 +8,7 @@ import { SpentContext } from '../../context/SpentContextProvider';
 import { MonthContext } from '../../context/MonthContextProvider';
 import { PersonContext } from '../../context/PersonContextProvider';
 
-import { InputsExpenses } from '../../interface/ExpensesInterface';
+import { Expenses, InputsExpenses } from '../../interface/ExpensesInterface';
 
 import { getDataMonth } from '../../services/monthServides';
 import { deleteExpense, deleteFixedExpense, updateExpenses } from '../../services/expensesServices';
@@ -18,9 +18,9 @@ import { useBtnRefresh } from '../../hooks/useBtnRefresh';
 import { ButtonDelete } from '../../components/ButtonDelete';
 import { FormFixedExpenses } from '../../components/FormFixedExpenses';
 import { ColumnsType } from 'antd/es/table';
-import { FixedExpense } from '../../interface/ComponentsInterface';
+import { FixedExpenseInputs } from '../../components/intercafeComponents';
 
-export const Expenses: React.FC = () => {
+export const ExpensesPage: React.FC = () => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<InputsExpenses>();
   const {isBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
   
@@ -40,7 +40,7 @@ export const Expenses: React.FC = () => {
     reset();
   };
 
-  const columns = [
+  const columns: ColumnsType<Expenses> = [
     {
       title: 'Gasto',
       dataIndex: 'spent_type',
@@ -83,7 +83,7 @@ export const Expenses: React.FC = () => {
       )
     }
   ];
-  const fixedExpenseColumns: ColumnsType<FixedExpense> = [
+  const fixedExpenseColumns: ColumnsType<FixedExpenseInputs> = [
     {
       title: 'Gasto',
       dataIndex: 'spent_type',
@@ -130,7 +130,7 @@ export const Expenses: React.FC = () => {
                   <Select {...field} placeholder= "Tipo de gasto">
                     {
                       spentContext.map( (i) => (
-                        <Option key={i.key} value={i.spent_name}>{i.spent_name}</Option>
+                        <Option key={i.id} value={i.spent_name}>{i.spent_name}</Option>
                       )
                       )
                     }
@@ -152,7 +152,7 @@ export const Expenses: React.FC = () => {
                   <Select {...field} placeholder= "A quien se le asignara">
                     {
                       personContext.map( (i) => (
-                        <Option key={i.key} value={i.person_name}>{i.person_name}</Option>
+                        <Option key={i.id} value={i.person_name}>{i.person_name}</Option>
                       )
                       )
                     }
@@ -171,7 +171,8 @@ export const Expenses: React.FC = () => {
                   required: "Este campo es obligatorio",
                   validate: {
                     positiveNumber: value => {
-                      const numericValue = Number(value.replace(/\./g, '').replace(',', '.')); 
+                      const stringValue = value.toString();
+                      const numericValue = Number(stringValue.replace(/\./g, '').replace(',', '.'));
                       return !isNaN(numericValue) && numericValue >= 0 || "El monto no puede ser negativo";
                     }
                   }

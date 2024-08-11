@@ -3,13 +3,13 @@ import { HistoryResumen } from '../pages/home/interfaceHome';
 
 export interface Expenses {
     descripcion: string;
-    fecha      : string,
+    fecha     ?: string,
     id        ?: number;
     monto      : string,
     spent_type : string,
     user       : string,
   }
-
+  
   export interface MyContextProviderProps {
     children: ReactNode;
   }
@@ -43,7 +43,7 @@ export interface ExpensesResumenItem {
 
 export type InputsExpenses = {
     descripcion: string;
-    monto      : number;
+    monto      : number | string;
     user       : string,
     fecha      : string,
     spent_type : string,

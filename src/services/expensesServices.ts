@@ -3,7 +3,8 @@ import { collection, getDocs, doc, where, query, updateDoc } from "firebase/fire
 
 import { validateUser } from "../helpers/validarUser";
 import { FixedExpenseInputs, FnState } from "../components/intercafeComponents";
-import { InputsExpenses } from "../interface/ExpensesInterface";
+import { Expenses, InputsExpenses } from "../interface/ExpensesInterface";
+import { FixedExpense } from "../interface/ComponentsInterface";
 
 // Actualizar
 export const updateFixedExpenses = async (data : FixedExpenseInputs, month: string) => {
@@ -85,7 +86,7 @@ export const updateExpenses = async (data: InputsExpenses, month: string) => {
 };
 
 //   Eliminar
-  export const deleteExpense = async (dataToDelete: string, fnBlock: FnState, fnRefresh: FnState, month: string) => {
+  export const deleteExpense = async (dataToDelete: Expenses, fnBlock: FnState, fnRefresh: FnState, month: string) => {
     try {
       const user = auth.currentUser;
       validateUser(user);
@@ -108,7 +109,7 @@ export const updateExpenses = async (data: InputsExpenses, month: string) => {
       const monthData = monthDoc.data();
   
       // Arreglar
-      const updatedExpenses = monthData.expenses.filter(expense => expense.monto !== dataToDelete.monto);
+      const updatedExpenses = monthData.expenses.filter((expense: InputsExpenses) => expense.monto !== dataToDelete.monto);
   
       const monthRef = doc(monthCollectionRef, monthDoc.id);
       await updateDoc(monthRef, {
@@ -127,7 +128,7 @@ export const updateExpenses = async (data: InputsExpenses, month: string) => {
     }
   };
 
-  export const deleteFixedExpense = async (dataToDelete: string, fnBlock: FnState, fnRefresh: FnState, month: string) => {
+  export const deleteFixedExpense = async (dataToDelete: FixedExpense, fnBlock: FnState, fnRefresh: FnState, month: string) => {
     try {
       const user = auth.currentUser;
       validateUser(user);
@@ -150,7 +151,7 @@ export const updateExpenses = async (data: InputsExpenses, month: string) => {
       const monthData = monthDoc.data();
   
       // Arreglar
-      const updatedExpenses = monthData.expenses.filter(expense => expense.monto !== dataToDelete.monto);
+      const updatedExpenses = monthData.expenses.filter((expense: FixedExpense) => expense.monto !== dataToDelete.monto);
   
       const monthRef = doc(monthCollectionRef, monthDoc.id);
       await updateDoc(monthRef, {
