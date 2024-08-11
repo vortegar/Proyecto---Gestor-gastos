@@ -17,7 +17,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
   
       const maxPerson = data.reduce((prev, curr) => (cleanNumber(prev.total) > cleanNumber(curr.total) ? prev : curr));
       const minPerson = data.reduce((prev, curr) => (cleanNumber(prev.total) < cleanNumber(curr.total) ? prev : curr));
-  
+
       const saldo = cleanNumber(maxPerson.total) - cleanNumber(minPerson.total);
   
       const saldoFormateado = saldo.toLocaleString('es-ES');
