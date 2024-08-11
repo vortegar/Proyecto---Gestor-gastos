@@ -7,7 +7,6 @@ import Title from "antd/es/typography/Title";
 import { ResumenProps } from "./intercafeComponents";
 import { PersonState } from "../context/PersonContextProvider";
 
-
 export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
   const [person, setPerson] = useState<PersonState>({});
   const [fixedExpense, setFixedExpense] = useState<number | undefined>(undefined);
@@ -54,7 +53,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
           ?
           data?.map( v => {
             return(
-            <div id={v.id.toString()} style={{ display: 'flex', width: '100%' }}>
+            <div id={v.id!.toString()} style={{ display: 'flex', width: '100%' }}>
               {
                 (type=='persona') && 
                 <>

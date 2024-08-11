@@ -11,7 +11,8 @@ export interface PersonResumen {
     total       : string;
   }
   export interface HistoryResumen {
-    // id          : number;
+    id          ?: number;
     spent_type  : string;
     total       : string;
+    user       ?: string;
   }
