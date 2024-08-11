@@ -10,7 +10,7 @@ import { LoadingScreen } from './components/Loading';
 import { Home } from './pages/home/Home';
 import { LoginPage } from './pages/Login/Login';
 import { History } from './pages/history/History';
-import { Expenses } from './pages/expenses/Expenses';
+import { ExpensesPage } from './pages/expenses/Expenses';
 import { Configurate } from './pages/configurate/Configurate';
 
 const { Content } = Layout;
@@ -32,7 +32,7 @@ export const App: React.FC = () => {
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/load" element={<LoadingScreen />} />
                 <Route path="/home" element={<ProtectedRoute element={Home} />} />
-                <Route path="/expenses" element={<ProtectedRoute element={Expenses} />} />
+                <Route path="/expenses" element={<ProtectedRoute element={ExpensesPage} />} />
                 <Route path="/configurate" element={<ProtectedRoute element={Configurate} />} />
                 <Route path="/history" element={<ProtectedRoute element={History} />} />
               </Routes>
