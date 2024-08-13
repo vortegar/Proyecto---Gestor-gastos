@@ -1,13 +1,10 @@
 import { GraficoProps } from '../interface/ExpensesInterface';
-import { Chart } from 'react-chartjs-2';
-
+import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
-  LineElement,
-  PointElement,
   Title,
   Tooltip,
   Legend,
@@ -19,20 +16,17 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
-  LineElement,
-  PointElement,
   Title,
   Tooltip,
   Legend
 );
 
-export const Grafico: React.FC<GraficoProps> = ({resumen, title}) => {
-  const dataLabelName = resumen.map( v => v.spent_type)
-  const dataLabeValue = resumen.map(v => Number(v.total)); // Asegúrate de que 'total' sea convertido a número
+export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
+  const dataLabelName = resumen.map((v) => v.spent_type);
+  const dataLabeValue = resumen.map((v) => Number(v.total)); // Asegúrate de que 'total' sea convertido a número
 
   const data: ChartData<'bar'> = {
     labels: dataLabelName,
-
     datasets: [
       {
         type: 'bar',
@@ -57,9 +51,10 @@ export const Grafico: React.FC<GraficoProps> = ({resumen, title}) => {
       },
     },
   };
+
   return (
     <div style={{ width: '550px', height: '500px', marginTop: '40px', marginInlineStart: '40px' }}>
-      <Chart type='bar' data={data} options={options} />
+      <Bar data={data} options={options} />
     </div>
   );
 };
