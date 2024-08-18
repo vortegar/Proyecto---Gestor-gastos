@@ -1,6 +1,7 @@
 // MODAL CREAR MES
 
 import { ExpensesResumen } from "../interface/ExpensesInterface";
+import { Month } from "../interface/MonthInterface";
 import { HistoryResumen, PersonResumen } from "../pages/home/interfaceHome";
 
 export interface ModalCreateMesProps {
@@ -11,6 +12,9 @@ export interface ModalCreateMesProps {
   
 export   interface OnSubmitMesParams {
     name: string; 
+  }
+export   interface OnSubmitYearParams {
+    year: string; 
   }
 
 export interface OptionItem {
@@ -41,3 +45,8 @@ export type PersonInputs = {name: string};
 export type FnState = () => void;
 
 export type FixedSpentInputs = {fixed_spent_name: string};
+
+// FormMonth
+export interface FormMonthProps {
+  fn: React.Dispatch<React.SetStateAction<Month>>;
+}

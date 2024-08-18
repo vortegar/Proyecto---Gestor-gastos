@@ -5,7 +5,6 @@ import ProtectedRoute from './context/ProtectedRouth';
 import { useAuth } from './context/AuthContextProvider';
 
 import { Navbar } from './components/Navbar';
-import { LoadingScreen } from './components/Loading';
 
 import { Home } from './pages/home/Home';
 import { LoginPage } from './pages/Login/Login';
@@ -16,6 +15,7 @@ import { Configurate } from './pages/configurate/Configurate';
 const { Content } = Layout;
 
 import './variables.css'
+import { LoadingScreen } from './pages/loading/Loading';
 
 export const App: React.FC = () => {
   const { isAuthenticated, uploadedData } = useAuth();

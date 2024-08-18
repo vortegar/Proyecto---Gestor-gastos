@@ -22,8 +22,8 @@ ChartJS.register(
 );
 
 export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
-  const dataLabelName = resumen.map((v) => v.spent_type);
-  const dataLabeValue = resumen.map((v) => Number(v.total)); // Asegúrate de que 'total' sea convertido a número
+  const dataLabelName = resumen.map((v) => v?.spent_type);
+  const dataLabeValue = resumen.map((v) => Number(v?.total));  
 
   const data: ChartData<'bar'> = {
     labels: dataLabelName,

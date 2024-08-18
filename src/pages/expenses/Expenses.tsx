@@ -1,7 +1,8 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { Option } from 'antd/es/mentions';
+import { ColumnsType } from 'antd/es/table';
 import { Table, Input, Form, Select, Row, Col, Divider } from 'antd';
 
 import { SpentContext } from '../../context/SpentContextProvider';
@@ -14,28 +15,32 @@ import { getDataMonth } from '../../services/monthServides';
 import { deleteExpense, deleteFixedExpense, updateExpenses } from '../../services/expensesServices';
 
 import { ButtonAdd } from '../../components/ButtonAdd';
-import { useBtnRefresh } from '../../hooks/useBtnRefresh';
 import { ButtonDelete } from '../../components/ButtonDelete';
 import { FormFixedExpenses } from '../../components/FormFixedExpenses';
-import { ColumnsType } from 'antd/es/table';
 import { FixedExpenseInputs } from '../../components/intercafeComponents';
+
+import { useBtnRefresh } from '../../hooks/useBtnRefresh';
+import { YearContext } from '../../context/YearContextProvider';
 
 export const ExpensesPage: React.FC = () => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<InputsExpenses>();
   const {isBlockBtn, isBlockBtnDelete, toggleBlockBtnDelete, refresh, toggleRefresh} = useBtnRefresh()
   
+  
+  const { yearContext } = useContext(YearContext);
   const { spentContext } = useContext(SpentContext);
   const { personContext } = useContext(PersonContext);
   const { monthContext, setMonthContext } = useContext(MonthContext);
-
+  
+  const [anioActual] = useState(yearContext[yearContext.length - 1])
   const mesActual = monthContext[monthContext.length - 1];
   
   useEffect(() => {
-    getDataMonth(setMonthContext)
-  }, [refresh, setMonthContext])
+    getDataMonth(setMonthContext, anioActual.id!)
+  }, [refresh, setMonthContext, anioActual])
 
   const onSubmitExpenses: SubmitHandler<InputsExpenses> = data => {
-    updateExpenses(data, mesActual.month)
+    updateExpenses(data, anioActual.id!, mesActual.id!)
     toggleRefresh();
     reset();
   };
@@ -78,7 +83,7 @@ export const ExpensesPage: React.FC = () => {
       render: (_, expense) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
-          fn={() => deleteExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual.month) } 
+          fn={() => deleteExpense(expense, toggleBlockBtnDelete, toggleRefresh, anioActual.id!, mesActual.id!) } 
         />
       )
     }
@@ -104,7 +109,7 @@ export const ExpensesPage: React.FC = () => {
       render: (_, expense) => (
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
-          fn={() => deleteFixedExpense(expense, toggleBlockBtnDelete, toggleRefresh, mesActual.month) } 
+          fn={() => deleteFixedExpense(expense, toggleBlockBtnDelete, toggleRefresh, anioActual.id!, mesActual.id!) } 
         />
       )
     }
@@ -113,9 +118,12 @@ export const ExpensesPage: React.FC = () => {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
-        <h2>Gastos del mes: {mesActual?.month}</h2>
+        <div>
+          <h2 style={{ margin: '0'}}>Gastos mes actual: {mesActual?.month}</h2>
+          <h2 style={{ marginTop: '0'}}>Año: {anioActual?.year} </h2>
+        </div>
       </div>
-      <Divider/>
+      <Divider style={{marginTop: '0'}}/>
       <Row gutter={16}>
         <Col span={10}>
           <FormFixedExpenses/>
@@ -149,7 +157,7 @@ export const ExpensesPage: React.FC = () => {
                   required: "Este campo es obligatorio",
                 }}
                 render={({ field }) => (
-                  <Select {...field} placeholder= "A quien se le asignara">
+                  <Select {...field} placeholder= "Person que realizo el pago">
                     {
                       personContext.map( (i) => (
                         <Option key={i.id} value={i.person_name}>{i.person_name}</Option>

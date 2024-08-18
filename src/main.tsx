@@ -9,21 +9,24 @@ import { ExpensesContextProvider } from './context/ExpensesContextProvider'
 import { MonthContextProvider } from './context/MonthContextProvider'
 import { AuthProvider } from './context/AuthContextProvider'
 import { FixedSpentContextProvider } from './context/FixedSpentContextProvider'
+import { YearContextProvider } from './context/YearContextProvider';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider>
-      <MonthContextProvider>
-        <PersonContextProvider>  
-          <FixedSpentContextProvider>
-            <SpentContextProvider>
-              <ExpensesContextProvider>
-                <App />
-              </ExpensesContextProvider>
-            </SpentContextProvider> 
-          </FixedSpentContextProvider>
-        </PersonContextProvider>
-      </MonthContextProvider>
+      <YearContextProvider>
+        <MonthContextProvider>
+          <PersonContextProvider>  
+            <FixedSpentContextProvider>
+              <SpentContextProvider>
+                <ExpensesContextProvider>
+                  <App />
+                </ExpensesContextProvider>
+              </SpentContextProvider> 
+            </FixedSpentContextProvider>
+          </PersonContextProvider>
+        </MonthContextProvider>
+      </YearContextProvider>
     </AuthProvider>
   </React.StrictMode>,
 )

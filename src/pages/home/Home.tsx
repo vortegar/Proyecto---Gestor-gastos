@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 
+import { YearContext } from '../../context/YearContextProvider';
 import { MonthContext } from '../../context/MonthContextProvider';
 
 import { Button, Divider } from 'antd';
@@ -10,19 +11,37 @@ import { Grafico } from '../../components/Grafico';
 import { getDataMonth } from '../../services/monthServides';
 import { ModalCreateMes } from '../../components/ModalCreateMes';
 
-import { useBtnRefresh } from '../../hooks/useBtnRefresh';
 import { PersonResumen } from './interfaceHome';
 import { ExpensesResumen } from '../../interface/ExpensesInterface';
 
+import { FormMonth } from '../../components/FormMonth';
+import { ModalCreateYear } from '../../components/ModalCreateYear';
+
+import { getDataYear } from '../../services/yearServides';
+import { useBtnRefresh } from '../../hooks/useBtnRefresh';
+
 export const Home: React.FC = () => {
+  const { yearContext, setYearContext } = useContext(YearContext);
   const { monthContext, setMonthContext } = useContext(MonthContext);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [isYearModalVisible, setIsYearModalVisible] = useState(false);
+  const [isMonthModalVisible, setIsMonthModalVisible] = useState(false);
+
+  const [anioActual, setAnioActual] = useState(yearContext[yearContext.length - 1])
   const [mesActual, setMesActual] = useState(monthContext[monthContext.length - 1])
 
   const { refresh, toggleRefresh} = useBtnRefresh()
   useEffect(() => {
-    getDataMonth(setMonthContext)
-  }, [refresh, setMonthContext])
+    getDataYear(setYearContext)
+  }, [refresh, setYearContext])
+  
+  useEffect(() => {
+    getDataMonth(setMonthContext, anioActual.id!)
+  }, [refresh, setMonthContext, anioActual])
+  
+  useEffect(() => {
+    setAnioActual(yearContext[yearContext.length - 1])
+  }, [yearContext])
   
   useEffect(() => {
     setMesActual(monthContext[monthContext.length - 1])
@@ -75,21 +94,29 @@ export const Home: React.FC = () => {
 
 //  const combineExpenses = expensesResumen.concat(fixedExpenses);
 
- const showModal = () => {
-    setIsModalVisible(true);
-  };
+  const showYearhModal = () => { setIsYearModalVisible(true);};
+  const showMonthModal = () => { setIsMonthModalVisible(true);};
 
   return (
     <>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
-      <h2>Resumen del gastos mes actual: {mesActual?.month}</h2>
-      <Button onClick={() => showModal()} className="custom-button">
+      <div>
+        <h2 style={{ margin: '0'}}>Resumen del gastos mes actual: {mesActual?.month}</h2>
+        <h2 style={{ marginTop: '0'}}>Año: {anioActual?.year} </h2>
+        <FormMonth fn={setMesActual}/>
+      </div>
+      <Button onClick={() => showMonthModal()} className="custom-button">
         Crear nuevo Mes
         <PlusOutlined />
       </Button>
+      <Button onClick={() => showYearhModal()} className="custom-button">
+        Nuevo Periodo Anual
+        <PlusOutlined />
+      </Button>
     </div>
-    <Divider />
-      <ModalCreateMes estado={isModalVisible} modificador={setIsModalVisible} fn={toggleRefresh} />
+    <Divider style={{ marginTop: 0 }}/>
+      <ModalCreateMes estado={isMonthModalVisible} modificador={setIsMonthModalVisible} fn={toggleRefresh} />
+      <ModalCreateYear estado={isYearModalVisible} modificador={setIsYearModalVisible} fn={toggleRefresh} />
       {
         monthContext.length > 0
         ?

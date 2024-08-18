@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
+import { ColumnsType } from 'antd/es/table';
 import { Table, Input, Form, notification } from 'antd';
 
 import { PersonContext } from '../context/PersonContextProvider';
@@ -10,9 +11,9 @@ import { useBtnRefresh } from '../hooks/useBtnRefresh';
 
 import { ButtonAdd } from './ButtonAdd';
 import { ButtonDelete } from './ButtonDelete';
-import { ColumnsType } from 'antd/es/table';
-import { Person } from '../interface/ComponentsInterface';
+
 import { PersonInputs } from './intercafeComponents';
+import { Person } from '../interface/ComponentsInterface';
 
 export const FormPersons: React.FC = () => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<PersonInputs>();
@@ -88,7 +89,7 @@ export const FormPersons: React.FC = () => {
           />
         </Form.Item>
         <Form.Item>
-          <ButtonAdd disabled={isBlockBtn} title='Agregar Nombre'/>
+          <ButtonAdd disabled={isBlockBtn} title='Agregar Usuario'/>
         </Form.Item>
       </Form>
       <Table 

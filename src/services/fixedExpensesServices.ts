@@ -1,10 +1,13 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { auth, db } from './firebase';
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 
 import { validateUser } from '../helpers/validarUser';
 import { formatToUpperCase } from '../helpers/formatData';
+
 import { FixedSpentInputs, FnState } from '../components/intercafeComponents';
-import { Dispatch, SetStateAction } from 'react';
+
 import { FixedSpent } from '../interface/ComponentsInterface';
 
 // Crear
@@ -19,7 +22,7 @@ import { FixedSpent } from '../interface/ComponentsInterface';
       await addDoc(personCollectionRef, {
         fixed_spent_name: formData,
         });
-        console.log("Documento Agregado: ");
+        // console.log("Documento Agregado: ");
       } catch (e) {
         console.error("Error añadiendo a: ", e);
       }
@@ -67,9 +70,9 @@ export const getDataFixedSpent = async (fn: Dispatch<SetStateAction<FixedSpent[]
         fnBlock();
       }, 300);
   
-      console.log("Document successfully deleted!");
+      // console.log("Document successfully deleted!");
     } catch (error) {
-      console.error("Error removing document: ", error);
+      console.error("Error al eliminar: ", error);
     }
   };
   

@@ -1,10 +1,13 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { auth, db } from './firebase';
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 
 import { validateUser } from "../helpers/validarUser";
 import { formatToUpperCase } from "../helpers/formatData";
+
 import { FnState, PersonInputs } from '../components/intercafeComponents';
-import { Dispatch, SetStateAction } from 'react';
+
 import { Person } from '../interface/ComponentsInterface';
 
 // Crear
@@ -47,7 +50,7 @@ export const getDataPerson = async (fn: Dispatch<SetStateAction<Person[]>>) => {
       personsArray.sort((a, b) => a.person_name.localeCompare(b.person_name));
       fn(personsArray)
     } catch (e) {
-      console.error("Error fetching documents: ", e);
+      console.error("Error en la peticion: ", e);
     }
   };
 
@@ -68,9 +71,9 @@ export const getDataPerson = async (fn: Dispatch<SetStateAction<Person[]>>) => {
         fnBlock();
       }, 300);
   
-      console.log("Document successfully deleted!");
+      console.log("Información eliminada!");
     } catch (error) {
-      console.error("Error removing document: ", error);
+      console.error("Error al Eliminar: ", error);
     }
   };
   

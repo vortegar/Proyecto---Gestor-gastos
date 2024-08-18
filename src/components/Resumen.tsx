@@ -15,10 +15,10 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
     if (type === 'persona' && data.length > 0) {
       const cleanNumber = (value: string) => Number(value.replace(/\./g, '').replace(',', '.'));
   
-      const maxPerson = data.reduce((prev, curr) => (cleanNumber(prev.total) > cleanNumber(curr.total) ? prev : curr));
-      const minPerson = data.reduce((prev, curr) => (cleanNumber(prev.total) < cleanNumber(curr.total) ? prev : curr));
+      const maxPerson = data.reduce((prev, curr) => (cleanNumber(prev?.total) > cleanNumber(curr?.total) ? prev : curr));
+      const minPerson = data.reduce((prev, curr) => (cleanNumber(prev?.total) < cleanNumber(curr?.total) ? prev : curr));
 
-      const saldo = cleanNumber(maxPerson.total) - cleanNumber(minPerson.total);
+      const saldo = cleanNumber(maxPerson?.total) - cleanNumber(minPerson?.total);
   
       const saldoFormateado = saldo.toLocaleString('es-ES');
   
@@ -49,11 +49,11 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
         style={{ textAlign: 'center', marginTop: '20px' }}
       >
         {
-          data.length > 0 
+          data?.length > 0 
           ?
           data?.map( v => {
             return(
-            <div id={v.id!.toString()} style={{ display: 'flex', width: '100%' }}>
+            <div id={v.id?.toString()} style={{ display: 'flex', width: '100%' }}>
               {
                 (type=='persona') && 
                 <>

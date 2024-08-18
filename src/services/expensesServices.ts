@@ -1,39 +1,49 @@
 import { auth, db } from "./firebase";
-import { collection, getDocs, doc, where, query, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 
 import { validateUser } from "../helpers/validarUser";
-import { FixedExpenseInputs, FnState } from "../components/intercafeComponents";
-import { Expenses, InputsExpenses } from "../interface/ExpensesInterface";
+
 import { FixedExpense } from "../interface/ComponentsInterface";
+import { Expenses, InputsExpenses } from "../interface/ExpensesInterface";
+import { FixedExpenseInputs, FnState } from "../components/intercafeComponents";
+
+import { v4 as uuidv4 } from 'uuid';
 
 // Actualizar
-export const updateFixedExpenses = async (data : FixedExpenseInputs, month: string) => {
+export const updateFixedExpenses = async (data: FixedExpenseInputs, year: string, monthId: string) => {
   try {
-    const user = auth.currentUser;
+    const user = auth.currentUser!;
     validateUser(user);
 
-    const userUid = user!.uid;
+    const userUid = user.uid;
     const userRef = doc(db, "users", userUid);
-    const monthCollectionRef = collection(userRef, "month");
+    const yearDocRef = doc(userRef, "year", year);
 
-    const q = query(monthCollectionRef, where('month', '==', month));
-    const querySnapshot = await getDocs(q);
+    const yearDoc = await getDoc(yearDocRef);
+    const months = yearDoc.data()!.month;
 
-    if (querySnapshot.empty) {
-      console.error('No se encontró el documento del mes');
+    const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
+    if (monthIndex === -1) {
+      console.error('No se encontró el mes con el ID proporcionado');
       return;
     }
 
-    const monthDoc = querySnapshot.docs[0];
-    
-    const transformData = Object.entries(data).map(([key, value]) => ({
-      spent_type: key,
-      total: value
-    }));
+    const updatedMonth = {
+      ...months[monthIndex],
+      fixed_expenses: Object.entries(data).map(([key, value]) => ({
+        spent_type: key,
+        total: value
+      }))
+    };
 
-    const monthRef = doc(monthCollectionRef, monthDoc.id);
-    await updateDoc(monthRef, {
-      fixed_expenses: transformData
+    const updatedMonths = [
+      ...months.slice(0, monthIndex),
+      updatedMonth,
+      ...months.slice(monthIndex + 1)
+    ];
+
+    await updateDoc(yearDocRef, {
+      month: updatedMonths
     });
 
     console.log("Documento actualizado con éxito");
@@ -42,42 +52,50 @@ export const updateFixedExpenses = async (data : FixedExpenseInputs, month: stri
   }
 };
 
-
-export const updateExpenses = async (data: InputsExpenses, month: string) => {
+export const updateExpenses = async (data: InputsExpenses,year: string, monthId: string) => {
   try {
-    const user = auth.currentUser;
+    const user = auth.currentUser!;
     validateUser(user);
 
-    const userUid = user!.uid;
+    const userUid = user.uid;
     const userRef = doc(db, "users", userUid);
-    const monthCollectionRef = collection(userRef, "month");
+    const yearDocRef = doc(userRef, "year", year);
 
-    const q = query(monthCollectionRef, where('month', '==', month));
-    const querySnapshot = await getDocs(q);
+    const yearDoc = await getDoc(yearDocRef);
+    const months = yearDoc.data()!.month;
 
-    if (querySnapshot.empty) {
-      console.error('No se encontró el documento del mes');
+    const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
+    if (monthIndex === -1) {
+      console.error('No se encontró el mes con el ID proporcionado');
       return;
     }
 
-    const monthDoc = querySnapshot.docs[0];
-    const monthData = monthDoc.data();
+    const updatedExpenses = {
+      ...months[monthIndex],
+      expenses: [
+        ...months[monthIndex].expenses,
+          {
+            id:  uuidv4(),
+            descripcion: data.descripcion,
+            monto: `${data.monto}`,
+            user: data.user,
+            fecha: data.fecha,
+            spent_type: data.spent_type,
+          }    
 
-    const updatedExpenses = [
-      ...monthData.expenses,
-      {
-        descripcion: data.descripcion,
-        monto: `${data.monto}`,
-        user: data.user,
-        fecha: data.fecha,
-        spent_type: data.spent_type,
-      }
+      ]
+    
+    }
+    const updatedMonths = [
+      ...months.slice(0, monthIndex),
+      updatedExpenses,
+      ...months.slice(monthIndex + 1)
     ];
 
-    const monthRef = doc(monthCollectionRef, monthDoc.id);
-    await updateDoc(monthRef, {
-      expenses: updatedExpenses
+    await updateDoc(yearDocRef, {
+      month: updatedMonths
     });
+    
 
     console.log("Gastos actualizados con éxito");
   } catch (e) {
@@ -85,35 +103,50 @@ export const updateExpenses = async (data: InputsExpenses, month: string) => {
   }
 };
 
-//   Eliminar
-  export const deleteExpense = async (dataToDelete: Expenses, fnBlock: FnState, fnRefresh: FnState, month: string) => {
+  export const deleteExpense = async (
+    dataToDelete: Expenses,
+    fnBlock: FnState,
+    fnRefresh: FnState,
+    year: string,
+    monthId: string
+  ) => {
     try {
-      const user = auth.currentUser;
+      const user = auth.currentUser!;
       validateUser(user);
   
-      const userUid = user!.uid;
-      const userRef = doc(db, "users", userUid);
-      const monthCollectionRef = collection(userRef, "month");
+      const userRef = doc(db, "users", user.uid);
+      const yearDocRef = doc(userRef, "year", year);
   
-      const q = query(monthCollectionRef, where('month', '==', month));
-      const querySnapshot = await getDocs(q);
+      const yearDoc = await getDoc(yearDocRef);
+
+      const months = yearDoc.data()!.month;
   
-      if (querySnapshot.empty) {
-        console.error('No se encontró el documento del mes');
+      const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
+      if (monthIndex === -1) {
+        console.error('No se encontró el mes con el ID proporcionado');
         return;
       }
   
       fnBlock();
+    
+      const updatedFixedExpenses = months[monthIndex].expenses.filter(
+        (expense: Expenses) => expense.id !== dataToDelete.id
+      );
+
   
-      const monthDoc = querySnapshot.docs[0];
-      const monthData = monthDoc.data();
+      const updatedMonth = {
+        ...months[monthIndex],
+        expenses: updatedFixedExpenses,
+      };
   
-      // Arreglar
-      const updatedExpenses = monthData.expenses.filter((expense: InputsExpenses) => expense.monto !== dataToDelete.monto);
+      const updatedMonths = [
+        ...months.slice(0, monthIndex),
+        updatedMonth,
+        ...months.slice(monthIndex + 1)
+      ];
   
-      const monthRef = doc(monthCollectionRef, monthDoc.id);
-      await updateDoc(monthRef, {
-        expenses: updatedExpenses
+      await updateDoc(yearDocRef, {
+        month: updatedMonths
       });
   
       fnRefresh();
@@ -127,35 +160,50 @@ export const updateExpenses = async (data: InputsExpenses, month: string) => {
       console.error("Error eliminando documento: ", error);
     }
   };
-
-  export const deleteFixedExpense = async (dataToDelete: FixedExpense, fnBlock: FnState, fnRefresh: FnState, month: string) => {
+  export const deleteFixedExpense = async (
+    dataToDelete: FixedExpense,
+    fnBlock: FnState,
+    fnRefresh: FnState,
+    year: string,
+    monthId: string
+  ) => {
     try {
-      const user = auth.currentUser;
+      const user = auth.currentUser!;
       validateUser(user);
   
-      const userUid = user!.uid;
-      const userRef = doc(db, "users", userUid);
-      const monthCollectionRef = collection(userRef, "month");
+      const userRef = doc(db, "users", user.uid);
+      const yearDocRef = doc(userRef, "year", year);
   
-      const q = query(monthCollectionRef, where('month', '==', month));
-      const querySnapshot = await getDocs(q);
+      const yearDoc = await getDoc(yearDocRef);
+
+      const months = yearDoc.data()!.month;
   
-      if (querySnapshot.empty) {
-        console.error('No se encontró el documento del mes');
+      const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
+      if (monthIndex === -1) {
+        console.error('No se encontró el mes con el ID proporcionado');
         return;
       }
   
       fnBlock();
+    
+      const updatedFixedExpenses = months[monthIndex].fixed_expenses.filter(
+        (expense: FixedExpense) => expense.spent_type !== dataToDelete.spent_type
+      );
+
   
-      const monthDoc = querySnapshot.docs[0];
-      const monthData = monthDoc.data();
+      const updatedMonth = {
+        ...months[monthIndex],
+        fixed_expenses: updatedFixedExpenses,
+      };
   
-      // Arreglar
-      const updatedExpenses = monthData.expenses.filter((expense: FixedExpense) => expense.monto !== dataToDelete.monto);
+      const updatedMonths = [
+        ...months.slice(0, monthIndex),
+        updatedMonth,
+        ...months.slice(monthIndex + 1)
+      ];
   
-      const monthRef = doc(monthCollectionRef, monthDoc.id);
-      await updateDoc(monthRef, {
-        fixed_expenses: updatedExpenses
+      await updateDoc(yearDocRef, {
+        month: updatedMonths
       });
   
       fnRefresh();

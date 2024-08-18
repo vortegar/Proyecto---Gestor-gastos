@@ -67,9 +67,9 @@ import { FnState, SpentsInputs } from "../components/intercafeComponents";
         fnBlock();
       }, 300);
   
-      console.log("Document successfully deleted!");
+      // console.log("Document successfully deleted!");
     } catch (error) {
-      console.error("Error removing document: ", error);
+      console.error("Error al eliminar: ", error);
     }
   };
   

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 
 import { Form, Input } from "antd";
@@ -12,6 +12,7 @@ import { useBtnRefresh } from "../hooks/useBtnRefresh";
 
 import { updateFixedExpenses } from "../services/expensesServices";
 import { FixedExpenseInputs } from "./intercafeComponents";
+import { YearContext } from "../context/YearContextProvider";
 
 export const FormFixedExpenses:  React.FC = () => {
   const { control, handleSubmit } = useForm<FixedExpenseInputs>();
@@ -19,8 +20,12 @@ export const FormFixedExpenses:  React.FC = () => {
   const {isBlockBtn, toggleBlockBtn, toggleRefresh} = useBtnRefresh()
   
   const { monthContext } = useContext(MonthContext);
+  const { yearContext } = useContext(YearContext);
+
+  const [anioActual] = useState(yearContext[yearContext.length - 1])
+
   
-  const mesActual = monthContext[monthContext.length - 1]?.month;
+  const mesActual = monthContext[monthContext.length - 1]?.id;
 
     const onSubmitFixedSpent: SubmitHandler<FixedExpenseInputs> = async(data) => {
         // console.log(data)
@@ -28,7 +33,7 @@ export const FormFixedExpenses:  React.FC = () => {
     
         toggleBlockBtn();
         try {
-          await updateFixedExpenses(data, mesActual);
+          await updateFixedExpenses(data, anioActual.id!, mesActual!);
           toggleRefresh();
           toggleBlockBtn();
     

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { Form, Modal, notification, Select } from 'antd';
@@ -7,13 +7,18 @@ import { MonthContext } from '../context/MonthContextProvider';
 
 import { addMonth } from '../services/monthServides';
 import { ModalCreateMesProps, OnSubmitMesParams } from './intercafeComponents';
+import { YearContext } from '../context/YearContextProvider';
 
 const { Option } = Select;
 export const ModalCreateMes:React.FC<ModalCreateMesProps> = ({estado, modificador, fn}) => {
 
   const { control, handleSubmit, reset } = useForm<OnSubmitMesParams>();
+  
+  const { yearContext } = useContext(YearContext);
   const { monthContext } = useContext(MonthContext);
   
+  const [anioActual] = useState(yearContext[yearContext.length - 1])
+
     const handleCancel = () => {
       modificador(false);
       reset();
@@ -29,7 +34,7 @@ export const ModalCreateMes:React.FC<ModalCreateMesProps> = ({estado, modificado
         return
       }
       modificador(false);
-      addMonth(name);
+      addMonth(anioActual.id!, name);
       fn();
       reset();
     }

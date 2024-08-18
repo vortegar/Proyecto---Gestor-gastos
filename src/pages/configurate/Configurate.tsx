@@ -11,7 +11,7 @@ export const Configurate: React.FC = () => {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
         <h2>Configuración </h2>
       </div>
-      <Divider/>
+      <Divider style={{ marginTop: '0'}}/>
       <Row gutter={16} style={{marginTop: '50px'}}>
         <Col span={8}>
          <FormPersons/>     
