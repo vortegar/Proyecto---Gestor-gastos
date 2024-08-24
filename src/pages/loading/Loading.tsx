@@ -1,14 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { Spin, Typography } from 'antd';
 
-import { getDataMonth } from '../../services/monthServides';
 import { getDataSpent } from '../../services/spentsServices';
 import { getDataPerson } from '../../services/formPersonServices';
 
 import { SpentContext } from '../../context/SpentContextProvider';
-import { MonthContext } from '../../context/MonthContextProvider';
 import { PersonContext } from '../../context/PersonContextProvider';
 
 import { useAuth } from '../../context/AuthContextProvider';
@@ -26,12 +24,10 @@ export const LoadingScreen: React.FC = () => {
     const { uploaded } = useAuth();
 
     const { setSpentContext } = useContext(SpentContext);
-    const { setMonthContext } = useContext(MonthContext);
     const { setPersonContext } = useContext(PersonContext);
     const { setFixedSpentContext } = useContext(FixedSpentContext);
-    const { yearContext, setYearContext } = useContext(YearContext);
+    const { setYearContext } = useContext(YearContext);
 
-    const [anioActual] = useState(yearContext[yearContext.length - 1])
 
     const navigate = useNavigate()
     
@@ -42,7 +38,6 @@ export const LoadingScreen: React.FC = () => {
             getDataPerson(setPersonContext),
             getDataFixedSpent(setFixedSpentContext),
             getDataYear(setYearContext),
-            // getDataMonth(setMonthContext, anioActual.id!),
           ]);
           navigate('/home')
           uploaded();
