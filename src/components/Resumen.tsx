@@ -17,7 +17,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
       const minPerson = data.reduce((prev, curr) => (prev?.total < curr?.total ? prev : curr));
 
       const saldo = maxPerson?.total - minPerson?.total;
-      setPerson({ user: maxPerson.user, total: saldo });
+      setPerson({ user: maxPerson.user as string, total: saldo });
     }
   }, [data, type]);
 
