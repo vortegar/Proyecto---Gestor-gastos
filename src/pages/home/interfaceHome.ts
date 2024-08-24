@@ -1,7 +1,7 @@
 export interface PersonResumen {
     id          : number;
     user        : string;
-    total       : string;
+    total       : number;
     spent_type ?: string,
   }
 
@@ -13,6 +13,6 @@ export interface PersonResumen {
   export interface HistoryResumen {
     id          ?: number;
     spent_type  : string;
-    total       : string;
+    total       : number;
     user       ?: string;
   }

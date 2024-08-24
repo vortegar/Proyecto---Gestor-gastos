@@ -70,6 +70,7 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
       return;
     }
 
+    console.log(typeof(data.monto))
     const updatedExpenses = {
       ...months[monthIndex],
       expenses: [
@@ -77,7 +78,7 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
           {
             id:  uuidv4(),
             descripcion: data.descripcion,
-            monto: `${data.monto}`,
+            monto: data.monto,
             user: data.user,
             fecha: data.fecha,
             spent_type: data.spent_type,

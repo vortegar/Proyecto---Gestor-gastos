@@ -178,27 +178,24 @@ export const ExpensesPage: React.FC = () => {
                 rules={{ 
                   required: "Este campo es obligatorio",
                   validate: {
-                    positiveNumber: value => {
-                      const stringValue = value.toString();
-                      const numericValue = Number(stringValue.replace(/\./g, '').replace(',', '.'));
-                      return !isNaN(numericValue) && numericValue >= 0 || "El monto no puede ser negativo";
+                    positiveNumber: (value: number) => {
+                      return value > 0 || "El monto no puede ser negativo";
                     }
                   }
                 }}
                 render={({ field: { onChange, onBlur, value, ref } }) => (
-                <Input
-                  type="text"
-                  placeholder="Monto"
-                  value={value}
-                  onChange={onChange}
-                  onBlur={() => {
-                    onBlur();
-                    const formatValue = Number(value).toLocaleString('es-ES');
-                    onChange(formatValue);
-                  }}
-                  inputRef={ref}
-                />
-              )}
+                  <Input
+                    type="number"
+                    placeholder="Monto"
+                    value={value}
+                    onChange={(e: { target:{ value: string}}) => {
+                      const numericValue = parseFloat(e.target.value); 
+                      onChange(isNaN(numericValue) ? '' : numericValue); 
+                    }}
+                    onBlur={onBlur}
+                    inputRef={ref}
+                  />
+                )}
               />
             </Form.Item>
             <Form.Item>

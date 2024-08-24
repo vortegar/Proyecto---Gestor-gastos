@@ -13,14 +13,12 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
 
   useEffect(() => {
     if (type === 'persona' && data.length > 0) {
-      const cleanNumber = (value: string) => Number(value.replace(/\./g, '').replace(',', '.'));
-  
-      const maxPerson = data.reduce((prev, curr) => (cleanNumber(prev?.total) > cleanNumber(curr?.total) ? prev : curr));
-      const minPerson = data.reduce((prev, curr) => (cleanNumber(prev?.total) < cleanNumber(curr?.total) ? prev : curr));
+      const maxPerson = data.reduce((prev, curr) => (prev?.total > curr?.total ? prev : curr));
+      const minPerson = data.reduce((prev, curr) => (prev?.total < curr?.total ? prev : curr));
 
-      const saldo = cleanNumber(maxPerson?.total) - cleanNumber(minPerson?.total);
+      const saldo = maxPerson?.total - minPerson?.total;
   
-      const saldoFormateado = saldo.toLocaleString('es-ES');
+      const saldoFormateado = saldo;
   
       setPerson({ user: maxPerson.user, total: saldoFormateado });
     }
@@ -29,8 +27,8 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
   useEffect(() => {
     if (type=='gastos fijos') {
 
-      const totalFixedExpense = data.reduce((prev, curr) => {
-        return Number(prev) + Number(curr.total);
+      const totalFixedExpense = data?.reduce((prev, curr) => {
+        return prev + curr.total;
       }, 0);
       setFixedExpense(totalFixedExpense);
     }
@@ -58,7 +56,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
                 (type=='persona') && 
                 <>
                   <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.user}:</span>
-                  <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.spent_type}</span>
+                  <span style={{ flexGrow: 1, textAlign: 'right' }}>{v.total}</span>
                 </>
               }
               {

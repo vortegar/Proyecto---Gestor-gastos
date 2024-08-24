@@ -47,13 +47,13 @@ export const Home: React.FC = () => {
     setMesActual(monthContext[monthContext.length - 1])
   }, [monthContext])
   
-  const acumuladorPerson = mesActual?.expenses.reduce((acc: { [key: string]: string }, item) => {
+  const acumuladorPerson = mesActual?.expenses.reduce((acc: { [key: string]: number }, item) => {
     const { user, monto } = item;
     if (!acc[user]) {
-      acc[user] = "0";
+      acc[user] = 0;
     }
-    const sumaActual = parseFloat(acc[user]) + Number(monto.replace(/\./g, '').replace(',', '.'));
-    acc[user] = sumaActual.toLocaleString('es-ES'); 
+    const sumaActual = acc[user] + + monto;
+    acc[user] = sumaActual
     return acc;
   }, {});
   
@@ -66,13 +66,14 @@ export const Home: React.FC = () => {
     }));
   }
   
-  const gruopExpenses = mesActual?.expenses.reduce((acc: { [key: string]: string }, item) => {
+
+  const gruopExpenses = mesActual?.expenses.reduce((acc: { [key: string]: number }, item) => {
     const { spent_type, monto } = item;
     if (!acc[spent_type]) {
-      acc[spent_type] = "0";
+      acc[spent_type] = 0;
     }
-    const sumaActual = parseFloat(acc[spent_type]) +  + Number(monto.replace(/\./g, '').replace(',', '.'));
-    acc[spent_type] = sumaActual.toLocaleString('es-ES'); 
+    const sumaActual = acc[spent_type] +  + monto;
+    acc[spent_type] = sumaActual; 
     return acc;
   }, {});
 
@@ -127,7 +128,7 @@ export const Home: React.FC = () => {
               <Resumen data={expensesResumen} title='Total Gasto Variable' type='gastos varios'/>
               <Resumen data={personResumen} title='Monto a cuadar' type='persona'/>
             </div>
-            <Grafico resumen={expensesResumen} title='Gasto Mensual'/>
+            {/* <Grafico resumen={expensesResumen} title='Gasto Mensual'/> */}
           </div>
         </>
         : 

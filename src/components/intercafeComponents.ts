@@ -22,7 +22,7 @@ export interface OptionItem {
     name: string;
 }
 export interface ResumenProps {
-  data: ExpensesResumen | FixedExpenseInputs[] | PersonResumen[] | HistoryResumen[];
+  data : ExpensesResumen | FixedExpenseInputs[] | PersonResumen[] | HistoryResumen[];
   title: string;
   type?: string;
 }
@@ -33,9 +33,9 @@ export interface TotalPerson {
 
 export type FixedExpenseInputs = {
   fixed_spent_name: string;
-  spent_type: string;
-  total: string;
-  [key: string]: string
+  spent_type      : string;
+  total           : number;
+  [key: string]   : string
 };
 
 export type SpentsInputs = {spent_name: string};

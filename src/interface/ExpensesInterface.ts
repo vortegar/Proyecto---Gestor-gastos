@@ -27,7 +27,7 @@ export interface Expenses {
 export interface ExpensesResumenItem {
     id        : number;
     spent_type: string;
-    total     : string;
+    total     : number;
     user     ?: string;
   }
   
@@ -43,8 +43,8 @@ export interface ExpensesResumenItem {
 
 export type InputsExpenses = {
     descripcion: string;
-    monto      : number | string;
-    user       : string,
-    fecha      : string,
-    spent_type : string,
+    monto      : number;
+    user       : string;
+    fecha      : string;
+    spent_type : string;
   };

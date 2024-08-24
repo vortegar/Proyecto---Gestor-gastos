@@ -28,9 +28,9 @@ export const FormFixedExpenses:  React.FC = () => {
   const mesActual = monthContext[monthContext.length - 1]?.id;
 
     const onSubmitFixedSpent: SubmitHandler<FixedExpenseInputs> = async(data) => {
-        // console.log(data)
         // if (!data.spent_name) return;
     
+        console.log(data)
         toggleBlockBtn();
         try {
           await updateFixedExpenses(data, anioActual.id!, mesActual!);

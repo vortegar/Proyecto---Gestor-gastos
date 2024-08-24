@@ -26,7 +26,7 @@ export interface Spent {
 
 export interface FixedExpense {
   spent_type: string;
-  total: string;
-  eliminar?: string; 
-  monto ?: string
+  total     : number;
+  eliminar ?: string; 
+  monto    ?: string
 }
