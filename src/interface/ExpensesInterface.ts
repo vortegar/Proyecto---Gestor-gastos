@@ -5,7 +5,7 @@ export interface Expenses {
     descripcion: string;
     fecha     ?: string,
     id        ?: number;
-    monto      : string,
+    monto      : number,
     spent_type : string,
     user       : string,
   }

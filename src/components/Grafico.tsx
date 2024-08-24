@@ -22,8 +22,8 @@ ChartJS.register(
 );
 
 export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
-  const dataLabelName = resumen.map((v) => v?.spent_type);
-  const dataLabeValue = resumen.map((v) => Number(v?.total));  
+  const dataLabelName = resumen?.map((v) => v?.spent_type);
+  const dataLabeValue = resumen?.map((v) => Number(v?.total));  
 
   const data: ChartData<'bar'> = {
     labels: dataLabelName,
@@ -44,16 +44,18 @@ export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
     plugins: {
       legend: {
         position: 'bottom',
+        labels: {font: { size: 10}},
       },
-      title: {
-        display: true,
-        text: title,
-      },
+      title: { display: true, text: title,},
+    },
+    scales: {
+      x: {ticks: { font: { size: 8}}},
+      y: {ticks: { font: { size: 8}}}
     },
   };
-
+  
   return (
-    <div style={{ width: '550px', height: '500px', marginTop: '40px', marginInlineStart: '40px' }}>
+    <div style={{ width: '550px', height: '400px', marginTop: '20px', marginInlineStart: '20px' }}>
       <Bar data={data} options={options} />
     </div>
   );

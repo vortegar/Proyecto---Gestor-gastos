@@ -22,7 +22,7 @@ export interface FormatArrayMonthItem {
   expenses      ?: Expenses[];
   fixed_expenses?: FixedExpenseInputs[];
   spent_type    ?: string;
-  total         ?: string
+  total         ?: number;
 }
 
 export const formatToUpperCase = (data: string): string => {

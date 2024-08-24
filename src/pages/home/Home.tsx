@@ -64,8 +64,7 @@ export const Home: React.FC = () => {
       user,
       total: acumuladorPerson[user]
     }));
-  }
-  
+  }  
 
   const gruopExpenses = mesActual?.expenses.reduce((acc: { [key: string]: number }, item) => {
     const { spent_type, monto } = item;
@@ -86,14 +85,15 @@ export const Home: React.FC = () => {
     }));
   }
 
-//  const fixedExpenses = mesActual?.fixed_expenses.map( (f, i) => {
-//   return{
-//     id: ( i + expensesResumen.length),
-//     ...f
-//   }
-//  })
+ const fixedExpenses = mesActual?.fixed_expenses.map( (f, i) => {
+  return{
+    id: ( i ),
+    ...f
+  }
+ })
 
-//  const combineExpenses = expensesResumen.concat(fixedExpenses);
+  // Constante que agrupa los gastos 
+  // const combineExpenses = expensesResumen.concat(fixedExpenses);
 
   const showYearhModal = () => { setIsYearModalVisible(true);};
   const showMonthModal = () => { setIsMonthModalVisible(true);};
@@ -128,7 +128,10 @@ export const Home: React.FC = () => {
               <Resumen data={expensesResumen} title='Total Gasto Variable' type='gastos varios'/>
               <Resumen data={personResumen} title='Monto a cuadar' type='persona'/>
             </div>
-            {/* <Grafico resumen={expensesResumen} title='Gasto Mensual'/> */}
+            <div style={{ display: 'flex',  flexDirection: 'column'}}>
+              <Grafico resumen={fixedExpenses} title='GastosFijos del mes'/>
+              <Grafico resumen={expensesResumen} title='Gastos Variables del mes'/>
+            </div>
           </div>
         </>
         : 

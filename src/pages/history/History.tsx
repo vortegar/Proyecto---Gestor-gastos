@@ -28,26 +28,18 @@ export const History = () => {
     getDataMonth(setMonthContext, anioActual.id!)
   }, [refresh, setMonthContext, anioActual])
 
-  // const expensesHistory = monthContext.map( m => {
-  //   const expensesTotal = m.expenses.reduce<number>((acc, current) => {
-  //       const sumaActual = parseFloat(acc) + Number(current.monto.replace(/\./g, '').replace(',', '.'));
-  //       return acc + sumaActual;
-  //     }, 0);
-  //   return{
-  //       spent_type: m.month,
-  //       total: String(expensesTotal),
-  //   }
-  // })
 
   const expensesHistory = monthContext.map(m => {
     const expensesTotal = m.expenses.reduce<number>((acc, current) => {
-      const monto = parseFloat(current.monto.replace(/\./g, '').replace(',', '.'));
-      return acc + monto;
+      return acc + current.monto;
     }, 0);
-    
+    const fixedExpensesTotal = m.fixed_expenses.reduce<number>((acc, current) => {
+      return acc + current.total;
+    }, 0);
+    const sumExpenses = expensesTotal + fixedExpensesTotal
     return {
       spent_type: m.month,
-      total: expensesTotal.toString(),
+      total: sumExpenses,
     };
   });
   const formatExpenseHistory = formatArrayMonth(expensesHistory, 'spent_type')
@@ -71,7 +63,7 @@ export const History = () => {
       )
     }
   ];
-
+  console.log(expensesHistory)
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>

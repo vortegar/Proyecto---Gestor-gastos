@@ -35,7 +35,7 @@ export const updateFixedExpenses = async (data: FixedExpenseInputs, year: string
         total: value
       }))
     };
-
+    console.log(updatedMonth)
     const updatedMonths = [
       ...months.slice(0, monthIndex),
       updatedMonth,

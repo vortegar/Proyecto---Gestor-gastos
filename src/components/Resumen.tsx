@@ -17,16 +17,12 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
       const minPerson = data.reduce((prev, curr) => (prev?.total < curr?.total ? prev : curr));
 
       const saldo = maxPerson?.total - minPerson?.total;
-  
-      const saldoFormateado = saldo;
-  
-      setPerson({ user: maxPerson.user, total: saldoFormateado });
+      setPerson({ user: maxPerson.user, total: saldo });
     }
   }, [data, type]);
 
   useEffect(() => {
     if (type=='gastos fijos') {
-
       const totalFixedExpense = data?.reduce((prev, curr) => {
         return prev + curr.total;
       }, 0);
