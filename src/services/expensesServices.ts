@@ -8,6 +8,7 @@ import { Expenses, InputsExpenses } from "../interface/ExpensesInterface";
 import { FixedExpenseInputs, FnState } from "../components/intercafeComponents";
 
 import { v4 as uuidv4 } from 'uuid';
+import { message } from "antd";
 
 // Actualizar
 export const updateFixedExpenses = async (data: FixedExpenseInputs, year: string, monthId: string) => {
@@ -45,8 +46,7 @@ export const updateFixedExpenses = async (data: FixedExpenseInputs, year: string
     await updateDoc(yearDocRef, {
       month: updatedMonths
     });
-
-    console.log("Documento actualizado con éxito");
+    message.success('Gasto agregado con éxito');
   } catch (e) {
     console.error("Error actualizando documento: ", e);
   }
@@ -70,7 +70,6 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
       return;
     }
 
-    console.log(typeof(data.monto))
     const updatedExpenses = {
       ...months[monthIndex],
       expenses: [
@@ -97,8 +96,7 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
       month: updatedMonths
     });
     
-
-    console.log("Gastos actualizados con éxito");
+    message.success('Gasto agregado con éxito');
   } catch (e) {
     console.error("Error añadiendo a: ", e);
   }

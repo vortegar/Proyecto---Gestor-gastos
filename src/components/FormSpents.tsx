@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
-import { Table, Input, Form, notification } from 'antd';
+import { Table, Input, Form, message } from 'antd';
 
 import { SpentContext } from '../context/SpentContextProvider';
 
@@ -31,10 +31,7 @@ export const FormSpents: React.FC = () => {
 
     const spentName = spentContext.find( s => s.spent_name?.toLowerCase() == data.spent_name.toLowerCase())
     if( spentName != undefined) {
-      notification.error({
-        message: 'Error',
-        description: 'Este gasto ya existe.',
-      });
+      message.error('Este gasto ya existe!!!');
       return      
     }
     toggleBlockBtn();

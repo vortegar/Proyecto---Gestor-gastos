@@ -57,7 +57,7 @@ export const LoginPage = () => {
       >
         Iniciar sesión con Google <GoogleOutlined />
       </Button>
-      <Title level={4} style={{ marginTop: '50px'}}>Una app creada para llevar tus gastos de forma ordenada!!!</Title>
+      <Title level={4} style={{ marginTop: '5vw'}}>Una app creada para llevar tus gastos de forma ordenada!!!</Title>
       <p style={{ textAlign: 'center', fontStyle: 'italic' }}>Creado por: Victorio Ortega🏅</p>
   </div>
   );

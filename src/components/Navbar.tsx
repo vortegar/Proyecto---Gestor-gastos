@@ -23,11 +23,11 @@ export const Navbar: React.FC = () => {
 
   return (
     <Sider  width={200}  style={{ height: '100vh', position: 'fixed', backgroundColor: 'var(--primary-color)' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-        <Title level={4} style={{ color: 'white', paddingTop: '40px', marginBottom: '0' }}>Bienvenido</Title>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '3vw' }}>
+        <Title level={4} style={{ color: 'white', paddingTop: '3vw', marginBottom: '0' }}>Bienvenido</Title>
         <Title level={4} style={{ color: 'white', marginTop: '0' }}>{username}</Title>
       </div>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{ backgroundColor: 'var(--primary-color)', marginTop: '30px'}}>
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{ backgroundColor: 'var(--primary-color)', marginTop: '2vw'}}>
         <Menu.Item key="1" icon={<HomeOutlined />}>
             <Link to="/home">Inicio</Link>
         </Menu.Item>

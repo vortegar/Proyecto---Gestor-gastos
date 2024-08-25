@@ -21,13 +21,13 @@ export const App: React.FC = () => {
   const { isAuthenticated, uploadedData } = useAuth();
   return (
     <Router>
-      <Layout style={{ minWidth: '100vw'}}>
+      <Layout style={{ minWidth: '98.8vw'}}>
         {(isAuthenticated && uploadedData) && <Navbar />}
 
-        <Layout className="site-layout" style={{ marginLeft: isAuthenticated ? 200 : 0, minHeight: '100vh' }}>
-          <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+        <Layout className="site-layout" style={{ marginLeft: isAuthenticated ? '14vw' : 0, minHeight: '100vh' }}>
+          <Content style={{ margin: '2vw 2vw 0', overflow: 'initial' }}>
     
-            <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+            <div className="site-layout-background" style={{ padding: '2vw', minHeight: '50vw' }}>
               <Routes>
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/load" element={<LoadingScreen />} />

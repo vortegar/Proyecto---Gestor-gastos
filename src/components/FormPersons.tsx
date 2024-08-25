@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 import { ColumnsType } from 'antd/es/table';
-import { Table, Input, Form, notification } from 'antd';
+import { Table, Input, Form, message } from 'antd';
 
 import { PersonContext } from '../context/PersonContextProvider';
 import { addPerson, deletePerson, getDataPerson } from '../services/formPersonServices';
@@ -28,10 +28,7 @@ export const FormPersons: React.FC = () => {
   const onSubmitPerson: SubmitHandler<PersonInputs> = async(data) => {
     const personName = personContext.find( s => s.person_name.toLowerCase() == data.name.toLowerCase())
     if( personName != undefined) {
-      notification.error({
-        message: 'Error',
-        description: 'Esta persona ya existe.',
-      });
+      message.error('Esta persona ya existe!!!');
       return      
     }
     toggleBlockBtn();

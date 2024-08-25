@@ -9,6 +9,7 @@ import { formatToUpperCase } from "../helpers/formatData";
 import { FnState, PersonInputs } from '../components/intercafeComponents';
 
 import { Person } from '../interface/ComponentsInterface';
+import { message } from 'antd';
 
 // Crear
 export const addPerson = async (data: PersonInputs) => {
@@ -22,7 +23,8 @@ export const addPerson = async (data: PersonInputs) => {
     await addDoc(personCollectionRef, {
         name: formData
       });
-      console.log("Documento Agregado: ");
+      message.success('Persona agregada!!!');
+
     } catch (e) {
       console.error("Error añadiendo a: ", e);
     }
@@ -71,7 +73,7 @@ export const getDataPerson = async (fn: Dispatch<SetStateAction<Person[]>>) => {
         fnBlock();
       }, 300);
   
-      console.log("Información eliminada!");
+      message.success('Persona eliminada!!!');
     } catch (error) {
       console.error("Error al Eliminar: ", error);
     }

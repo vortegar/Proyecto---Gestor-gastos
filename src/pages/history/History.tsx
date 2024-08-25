@@ -28,7 +28,6 @@ export const History = () => {
     getDataMonth(setMonthContext, anioActual.id!)
   }, [refresh, setMonthContext, anioActual])
 
-
   const expensesHistory = monthContext.map(m => {
     const expensesTotal = m.expenses.reduce<number>((acc, current) => {
       return acc + current.monto;
@@ -63,7 +62,6 @@ export const History = () => {
       )
     }
   ];
-  console.log(expensesHistory)
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>

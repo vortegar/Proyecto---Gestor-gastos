@@ -123,7 +123,7 @@ export const Home: React.FC = () => {
         ?
         <>
           <div style={{ display: 'flex'}}>
-            <div style={{ display: 'flex', flexDirection: 'column', padding: '24px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: '3vw', paddingRight: '3vw' }}>
               <Resumen data={mesActual?.fixed_expenses} title='Total Gasto Fijo' type='gastos fijos'/>
               <Resumen data={expensesResumen} title='Total Gasto Variable' type='gastos varios'/>
               <Resumen data={personResumen} title='Monto a cuadar' type='persona'/>

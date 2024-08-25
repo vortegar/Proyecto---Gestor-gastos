@@ -217,7 +217,7 @@ export const ExpensesPage: React.FC = () => {
                 />
             </Form.Item>
         <Form.Item>
-          <ButtonAdd disabled={isBlockBtn} title='Agregar Gasto'/>
+          <ButtonAdd disabled={isBlockBtn} title='Agregar Gasto Variable'/>
         </Form.Item>
       </Form>
       </Col>

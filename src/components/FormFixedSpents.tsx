@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
-import { Table, Input, Form, notification } from 'antd';
+import { Table, Input, Form, notification, message } from 'antd';
 
 import { useBtnRefresh } from '../hooks/useBtnRefresh';
 
@@ -32,6 +32,7 @@ export const FormFixedSpents: React.FC = () => {
         message: 'Error',
         description: 'Este gasto ya existe.',
       });
+      message.error('Este gasto ya existe!!!');
       return      
     }
     toggleBlockBtn();

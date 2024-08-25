@@ -9,6 +9,7 @@ import { formatToUpperCase } from '../helpers/formatData';
 import { FixedSpentInputs, FnState } from '../components/intercafeComponents';
 
 import { FixedSpent } from '../interface/ComponentsInterface';
+import { message } from 'antd';
 
 // Crear
   export const addFixedSpent = async (data: FixedSpentInputs) => {
@@ -22,7 +23,7 @@ import { FixedSpent } from '../interface/ComponentsInterface';
       await addDoc(personCollectionRef, {
         fixed_spent_name: formData,
         });
-        // console.log("Documento Agregado: ");
+        message.success('Gasto Agregado!!!');
       } catch (e) {
         console.error("Error añadiendo a: ", e);
       }
@@ -69,8 +70,7 @@ export const getDataFixedSpent = async (fn: Dispatch<SetStateAction<FixedSpent[]
       setTimeout(() => {
         fnBlock();
       }, 300);
-  
-      // console.log("Document successfully deleted!");
+      message.success('Gasto Eliminado!!!');
     } catch (error) {
       console.error("Error al eliminar: ", error);
     }

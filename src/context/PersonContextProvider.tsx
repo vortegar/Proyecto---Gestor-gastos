@@ -7,7 +7,7 @@ interface Person {
   
 export  interface PersonState {
     user  ?: string;
-    total ?: number;
+    total ?: number | string;
   }
   
   interface MyContextProviderProps {

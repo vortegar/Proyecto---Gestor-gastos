@@ -49,11 +49,18 @@ export const FormFixedExpenses:  React.FC = () => {
                     name={f.fixed_spent_name}
                     control={control}
                     rules={{ required: "Este campo es obligatorio" }}
-                    render={({ field }) => (
-                      <Input 
+                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                      <Input
                         style = {{ marginTop: '0.2vw'}}
-                        {...field} 
+                        type="number"
                         placeholder={`Monto ${f.fixed_spent_name}`}
+                        value={value}
+                        onChange={(e: { target:{ value: string}}) => {
+                          const numericValue = parseFloat(e.target.value); 
+                          onChange(isNaN(numericValue) ? '' : numericValue); 
+                        }}
+                        onBlur={onBlur}
+                        inputRef={ref}
                       />
                     )}
                   />

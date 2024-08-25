@@ -7,6 +7,7 @@ import { validateUser } from "../helpers/validarUser";
 import { formatToUpperCase } from "../helpers/formatData";
 import { Spent } from "../context/SpentContextProvider";
 import { FnState, SpentsInputs } from "../components/intercafeComponents";
+import { message } from "antd";
 
 // Crear
   export const addSpent = async (data: SpentsInputs) => {
@@ -20,6 +21,7 @@ import { FnState, SpentsInputs } from "../components/intercafeComponents";
       await addDoc(spentCollectionRef, {
         spent_name: formData,
         });
+      message.success('Gasto agregado!!!');
         // console.log("Documento Agregado: ");
       } catch (e) {
         console.error("Error añadiendo a: ", e);
@@ -67,7 +69,7 @@ import { FnState, SpentsInputs } from "../components/intercafeComponents";
         fnBlock();
       }, 300);
   
-      // console.log("Document successfully deleted!");
+      message.success('Gasto eliminado!!!');
     } catch (error) {
       console.error("Error al eliminar: ", error);
     }
