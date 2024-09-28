@@ -19,6 +19,7 @@ import { ModalCreateYear } from '../../components/ModalCreateYear';
 
 import { getDataYear } from '../../services/yearServides';
 import { useBtnRefresh } from '../../hooks/useBtnRefresh';
+import { ModalCalculate } from '../../components/ModalCalculate';
 
 export const Home: React.FC = () => {
   const { yearContext, setYearContext } = useContext(YearContext);
@@ -26,6 +27,7 @@ export const Home: React.FC = () => {
 
   const [isYearModalVisible, setIsYearModalVisible] = useState(false);
   const [isMonthModalVisible, setIsMonthModalVisible] = useState(false);
+  const [isCalculateModalVisible, setIsCalculateModalVisible] = useState(false);
 
   const [anioActual, setAnioActual] = useState(yearContext[yearContext.length - 1])
   const [mesActual, setMesActual] = useState(monthContext[monthContext.length - 1])
@@ -85,27 +87,25 @@ export const Home: React.FC = () => {
     }));
   }
 
- const fixedExpenses = mesActual?.fixed_expenses.map( (f, i) => {
-  return{
-    id: ( i ),
-    ...f
-  }
- })
-
   // Constante que agrupa los gastos 
   // const combineExpenses = expensesResumen.concat(fixedExpenses);
 
   const showYearhModal = () => { setIsYearModalVisible(true);};
   const showMonthModal = () => { setIsMonthModalVisible(true);};
+  const showCalculateModal = () => { setIsCalculateModalVisible(true);};
 
   return (
     <>
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '3vw', paddingRight: '1vw' }}>
       <div>
         <h2 style={{ margin: '0'}}>Resumen del gastos mes actual: {mesActual?.month}</h2>
         <h2 style={{ marginTop: '0'}}>Año: {anioActual?.year} </h2>
         <FormMonth fn={setMesActual}/>
       </div>
+      <Button onClick={() => showCalculateModal()} className="custom-button">
+        Calcular diferencia
+        <PlusOutlined />
+      </Button>
       <Button onClick={() => showMonthModal()} className="custom-button">
         Crear nuevo Mes
         <PlusOutlined />
@@ -116,21 +116,27 @@ export const Home: React.FC = () => {
       </Button>
     </div>
     <Divider style={{ marginTop: 0 }}/>
-      <ModalCreateMes estado={isMonthModalVisible} modificador={setIsMonthModalVisible} fn={toggleRefresh} />
       <ModalCreateYear estado={isYearModalVisible} modificador={setIsYearModalVisible} fn={toggleRefresh} />
+      <ModalCreateMes estado={isMonthModalVisible} modificador={setIsMonthModalVisible} fn={toggleRefresh} />
+      <ModalCalculate 
+        estado={isCalculateModalVisible} 
+        extraItems= {mesActual?.extra_items}
+        modificador={setIsCalculateModalVisible} 
+        fixedExpenses = {mesActual?.fixed_expenses}  
+      />
       {
         monthContext.length > 0
         ?
         <>
           <div style={{ display: 'flex'}}>
             <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: '3vw', paddingRight: '3vw' }}>
-              <Resumen data={mesActual?.fixed_expenses} title='Total Gasto Fijo' type='gastos fijos'/>
-              <Resumen data={expensesResumen} title='Total Gasto Variable' type='gastos varios'/>
-              <Resumen data={personResumen} title='Monto a cuadar' type='persona'/>
+              <Resumen data={mesActual?.fixed_expenses} title='Resumen Gasto Fijo' type='gastos fijos'/>
+              <Resumen data={expensesResumen} title='Resumen Gasto Variable' type='gastos varios'/>
+              <Resumen data={personResumen} title='Resumen Gasto por persona' type='persona'/>
             </div>
             <div style={{ display: 'flex',  flexDirection: 'column'}}>
-              <Grafico resumen={fixedExpenses} title='GastosFijos del mes'/>
-              <Grafico resumen={expensesResumen} title='Gastos Variables del mes'/>
+              <Grafico resumen={mesActual?.fixed_expenses} title='Gastos fijos del mes'/>
+              <Grafico resumen={expensesResumen} title='Gastos variables del mes'/>
             </div>
           </div>
         </>

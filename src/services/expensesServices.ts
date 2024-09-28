@@ -11,6 +11,51 @@ import { v4 as uuidv4 } from 'uuid';
 import { message } from "antd";
 
 // Actualizar
+export const updateExtraExpenses = async (data: FixedExpenseInputs, year: string, monthId: string) => {
+  try {
+    const user = auth.currentUser!;
+    validateUser(user);
+
+    const userUid = user.uid;
+    const userRef = doc(db, "users", userUid);
+    const yearDocRef = doc(userRef, "year", year);
+
+    const yearDoc = await getDoc(yearDocRef);
+    const months = yearDoc.data()!.month;
+
+    const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
+    if (monthIndex === -1) {
+      console.error('No se encontró el mes con el ID proporcionado');
+      return;
+    }
+
+    const updatedMonth = {
+      ...months[monthIndex],
+      extra_items:  [
+        ...months[monthIndex].extra_items,
+        {
+          id:  uuidv4(),
+          person_name:data.user,
+          total: data.monto,
+        }
+      ]}
+
+    const updatedMonths = [
+      ...months.slice(0, monthIndex),
+      updatedMonth,
+      ...months.slice(monthIndex + 1)
+    ];
+
+    await updateDoc(yearDocRef, {
+      month: updatedMonths
+    });
+  
+    message.success('Gasto agregado con éxito');
+  } catch (e) {
+    console.error("Error actualizando documento: ", e);
+  }
+};
+
 export const updateFixedExpenses = async (data: FixedExpenseInputs, year: string, monthId: string) => {
   try {
     const user = auth.currentUser!;
@@ -32,6 +77,7 @@ export const updateFixedExpenses = async (data: FixedExpenseInputs, year: string
     const updatedMonth = {
       ...months[monthIndex],
       fixed_expenses: Object.entries(data).map(([key, value]) => ({
+        id:  uuidv4(),
         spent_type: key,
         total: value
       }))
@@ -159,6 +205,7 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
       console.error("Error eliminando documento: ", error);
     }
   };
+  
   export const deleteFixedExpense = async (
     dataToDelete: FixedExpense,
     fnBlock: FnState,
@@ -193,6 +240,63 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
       const updatedMonth = {
         ...months[monthIndex],
         fixed_expenses: updatedFixedExpenses,
+      };
+  
+      const updatedMonths = [
+        ...months.slice(0, monthIndex),
+        updatedMonth,
+        ...months.slice(monthIndex + 1)
+      ];
+  
+      await updateDoc(yearDocRef, {
+        month: updatedMonths
+      });
+  
+      fnRefresh();
+  
+      setTimeout(() => {
+        fnBlock();
+      }, 300);
+  
+      console.log("Documento actualizado con éxito");
+    } catch (error) {
+      console.error("Error eliminando documento: ", error);
+    }
+  };
+  
+  export const deleteExtraItems = async (
+    dataToDelete: FixedExpense,
+    fnBlock: FnState,
+    fnRefresh: FnState,
+    year: string,
+    monthId: string
+  ) => {
+    try {
+      const user = auth.currentUser!;
+      validateUser(user);
+  
+      const userRef = doc(db, "users", user.uid);
+      const yearDocRef = doc(userRef, "year", year);
+  
+      const yearDoc = await getDoc(yearDocRef);
+
+      const months = yearDoc.data()!.month;
+  
+      const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
+      if (monthIndex === -1) {
+        console.error('No se encontró el mes con el ID proporcionado');
+        return;
+      }
+  
+      fnBlock();
+    
+      const updatedExtraItems = months[monthIndex].extra_items.filter(
+        (expense: FixedExpense) => expense.id !== dataToDelete.id
+      );
+
+      const updatedMonth = {
+        ...months[monthIndex],
+        extra_items: updatedExtraItems,
       };
   
       const updatedMonths = [

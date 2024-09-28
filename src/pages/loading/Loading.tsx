@@ -28,7 +28,6 @@ export const LoadingScreen: React.FC = () => {
     const { setFixedSpentContext } = useContext(FixedSpentContext);
     const { setYearContext } = useContext(YearContext);
 
-
     const navigate = useNavigate()
     
     const loadData = async () => {

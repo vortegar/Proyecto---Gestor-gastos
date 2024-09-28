@@ -45,7 +45,7 @@ export const FormMonth: React.FC<FormMonthProps>  = ({fn}) => {
             rules={{ required: "Este campo es obligatorio" }}
             render={({ field }) => (
               <>
-                <Select {...field} placeholder= "Meses creados">
+                <Select {...field} placeholder= "Buscar Mes">
                     {
                       monthContext.map( (i) => (
                         <Option key={i.id} value={i.id}>

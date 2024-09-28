@@ -1,15 +1,20 @@
 // MODAL CREAR MES
-
-import { ExpensesResumen } from "../interface/ExpensesInterface";
-import { Month } from "../interface/MonthInterface";
+import { Control, FieldErrors } from "react-hook-form";
 import { HistoryResumen, PersonResumen } from "../pages/home/interfaceHome";
 
+import { Month } from "../interface/MonthInterface";
+import { ExpensesResumen } from "../interface/ExpensesInterface";
 export interface ModalCreateMesProps {
     estado: boolean;     
     modificador: (arg: boolean) => void;
     fn: () => void;          
   }
-  
+  export interface ModalCalculateDiff {
+    estado       : boolean;     
+    modificador  : (arg: boolean) => void;
+    extraItems   : ExtraItemsInputs[];
+    fixedExpenses: FixedExpenseInputs[];
+  }
 export   interface OnSubmitMesParams {
     name: string; 
   }
@@ -22,9 +27,9 @@ export interface OptionItem {
     name: string;
 }
 export interface ResumenProps {
-  data : ExpensesResumen | FixedExpenseInputs[] | PersonResumen[] | HistoryResumen[];
-  title: string;
-  type?: string;
+  data   : ExpensesResumen | FixedExpenseInputs[] | PersonResumen[] | HistoryResumen[];
+  title  : string;
+  type  ?: string;
 }
 
 export interface TotalPerson {
@@ -38,6 +43,38 @@ export type FixedExpenseInputs = {
   [key: string]   : string | number;
 };
 
+export type ExtraItemsInputs = {
+  id              : number;
+  person_name     : string;
+  total           : number;
+};
+
+export interface IDivisionRow {
+  spentType: string;
+  total: number;        
+  control: Control<IFormValuesDivision>; 
+  index: number;        
+  errors: FieldErrors<IFormValuesDivision>;  
+}
+
+export interface IExtraItemsRow {
+  monto     : number;        
+  person    : string;
+}
+
+interface IFormValuesDivision {
+  items: {
+    person: string;
+    monto: number;
+  }[];
+}
+
+export interface IFormValueCalculate {
+  items: {
+    person: string;
+    monto: number;
+  }[];
+}
 export type SpentsInputs = {spent_name: string};
 
 export type PersonInputs = {name: string};

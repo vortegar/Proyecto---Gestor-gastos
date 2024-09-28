@@ -8,6 +8,7 @@ import { GoogleOutlined } from "@ant-design/icons";
 
 import { auth, db } from "../../services/firebase.js";
 import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
+
 import { useBtnRefresh } from "../../hooks/useBtnRefresh.js";
 
 export const LoginPage = () => {
@@ -48,7 +49,7 @@ export const LoginPage = () => {
   const { Title } = Typography;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <Title level={1}>Bienvenido a: TusgastosApp</Title>
+    <Title style={{ padding: '0.42vw'}}level={1}>Bienvenido a: TusgastosApp</Title>
       <Button
         disabled={isBlockBtn}
         type="primary"

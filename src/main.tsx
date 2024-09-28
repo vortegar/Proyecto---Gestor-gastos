@@ -10,6 +10,7 @@ import { MonthContextProvider } from './context/MonthContextProvider'
 import { AuthProvider } from './context/AuthContextProvider'
 import { FixedSpentContextProvider } from './context/FixedSpentContextProvider'
 import { YearContextProvider } from './context/YearContextProvider';
+import { DiffContextProvider } from './context/DiffPersonContextProvider';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -17,13 +18,15 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <YearContextProvider>
         <MonthContextProvider>
           <PersonContextProvider>  
-            <FixedSpentContextProvider>
-              <SpentContextProvider>
-                <ExpensesContextProvider>
-                  <App />
-                </ExpensesContextProvider>
-              </SpentContextProvider> 
-            </FixedSpentContextProvider>
+            <DiffContextProvider> 
+              <FixedSpentContextProvider>
+                <SpentContextProvider>
+                  <ExpensesContextProvider>
+                    <App />
+                  </ExpensesContextProvider>
+                </SpentContextProvider> 
+              </FixedSpentContextProvider>
+            </DiffContextProvider>
           </PersonContextProvider>
         </MonthContextProvider>
       </YearContextProvider>

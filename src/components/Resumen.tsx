@@ -1,27 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { Card, Space } from "antd";
-import { FileOutlined } from "@ant-design/icons";
 
 import Title from "antd/es/typography/Title";
 import { ResumenProps } from "./intercafeComponents";
-import { PersonState } from "../context/PersonContextProvider";
+import { DiffContext } from "../context/DiffPersonContextProvider";
 
 export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
-  const [person, setPerson] = useState<PersonState>({});
-  const [expenses, setExpenses] = useState<string | undefined>(undefined);
 
+  const [expenses, setExpenses] = useState<string | undefined>(undefined);  
   const [fixedExpense, setFixedExpense] = useState<string | undefined>(undefined);
-
+  
+  const { diffContext, setDiffContext } = useContext(DiffContext);
+  
   useEffect(() => {
     if (type === 'persona' && data.length > 0) {
       const maxPerson = data.reduce((prev, curr) => (prev?.total > curr?.total ? prev : curr));
       const minPerson = data.reduce((prev, curr) => (prev?.total < curr?.total ? prev : curr));
 
-      const saldo = (maxPerson?.total - minPerson?.total)?.toLocaleString('es-Es');
-      setPerson({ user: maxPerson.user as string, total: saldo });
+      setDiffContext({ user: maxPerson.user as string, total: (maxPerson?.total - minPerson?.total)});
     }
-  }, [data, type]);
+  }, [data, type, setDiffContext]);
  
   useEffect(() => {
     if (type=='gastos varios') {
@@ -46,9 +45,10 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
       <Card
       className="custom-card-head"
         title={
-          <div>
-            <FileOutlined style={{ marginRight: '2vw'}}/>
-            <Title level={4} style={{ display: 'inline', fontSize:'16px', color: 'var(--quaternary-color)' }}>{title}</Title>
+          <div >
+            <Title level={4} style={{ display: 'inline', fontSize:'16px', color: 'var(--quaternary-color)' }}>
+              {title}
+            </Title>
           </div>
         }
         style={{ textAlign: 'center', marginTop: '2vw' }}
@@ -63,7 +63,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
                 (type=='persona') && 
                 <>
                   <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.user}:</span>
-                  <span style={{ flexGrow: 1, textAlign: 'right' }}>{v.total?.toLocaleString('es-ES')}</span>
+                  <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.total?.toLocaleString('es-ES')}</span>
                 </>
               }
               {
@@ -86,23 +86,23 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
           :
           <span>No hay datos</span>
         }
-        {type === 'persona' && person.total !== undefined && (
+        {type === 'persona' && diffContext.total !== undefined && (
           <div style={{ display: 'flex', width: '100%' }}>
-            <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Se debe a {person.user}:</strong></span>
-            <span style={{ textAlign: 'right' }}><strong>$ {person.total?.toLocaleString('es-ES')}</strong></span>
+            <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Se debe a {diffContext.user}:</strong></span>
+            <span style={{ textAlign: 'right' }}><strong>$ {diffContext.total?.toLocaleString('es-ES')}</strong></span>
           </div>
         )}
         {
           (type=='gastos fijos') && 
           <div style={{ display: 'flex', width: '100%' }}>
-            <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Total Gastos Fijos:</strong></span>
+            <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Total:</strong></span>
             <span style={{ flexGrow: 1, textAlign: 'right' }}> <strong>$ {fixedExpense}</strong></span>
           </div>
         }
         {
           (type=='gastos varios') && 
           <div style={{ display: 'flex', width: '100%' }}>
-            <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Total Gastos variables:</strong></span>
+            <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Total:</strong></span>
             <span style={{ flexGrow: 1, textAlign: 'right' }}> <strong>$ {expenses}</strong></span>
           </div>
         }

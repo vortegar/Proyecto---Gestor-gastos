@@ -12,7 +12,7 @@ import { PersonContext } from '../../context/PersonContextProvider';
 import { Expenses, InputsExpenses } from '../../interface/ExpensesInterface';
 
 import { getDataMonth } from '../../services/monthServides';
-import { deleteExpense, deleteFixedExpense, updateExpenses } from '../../services/expensesServices';
+import { deleteExpense, deleteExtraItems, deleteFixedExpense, updateExpenses } from '../../services/expensesServices';
 
 import { ButtonAdd } from '../../components/ButtonAdd';
 import { ButtonDelete } from '../../components/ButtonDelete';
@@ -21,6 +21,7 @@ import { FixedExpenseInputs } from '../../components/intercafeComponents';
 
 import { useBtnRefresh } from '../../hooks/useBtnRefresh';
 import { YearContext } from '../../context/YearContextProvider';
+import { FormExtraExpenses } from '../../components/FormExtraExpenses';
 
 export const ExpensesPage: React.FC = () => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<InputsExpenses>();
@@ -110,6 +111,33 @@ export const ExpensesPage: React.FC = () => {
         <ButtonDelete 
           disabled={isBlockBtnDelete} 
           fn={() => deleteFixedExpense(expense, toggleBlockBtnDelete, toggleRefresh, anioActual.id!, mesActual.id!) } 
+        />
+      )
+    }
+  ];
+  
+  const extraItemsColumns: ColumnsType<FixedExpenseInputs> = [
+    {
+      title: 'Persona',
+      dataIndex: 'person_name',
+      key: 'person_name',
+      align: 'center',
+    },
+    {
+      title: 'Pago',
+      dataIndex: 'total',
+      key: 'total',
+      align: 'center',
+    },
+    {
+      title: 'Acción',
+      dataIndex: 'eliminar',
+      key: 'eliminar',
+      align: 'center',
+      render: (_, expense) => (
+        <ButtonDelete 
+          disabled={isBlockBtnDelete} 
+          fn={() => deleteExtraItems(expense, toggleBlockBtnDelete, toggleRefresh, anioActual.id!, mesActual.id!) } 
         />
       )
     }
@@ -221,7 +249,6 @@ export const ExpensesPage: React.FC = () => {
         </Form.Item>
       </Form>
       </Col>
-
       </Row>
       <Row gutter={16}>
         <Col span={10}>
@@ -252,6 +279,25 @@ export const ExpensesPage: React.FC = () => {
             }}
             />
         </Col>
+      </Row>
+      <Row gutter={16}>
+        <Col span={10}>
+          <FormExtraExpenses/>
+        </Col>  
+        <Col span={14}>
+          <Table 
+            columns={extraItemsColumns} 
+            dataSource={mesActual?.extra_items} 
+            title={() => (
+              <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}>
+                Gastos Extra
+              </h4>
+            )}
+            locale={{
+              emptyText: <span>Aun no existen gastos en el mes</span> 
+            }}
+            />
+            </Col>
       </Row>
 
     </div>
