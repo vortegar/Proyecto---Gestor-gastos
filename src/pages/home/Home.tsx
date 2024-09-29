@@ -29,8 +29,8 @@ export const Home: React.FC = () => {
   const [isMonthModalVisible, setIsMonthModalVisible] = useState(false);
   const [isCalculateModalVisible, setIsCalculateModalVisible] = useState(false);
 
-  const [anioActual, setAnioActual] = useState(yearContext[yearContext.length - 1])
-  const [mesActual, setMesActual] = useState(monthContext[monthContext.length - 1])
+  const [anioActual, setAnioActual] = useState(yearContext[yearContext.length - 1]);
+  const [mesActual, setMesActual] = useState(monthContext[monthContext.length - 1]);
 
   const { refresh, toggleRefresh} = useBtnRefresh()
   useEffect(() => {
