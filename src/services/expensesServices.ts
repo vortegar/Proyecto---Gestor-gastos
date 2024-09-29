@@ -1,33 +1,22 @@
-import { auth, db } from "./firebase";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
-
-import { validateUser } from "../helpers/validarUser";
+import { updateDoc } from "firebase/firestore";
 
 import { FixedExpense } from "../interface/ComponentsInterface";
 import { Expenses, InputsExpenses } from "../interface/ExpensesInterface";
 import { ExtraItemsColumns, FixedExpenseInputs, FnState, FormExtraExpenesesInputs } from "../components/intercafeComponents";
 
-import { v4 as uuidv4 } from 'uuid';
 import { message } from "antd";
+import { v4 as uuidv4 } from 'uuid';
+
+import { MESSAGE_ERROR, MESSAGE_SUCCES } from "./constantesServices";
+import { checkMonthExistence, findMonthById } from "../helpers/validateMonths";
 
 // Actualizar
 export const updateExtraExpenses = async (data: FormExtraExpenesesInputs, year: string, monthId: string) => {
   try {
-    const user = auth.currentUser!;
-    validateUser(user);
-
-    const userUid = user.uid;
-    const userRef = doc(db, "users", userUid);
-    const yearDocRef = doc(userRef, "year", year);
-
-    const yearDoc = await getDoc(yearDocRef);
-    const months = yearDoc.data()!.month;
-
+    
+    const {months, yearDocRef} = await findMonthById(year);
     const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
-    if (monthIndex === -1) {
-      console.error('No se encontró el mes con el ID proporcionado');
-      return;
-    }
+    checkMonthExistence(monthIndex)
 
     const updatedMonth = {
       ...months[monthIndex],
@@ -50,29 +39,18 @@ export const updateExtraExpenses = async (data: FormExtraExpenesesInputs, year: 
       month: updatedMonths
     });
   
-    message.success('Gasto agregado con éxito');
+    message.success(MESSAGE_SUCCES);
   } catch (e) {
-    console.error("Error actualizando documento: ", e);
+    console.error(MESSAGE_ERROR, e);
   }
 };
 
 export const updateFixedExpenses = async (data: FixedExpenseInputs, year: string, monthId: string) => {
   try {
-    const user = auth.currentUser!;
-    validateUser(user);
 
-    const userUid = user.uid;
-    const userRef = doc(db, "users", userUid);
-    const yearDocRef = doc(userRef, "year", year);
-
-    const yearDoc = await getDoc(yearDocRef);
-    const months = yearDoc.data()!.month;
-
+    const {months, yearDocRef} = await findMonthById(year);
     const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
-    if (monthIndex === -1) {
-      console.error('No se encontró el mes con el ID proporcionado');
-      return;
-    }
+    checkMonthExistence(monthIndex)
 
     const updatedMonth = {
       ...months[monthIndex],
@@ -82,7 +60,7 @@ export const updateFixedExpenses = async (data: FixedExpenseInputs, year: string
         total: value
       }))
     };
-    console.log(updatedMonth)
+
     const updatedMonths = [
       ...months.slice(0, monthIndex),
       updatedMonth,
@@ -92,29 +70,18 @@ export const updateFixedExpenses = async (data: FixedExpenseInputs, year: string
     await updateDoc(yearDocRef, {
       month: updatedMonths
     });
-    message.success('Gasto agregado con éxito');
+    message.success(MESSAGE_SUCCES);
   } catch (e) {
-    console.error("Error actualizando documento: ", e);
+    console.error(MESSAGE_ERROR, e);
   }
 };
 
 export const updateExpenses = async (data: InputsExpenses,year: string, monthId: string) => {
   try {
-    const user = auth.currentUser!;
-    validateUser(user);
 
-    const userUid = user.uid;
-    const userRef = doc(db, "users", userUid);
-    const yearDocRef = doc(userRef, "year", year);
-
-    const yearDoc = await getDoc(yearDocRef);
-    const months = yearDoc.data()!.month;
-
+    const {months, yearDocRef} = await findMonthById(year);
     const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
-    if (monthIndex === -1) {
-      console.error('No se encontró el mes con el ID proporcionado');
-      return;
-    }
+    checkMonthExistence(monthIndex);
 
     const updatedExpenses = {
       ...months[monthIndex],
@@ -128,10 +95,9 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
             fecha: data.fecha,
             spent_type: data.spent_type,
           }    
-
       ]
-    
-    }
+    };
+
     const updatedMonths = [
       ...months.slice(0, monthIndex),
       updatedExpenses,
@@ -142,9 +108,9 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
       month: updatedMonths
     });
     
-    message.success('Gasto agregado con éxito');
+    message.success(MESSAGE_SUCCES);
   } catch (e) {
-    console.error("Error añadiendo a: ", e);
+    console.error(MESSAGE_ERROR, e);
   }
 };
 
@@ -156,21 +122,10 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
     monthId: string
   ) => {
     try {
-      const user = auth.currentUser!;
-      validateUser(user);
   
-      const userRef = doc(db, "users", user.uid);
-      const yearDocRef = doc(userRef, "year", year);
-  
-      const yearDoc = await getDoc(yearDocRef);
-
-      const months = yearDoc.data()!.month;
-  
+      const {months, yearDocRef} = await findMonthById(year);
       const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
-      if (monthIndex === -1) {
-        console.error('No se encontró el mes con el ID proporcionado');
-        return;
-      }
+      checkMonthExistence(monthIndex);
   
       fnBlock();
     
@@ -178,7 +133,6 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
         (expense: Expenses) => expense.id !== dataToDelete.id
       );
 
-  
       const updatedMonth = {
         ...months[monthIndex],
         expenses: updatedFixedExpenses,
@@ -200,9 +154,9 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
         fnBlock();
       }, 300);
   
-      console.log("Documento actualizado con éxito");
+      console.log(MESSAGE_SUCCES);
     } catch (error) {
-      console.error("Error eliminando documento: ", error);
+      console.error(MESSAGE_ERROR, error);
     }
   };
   
@@ -214,28 +168,16 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
     monthId: string
   ) => {
     try {
-      const user = auth.currentUser!;
-      validateUser(user);
-  
-      const userRef = doc(db, "users", user.uid);
-      const yearDocRef = doc(userRef, "year", year);
-  
-      const yearDoc = await getDoc(yearDocRef);
 
-      const months = yearDoc.data()!.month;
-  
+      const {months, yearDocRef} = await findMonthById(year);
       const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
-      if (monthIndex === -1) {
-        console.error('No se encontró el mes con el ID proporcionado');
-        return;
-      }
+      checkMonthExistence(monthIndex);
   
       fnBlock();
     
       const updatedFixedExpenses = months[monthIndex].fixed_expenses.filter(
         (expense: FixedExpense) => expense.spent_type !== dataToDelete.spent_type
       );
-
   
       const updatedMonth = {
         ...months[monthIndex],
@@ -258,9 +200,9 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
         fnBlock();
       }, 300);
   
-      console.log("Documento actualizado con éxito");
+      console.log(MESSAGE_SUCCES);
     } catch (error) {
-      console.error("Error eliminando documento: ", error);
+      console.error(MESSAGE_ERROR, error);
     }
   };
   
@@ -272,21 +214,10 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
     monthId: string
   ) => {
     try {
-      const user = auth.currentUser!;
-      validateUser(user);
-  
-      const userRef = doc(db, "users", user.uid);
-      const yearDocRef = doc(userRef, "year", year);
-  
-      const yearDoc = await getDoc(yearDocRef);
 
-      const months = yearDoc.data()!.month;
-  
+      const {months, yearDocRef} = await findMonthById(year);
       const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
-      if (monthIndex === -1) {
-        console.error('No se encontró el mes con el ID proporcionado');
-        return;
-      }
+      checkMonthExistence(monthIndex);
   
       fnBlock();
     
@@ -315,8 +246,8 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
         fnBlock();
       }, 300);
   
-      console.log("Documento actualizado con éxito");
+      console.log(MESSAGE_SUCCES);
     } catch (error) {
-      console.error("Error eliminando documento: ", error);
+      console.error(MESSAGE_ERROR, error);
     }
   };
