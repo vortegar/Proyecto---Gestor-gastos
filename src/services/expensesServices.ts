@@ -5,13 +5,13 @@ import { validateUser } from "../helpers/validarUser";
 
 import { FixedExpense } from "../interface/ComponentsInterface";
 import { Expenses, InputsExpenses } from "../interface/ExpensesInterface";
-import { FixedExpenseInputs, FnState } from "../components/intercafeComponents";
+import { ExtraItemsColumns, FixedExpenseInputs, FnState, FormExtraExpenesesInputs } from "../components/intercafeComponents";
 
 import { v4 as uuidv4 } from 'uuid';
 import { message } from "antd";
 
 // Actualizar
-export const updateExtraExpenses = async (data: FixedExpenseInputs, year: string, monthId: string) => {
+export const updateExtraExpenses = async (data: FormExtraExpenesesInputs, year: string, monthId: string) => {
   try {
     const user = auth.currentUser!;
     validateUser(user);
@@ -207,7 +207,7 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
   };
   
   export const deleteFixedExpense = async (
-    dataToDelete: FixedExpense,
+    dataToDelete: FixedExpenseInputs,
     fnBlock: FnState,
     fnRefresh: FnState,
     year: string,
@@ -265,7 +265,7 @@ export const updateExpenses = async (data: InputsExpenses,year: string, monthId:
   };
   
   export const deleteExtraItems = async (
-    dataToDelete: FixedExpense,
+    dataToDelete: ExtraItemsColumns,
     fnBlock: FnState,
     fnRefresh: FnState,
     year: string,

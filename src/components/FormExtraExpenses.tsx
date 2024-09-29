@@ -10,7 +10,7 @@ import { ButtonAdd } from "./ButtonAdd";
 
 import { useBtnRefresh } from "../hooks/useBtnRefresh";
 
-import { FixedExpenseInputs } from "./intercafeComponents";
+import { FormExtraExpenesesInputs } from "./intercafeComponents";
 
 import { updateExtraExpenses } from "../services/expensesServices";
 import { PersonContext } from "../context/PersonContextProvider";
@@ -19,7 +19,7 @@ import { Option } from "antd/es/mentions";
 export const FormExtraExpenses:  React.FC = () => {
   const {isBlockBtn, toggleBlockBtn, toggleRefresh} = useBtnRefresh()
 
-  const { control, handleSubmit, formState: { errors } } = useForm();
+  const { control, handleSubmit, formState: { errors } } = useForm<FormExtraExpenesesInputs>();
   
   const { yearContext } = useContext(YearContext);
   const { monthContext } = useContext(MonthContext);
@@ -29,7 +29,7 @@ export const FormExtraExpenses:  React.FC = () => {
   
   const mesActual = monthContext[monthContext.length - 1]?.id;
 
-  const onSubmitExtraSpent: SubmitHandler<FixedExpenseInputs> = async(data) => {
+  const onSubmitExtraSpent: SubmitHandler<FormExtraExpenesesInputs> = async(data) => {
     toggleBlockBtn();
     try {
       await updateExtraExpenses(data, anioActual.id!, mesActual!);

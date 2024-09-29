@@ -17,7 +17,7 @@ import { deleteExpense, deleteExtraItems, deleteFixedExpense, updateExpenses } f
 import { ButtonAdd } from '../../components/ButtonAdd';
 import { ButtonDelete } from '../../components/ButtonDelete';
 import { FormFixedExpenses } from '../../components/FormFixedExpenses';
-import { FixedExpenseInputs } from '../../components/intercafeComponents';
+import { ExtraItemsColumns, FixedExpenseInputs } from '../../components/intercafeComponents';
 
 import { useBtnRefresh } from '../../hooks/useBtnRefresh';
 import { YearContext } from '../../context/YearContextProvider';
@@ -116,7 +116,7 @@ export const ExpensesPage: React.FC = () => {
     }
   ];
   
-  const extraItemsColumns: ColumnsType<FixedExpenseInputs> = [
+  const extraItemsColumns: ColumnsType<ExtraItemsColumns> = [
     {
       title: 'Persona',
       dataIndex: 'person_name',

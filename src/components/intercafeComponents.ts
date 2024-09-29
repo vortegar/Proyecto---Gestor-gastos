@@ -43,6 +43,17 @@ export type FixedExpenseInputs = {
   [key: string]   : string | number;
 };
 
+export type ExtraItemsColumns = {
+  person_name : string;
+  total           : number;
+  [key: string]   : string | number;
+};
+
+export type FormExtraExpenesesInputs = {
+  user: string;
+  monto: number;
+};
+
 export type ExtraItemsInputs = {
   id              : number;
   person_name     : string;

@@ -1,12 +1,11 @@
 export interface ButtonAddProps {
-    disabled: boolean;
-    title: string;
+  title   : string;
+  disabled: boolean;
   }
-
 
 export interface ButtonDeleteProps {
     disabled: boolean;
-    fn: () => void;
+    fn      : () => void;
   }
 
 export interface FixedSpent {
@@ -25,8 +24,9 @@ export interface Spent {
 } 
 
 export interface FixedExpense {
-  spent_type: string;
+  id        : string;
   total     : number | string;
   eliminar ?: string; 
+  spent_type: string;
   monto    ?: string
 }
