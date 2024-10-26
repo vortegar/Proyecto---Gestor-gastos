@@ -1,26 +1,25 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { auth, db } from './firebase';
-import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { v4 as uuidv4 } from 'uuid';
 
-import { validateUser } from '../helpers/validarUser';
+import { getYear } from '../helpers/collection';
 import { formatArrayMonth } from '../helpers/formatData';
+
+import { updateDoc, arrayUnion } from "firebase/firestore";
 
 import { Month } from '../interface/MonthInterface';
 import { FnState } from '../components/intercafeComponents';
 
-import { v4 as uuidv4 } from 'uuid';
+import { MESSAGE_DELETE_ITEM, MESSAGE_ERROR } from '../constants/constantesServices';
+
+import { message } from 'antd';
+
 // Crear
 export const addMonth = async (year: string, monthData: string) => {
   try {
-    const user = auth.currentUser!;
-    validateUser(user);
-
-    const userRef = doc(db, "users", user.uid);
-    const yearDocRef = doc(userRef, "year", year);
-    const yearDoc = await getDoc(yearDocRef);
-
+    const {yearDoc, yearDocRef} = await getYear(year)
     if (!yearDoc.exists()) {
+      message.error(MESSAGE_ERROR);
      console.log('No se encontro el año')
     }
 
@@ -36,23 +35,16 @@ export const addMonth = async (year: string, monthData: string) => {
       month: arrayUnion(newMonth)
     });
 
-    // console.log("Mes agregado con éxito al año:", year);
   } catch (e) {
-    console.error("Error actualizando documento: ", e);
+    message.error(MESSAGE_ERROR);
+    console.error(MESSAGE_ERROR, e);
   }
 };
 
 // Obtener data de meses
 export const getDataMonth = async (fn: Dispatch<SetStateAction<Month[]>>, year: string) => {
   try {
-    const user = auth.currentUser!;
-    validateUser(user);
-
-    const userUid = user.uid;
-    const userRef = doc(db, "users", userUid);
-    const yearDocRef = doc(userRef, "year", year);
-
-    const yearDoc = await getDoc(yearDocRef);
+    const {yearDoc} = await getYear(year)
 
     if (!yearDoc.exists()) {
       console.error("No se encontró el documento del año");
@@ -69,26 +61,18 @@ export const getDataMonth = async (fn: Dispatch<SetStateAction<Month[]>>, year: 
 };
 
 // Buscar un Mes
-export const getMonthById = async (yearId: string, monthId: string, fn: Dispatch<SetStateAction<Month>>, fnBlock: FnState) => {
-  
+export const getMonthById = async (yearId: string, monthId: string, fn: Dispatch<SetStateAction<Month>>, fnBlock: FnState) => {  
   try {
-    const user = auth.currentUser!;
-    validateUser(user);
-    const userRef = doc(db, "users", user.uid); 
-    const yearDocRef = doc(userRef, "year", yearId);
-    
-    const yearDoc = await getDoc(yearDocRef);
+    const {yearDoc} = await getYear(yearId)
     
     if (yearDoc.exists()) {
       const yearData = yearDoc.data();
       const months: Month[] = yearData?.month;
 
-      console.log(months)
       const monthData = months.find((month) => month.id === monthId); 
 
       if (monthData) {
         fn(monthData);
-        console.log("Mes encontrado:", monthData);
         fnBlock();
       } else {
         console.log("No se encontró un mes con el ID proporcionado");
@@ -97,7 +81,8 @@ export const getMonthById = async (yearId: string, monthId: string, fn: Dispatch
       console.log("No se encontró el documento del año");
     }
   } catch (e) {
-    console.error("Error al obtener el mes: ", e);
+    message.error(MESSAGE_ERROR);
+    console.error(MESSAGE_ERROR, e);
   }
 };
 
@@ -105,15 +90,7 @@ export const getMonthById = async (yearId: string, monthId: string, fn: Dispatch
 export const deleteMonthById = async (year: string, monthId: string, fnBlock: FnState, fnRefresh: FnState) => {
   
   try {
-    const user = auth.currentUser!;
-    fnBlock();
-
-    validateUser(user);
-
-    const userRef = doc(db, "users", user.uid);
-    const yearDocRef = doc(userRef, "year", year);
-
-    const yearDoc = await getDoc(yearDocRef);
+    const {yearDoc, yearDocRef} = await getYear(year)
     
     if (!yearDoc.exists()) {
       console.error('No se encontró el documento del año');
@@ -132,8 +109,9 @@ export const deleteMonthById = async (year: string, monthId: string, fnBlock: Fn
       fnBlock(); 
     }, 300);
 
-    console.log("Mes eliminado correctamente:", monthId);
+    message.success(MESSAGE_DELETE_ITEM);
   } catch (e) {
-    console.error("Error al eliminar el mes: ", e);
+    message.error(MESSAGE_ERROR);
+    console.error(MESSAGE_ERROR, e);
   }
 };

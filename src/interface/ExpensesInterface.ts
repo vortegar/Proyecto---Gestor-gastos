@@ -2,12 +2,13 @@ import { ReactNode } from 'react';
 import { HistoryResumen } from '../pages/home/interfaceHome';
 
 export interface Expenses {
+    id        ?: string,
     descripcion: string;
     fecha     ?: string,
-    id        ?: number;
     monto      : number,
     spent_type : string,
-    user       : string,
+    user_1     : string,
+    user_2     : string,
   }
   
   export interface MyContextProviderProps {
@@ -47,4 +48,6 @@ export type InputsExpenses = {
     user       : string;
     fecha      : string;
     spent_type : string;
+    user_1     : string;
+    user_2     : string;
   };

@@ -1,7 +1,8 @@
 import { useContext, useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
-import { Table, Input, Form, notification, message } from 'antd';
+import { ColumnsType } from 'antd/es/table';
+import { Table, Input, Form, message } from 'antd';
 
 import { useBtnRefresh } from '../hooks/useBtnRefresh';
 
@@ -10,9 +11,10 @@ import { ButtonDelete } from './ButtonDelete';
 
 import { FixedSpentContext } from '../context/FixedSpentContextProvider';
 import { addFixedSpent, deleteFixedSpent, getDataFixedSpent } from '../services/fixedExpensesServices';
-import { FixedSpent } from '../interface/ComponentsInterface';
-import { ColumnsType } from 'antd/es/table';
+
 import { FixedSpentInputs } from './intercafeComponents';
+import { FixedSpent } from '../interface/ComponentsInterface';
+import { MESSAGE_ADD_ITEM, MESSAGE_ERROR } from '../constants/constantesServices';
 
 export const FormFixedSpents: React.FC = () => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<FixedSpentInputs>();
@@ -28,11 +30,7 @@ export const FormFixedSpents: React.FC = () => {
     if (!data.fixed_spent_name) return;
     const fixedSpentName = fixedSpentContext.find( s => s.fixed_spent_name?.toLowerCase() == data.fixed_spent_name.toLowerCase())
     if( fixedSpentName != undefined) {
-      notification.error({
-        message: 'Error',
-        description: 'Este gasto ya existe.',
-      });
-      message.error('Este gasto ya existe!!!');
+      message.error('Este gasto ya existe.');
       return      
     }
     toggleBlockBtn();
@@ -41,7 +39,9 @@ export const FormFixedSpents: React.FC = () => {
       toggleRefresh();
       toggleBlockBtn();
       reset();
+      message.success(MESSAGE_ADD_ITEM);
     } catch (error) {
+      message.error(MESSAGE_ERROR);
       console.log('error', error)      
     }
   };

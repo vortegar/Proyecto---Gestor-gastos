@@ -14,6 +14,7 @@ import { ButtonDelete } from './ButtonDelete';
 
 import { PersonInputs } from './intercafeComponents';
 import { Person } from '../interface/ComponentsInterface';
+import { MESSAGE_ADD_ITEM, MESSAGE_ERROR } from '../constants/constantesServices';
 
 export const FormPersons: React.FC = () => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<PersonInputs>();
@@ -28,7 +29,7 @@ export const FormPersons: React.FC = () => {
   const onSubmitPerson: SubmitHandler<PersonInputs> = async(data) => {
     const personName = personContext.find( s => s.person_name.toLowerCase() == data.name.toLowerCase())
     if( personName != undefined) {
-      message.error('Esta persona ya existe!!!');
+      message.error('Esta persona ya existe');
       return      
     }
     toggleBlockBtn();
@@ -37,8 +38,10 @@ export const FormPersons: React.FC = () => {
       toggleRefresh();
       toggleBlockBtn();
       reset();
+      message.success(MESSAGE_ADD_ITEM);
     } catch (error) {
-      console.log('error', error)      
+      message.error(MESSAGE_ERROR);
+      console.log('error', error);    
     }
   };
 

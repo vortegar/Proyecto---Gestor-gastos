@@ -35,7 +35,7 @@ export const Navbar: React.FC = () => {
           monthContext.length > 0 &&
           <>  
             <Menu.Item key="2" icon={<UserOutlined />}>
-                <Link to="/expenses">Gastos Fijos/Vbles</Link>
+                <Link to="/expenses">Gastos</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<FileTextOutlined/>}>
                 <Link to="/history">Historico Anual</Link>

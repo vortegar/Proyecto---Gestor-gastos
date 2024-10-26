@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { auth, db } from './firebase';
-import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 
 import { validateUser } from '../helpers/validarUser';
 import { formatToUpperCase } from '../helpers/formatData';
@@ -9,35 +9,33 @@ import { formatToUpperCase } from '../helpers/formatData';
 import { FixedSpentInputs, FnState } from '../components/intercafeComponents';
 
 import { FixedSpent } from '../interface/ComponentsInterface';
+
 import { message } from 'antd';
+
+import { MESSAGE_ADD_ITEM, MESSAGE_DELETE_ITEM, MESSAGE_ERROR } from '../constants/constantesServices';
+
+import { getFixedSpentsCollection } from '../helpers/collection';
 
 // Crear
   export const addFixedSpent = async (data: FixedSpentInputs) => {
-    const user = auth.currentUser;
-    const formData = formatToUpperCase(data.fixed_spent_name)
     try {
-      validateUser(user);
-      const userRef = doc(db, 'users', user!.uid);
-  
-      const personCollectionRef = collection(userRef, 'fixedspent');
+      const formData = formatToUpperCase(data.fixed_spent_name);
+      const personCollectionRef = getFixedSpentsCollection();
+      
       await addDoc(personCollectionRef, {
         fixed_spent_name: formData,
         });
-        message.success('Gasto Agregado!!!');
+        message.success(MESSAGE_ADD_ITEM);
       } catch (e) {
-        console.error("Error añadiendo a: ", e);
+        message.error(MESSAGE_ERROR);
+        console.error(MESSAGE_ERROR, e);
       }
     };
 
 // Leer 
 export const getDataFixedSpent = async (fn: Dispatch<SetStateAction<FixedSpent[]>>) => {
   try {
-    const user = auth.currentUser;
-    validateUser(user);
-
-    const userUid = user!.uid;
-    const userRef = doc(db, "users", userUid);
-    const personCollectionRef = collection(userRef, "fixedspent");
+    const personCollectionRef = getFixedSpentsCollection();
 
     const querySnapshot = await getDocs(personCollectionRef);
       const fixedSpentArray = querySnapshot.docs.map(doc => {
@@ -50,6 +48,7 @@ export const getDataFixedSpent = async (fn: Dispatch<SetStateAction<FixedSpent[]
       fixedSpentArray.sort((a, b) => a.fixed_spent_name.localeCompare(b.fixed_spent_name));
       fn(fixedSpentArray)
     } catch (e) {
+      message.error(MESSAGE_ERROR);
       console.error("Error fetching documents: ", e);
     }
   };
@@ -70,9 +69,10 @@ export const getDataFixedSpent = async (fn: Dispatch<SetStateAction<FixedSpent[]
       setTimeout(() => {
         fnBlock();
       }, 300);
-      message.success('Gasto Eliminado!!!');
+      message.success(MESSAGE_DELETE_ITEM);
     } catch (error) {
-      console.error("Error al eliminar: ", error);
+      message.error(MESSAGE_ERROR);
+      console.error(MESSAGE_ERROR, error);
     }
   };
   

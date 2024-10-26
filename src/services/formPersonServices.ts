@@ -1,32 +1,34 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { auth, db } from './firebase';
-import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 
 import { validateUser } from "../helpers/validarUser";
 import { formatToUpperCase } from "../helpers/formatData";
+import { getPersonCollection } from '../helpers/collection';
 
 import { FnState, PersonInputs } from '../components/intercafeComponents';
 
 import { Person } from '../interface/ComponentsInterface';
+
 import { message } from 'antd';
+
+import { MESSAGE_ADD_ITEM, MESSAGE_DELETE_ITEM, MESSAGE_ERROR } from '../constants/constantesServices';
 
 // Crear
 export const addPerson = async (data: PersonInputs) => {
-  const user = auth.currentUser;
   try {
-    validateUser(user);
     const formData = formatToUpperCase(data!.name)
-    const userRef = doc(db, 'users', user!.uid);
+    const personCollectionRef = getPersonCollection();
 
-    const personCollectionRef = collection(userRef, 'person');
     await addDoc(personCollectionRef, {
         name: formData
       });
-      message.success('Persona agregada!!!');
+      message.success(MESSAGE_ADD_ITEM);
 
     } catch (e) {
-      console.error("Error añadiendo a: ", e);
+      message.error(MESSAGE_ERROR);
+      console.error(MESSAGE_ERROR, e);
     }
   };
 
@@ -34,12 +36,7 @@ export const addPerson = async (data: PersonInputs) => {
 export const getDataPerson = async (fn: Dispatch<SetStateAction<Person[]>>) => {
   
   try {
-    const user = auth.currentUser;
-    validateUser(user);
-
-    const userUid = user!.uid;
-    const userRef = doc(db, "users", userUid);
-    const personCollectionRef = collection(userRef, "person");
+    const personCollectionRef = getPersonCollection();
 
     const querySnapshot = await getDocs(personCollectionRef);
       const personsArray = querySnapshot.docs.map(doc => {
@@ -52,6 +49,7 @@ export const getDataPerson = async (fn: Dispatch<SetStateAction<Person[]>>) => {
       personsArray.sort((a, b) => a.person_name.localeCompare(b.person_name));
       fn(personsArray)
     } catch (e) {
+      message.error(MESSAGE_ERROR);
       console.error("Error en la peticion: ", e);
     }
   };
@@ -73,9 +71,10 @@ export const getDataPerson = async (fn: Dispatch<SetStateAction<Person[]>>) => {
         fnBlock();
       }, 300);
   
-      message.success('Persona eliminada!!!');
+      message.success(MESSAGE_DELETE_ITEM);
     } catch (error) {
-      console.error("Error al Eliminar: ", error);
+      message.error(MESSAGE_ERROR);
+      console.error(MESSAGE_ERROR, error);
     }
   };
   

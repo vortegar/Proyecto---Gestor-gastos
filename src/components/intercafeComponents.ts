@@ -1,20 +1,19 @@
 // MODAL CREAR MES
 import { Control, FieldErrors } from "react-hook-form";
-import { HistoryResumen, PersonResumen } from "../pages/home/interfaceHome";
+import { ResumenI } from "../pages/home/interfaceHome";
 
 import { Month } from "../interface/MonthInterface";
-import { ExpensesResumen } from "../interface/ExpensesInterface";
 export interface ModalCreateMesProps {
     estado: boolean;     
     modificador: (arg: boolean) => void;
     fn: () => void;          
   }
-  export interface ModalCalculateDiff {
-    estado       : boolean;     
-    modificador  : (arg: boolean) => void;
-    extraItems   : ExtraItemsInputs[];
-    fixedExpenses: FixedExpenseInputs[];
-  }
+export interface ModalCalculateDiff {
+  estado       : boolean;     
+  modificador  : (arg: boolean) => void;
+  extraItems   : ExtraItemsInputs[];
+  fixedExpenses: FixedExpenseInputs[];
+}
 export   interface OnSubmitMesParams {
     name: string; 
   }
@@ -27,7 +26,7 @@ export interface OptionItem {
     name: string;
 }
 export interface ResumenProps {
-  data   : ExpensesResumen | FixedExpenseInputs[] | PersonResumen[] | HistoryResumen[];
+  data   : ResumenI[];
   title  : string;
   type  ?: string;
 }
@@ -37,20 +36,18 @@ export interface TotalPerson {
 }
 
 export type FixedExpenseInputs = {
-  fixed_spent_name: string;
-  spent_type      : string;
-  total           : number;
-  [key: string]   : string | number;
+  spent_type    : string;
+  monto         : number;
 };
 
 export type ExtraItemsColumns = {
-  person_name : string;
-  total           : number;
-  [key: string]   : string | number;
+  person_name   : string;
+  monto         : number;
+  [key: string] : string | number;
 };
 
 export type FormExtraExpenesesInputs = {
-  user: string;
+  person_name : string;
   monto: number;
 };
 

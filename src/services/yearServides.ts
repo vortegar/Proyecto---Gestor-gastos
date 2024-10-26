@@ -1,41 +1,36 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { auth, db } from './firebase';
-import { collection, addDoc, getDocs, doc, getDoc, deleteDoc } from "firebase/firestore";
+import { addDoc, getDocs, doc, getDoc, deleteDoc } from "firebase/firestore";
 
 import { validateUser } from '../helpers/validarUser';
 
 import { Year } from '../interface/YearInterface';
 import { FnState } from '../components/intercafeComponents';
+import { getYearCollection } from '../helpers/collection';
+
+import { MESSAGE_DELETE_ITEM, MESSAGE_ERROR } from '../constants/constantesServices';
+
+import { message } from 'antd';
 
 // Crear
 export const addYear = async (data: string) => {
-  const user = auth.currentUser;
-    try {
-      validateUser(user);
+  try {
+      const yearCollectionRef = getYearCollection()
 
-      const userRef = doc(db, "users", user!.uid); 
-  
-      const yearCollectionRef = collection(userRef, 'year');
       await addDoc(yearCollectionRef, {
         year: data,
         month: [],
       });
-      // console.log(docRef)
     } catch (e) {
-      console.error("Error añadiendo a: ", e);
+      console.error(MESSAGE_ERROR, e);
     }
   };
 
   // Obtener data de meses
   export const getDataYear = async (fn: Dispatch<SetStateAction<Year[]>>) => {
     try {
-      const user = auth.currentUser;
-      validateUser(user);
-      
-      const userUid = user!.uid;
-      const userRef = doc(db, "users", userUid);
-      const yearCollectionRef = collection(userRef, "year");
+      const yearCollectionRef = getYearCollection();
   
       const querySnapshot = await getDocs(yearCollectionRef);
       const yearArrays = querySnapshot.docs.map(doc => ({
@@ -47,7 +42,7 @@ export const addYear = async (data: string) => {
 
       fn(orderYearArrays);
     } catch (e) {
-      console.error("Error: ", e);
+      console.error(MESSAGE_ERROR, e);
     }
   };
 
@@ -71,7 +66,7 @@ export const getYearById = async (id: string, fn: Dispatch<SetStateAction<Year>>
       console.log("No se encontró un mes con el ID proporcionado");
     }
   } catch (e) {
-    console.error("Error al obtener el mes: ", e);
+    console.error(MESSAGE_ERROR, e);
   }
 };
 
@@ -89,8 +84,9 @@ export const deleteYearById = async (id: string, fnBlock: FnState, fnRefresh: Fn
     setTimeout(() => {
       fnBlock()
     }, 300);
-    console.log("Mes eliminado correctamente:", id);
+    message.success(MESSAGE_DELETE_ITEM);
   } catch (e) {
-    console.error("Error al eliminar el mes: ", e);
+    message.error(MESSAGE_ERROR);
+    console.error(MESSAGE_ERROR, e);
   }
 };

@@ -15,6 +15,7 @@ import { Spent } from '../interface/ComponentsInterface';
 import { ColumnsType } from 'antd/es/table';
 
 import { SpentsInputs } from './intercafeComponents';
+import { MESSAGE_ADD_ITEM, MESSAGE_ERROR } from '../constants/constantesServices';
 
 export const FormSpents: React.FC = () => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<SpentsInputs>();
@@ -31,7 +32,7 @@ export const FormSpents: React.FC = () => {
 
     const spentName = spentContext.find( s => s.spent_name?.toLowerCase() == data.spent_name.toLowerCase())
     if( spentName != undefined) {
-      message.error('Este gasto ya existe!!!');
+      message.error('Este gasto ya existe');
       return      
     }
     toggleBlockBtn();
@@ -40,8 +41,10 @@ export const FormSpents: React.FC = () => {
       toggleRefresh();
       toggleBlockBtn();
       reset();
+      message.success(MESSAGE_ADD_ITEM);
     } catch (error) {
-     console.log('error', error) 
+      message.error(MESSAGE_ERROR);
+     console.log('error', error); 
     }
   };
 

@@ -1,76 +1,87 @@
-import { useContext, useState } from "react";
-import { Controller, useForm, SubmitHandler } from "react-hook-form";
+import { ChangeEvent, useEffect, useState } from "react";
 
-import { Col, Form, Input, Row } from "antd";
+import { Table } from "antd";
+import { ColumnsType } from "antd/es/table";
 
-import { YearContext } from "../context/YearContextProvider";
-import { MonthContext } from "../context/MonthContextProvider";
-import { FixedSpentContext } from "../context/FixedSpentContextProvider";
+import * as XLSX from 'xlsx';
 
-import { ButtonAdd } from "./ButtonAdd";
-
-import { useBtnRefresh } from "../hooks/useBtnRefresh";
+import { useActualDate } from "../hooks/useActualDate";
 
 import { FixedExpenseInputs } from "./intercafeComponents";
 
 import { updateFixedExpenses } from "../services/expensesServices";
 
 export const FormFixedExpenses:  React.FC = () => {
-  const { control, handleSubmit } = useForm<FixedExpenseInputs>();
-  const { fixedSpentContext } = useContext(FixedSpentContext);
-  const {isBlockBtn, toggleBlockBtn, toggleRefresh} = useBtnRefresh()
-  
-  const { yearContext } = useContext(YearContext);
-  const { monthContext } = useContext(MonthContext);
+  const [data, setData] = useState([]);
+  const {anioActual, mesActual} = useActualDate()
 
-  const [anioActual] = useState(yearContext[yearContext.length - 1])
-  
-  const mesActual = monthContext[monthContext.length - 1]?.id;
-
-    const onSubmitFixedSpent: SubmitHandler<FixedExpenseInputs> = async(data) => {
-        toggleBlockBtn();
-        try {
-          await updateFixedExpenses(data, anioActual.id!, mesActual!);
-          toggleRefresh();
-          toggleBlockBtn();
-    
-        } catch (error) {
-         console.log('error', error) 
-        }
+  useEffect(() => {
+     setData(mesActual.fixed_expenses as [])
+  }, [mesActual.fixed_expenses])
+ 
+  const handleFileUploadFixedExpense = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files![0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const arrayBuffer = e.target!.result as ArrayBuffer;
+        const data = new Uint8Array(arrayBuffer); 
+        const workbook = XLSX.read(data, { type: 'array' }); 
+        
+        const worksheet = workbook.Sheets[workbook.SheetNames[1]];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as [];
+        const objectTable = jsonData.map(l => {
+          return {
+            spent_type  : l[0],
+            monto       : l[1],
+          }
+        }) as [];
+        
+        setData(objectTable);
+        updateFixedExpenses(objectTable, anioActual.id!, mesActual.id!)
       };
-      return (
-        <Form layout="vertical" onFinish={handleSubmit(onSubmitFixedSpent)}>
-          <Row gutter={16}>
-            {fixedSpentContext.map((f, index) => (
-              <Col span={12} key={index}> 
-                <Form.Item>
-                  <Input disabled={true} defaultValue={f.fixed_spent_name} />
-                  <Controller
-                    name={f.fixed_spent_name}
-                    control={control}
-                    rules={{ required: "Este campo es obligatorio" }}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
-                      <Input
-                        style = {{ marginTop: '0.2vw'}}
-                        type="number"
-                        placeholder={`Monto ${f.fixed_spent_name}`}
-                        value={value}
-                        onChange={(e: { target:{ value: string}}) => {
-                          const numericValue = parseFloat(e.target.value); 
-                          onChange(isNaN(numericValue) ? '' : numericValue); 
-                        }}
-                        onBlur={onBlur}
-                        inputRef={ref}
-                      />
-                    )}
-                  />
-                </Form.Item>
-              </Col>
-            ))}
-          </Row>
-          <Form.Item>
-            <ButtonAdd disabled={isBlockBtn} title='Agregar Gasto Fijo' />
-          </Form.Item>
-        </Form>
-      );
-    };
+      reader.readAsArrayBuffer(file);
+    }
+  };
+  
+    const fixedExpenseColumns: ColumnsType<FixedExpenseInputs> = [
+    {
+      title: 'Gasto',
+      dataIndex: 'spent_type',
+      key: 'spent_type',
+      align: 'center',
+    },
+    {
+      title: 'Monto',
+      dataIndex: 'monto',
+      key: 'monto',
+      align: 'center',
+    },
+    // {
+    //   title: 'Acción',
+    //   dataIndex: 'eliminar',
+    //   key: 'eliminar',
+    //   align: 'center',
+      // render: (_, expense) => (
+      //   <ButtonDelete 
+      //     disabled={isBlockBtnDelete} 
+      //     fn={() => deleteFixedExpense(expense, toggleBlockBtnDelete, toggleRefresh, anioActual.id!, mesActual.id!) } 
+      //   />
+      // )
+    // }
+  ];
+
+  return (
+    <>
+      <input type="file" accept=".xlsx" onChange={handleFileUploadFixedExpense} />
+      <Table 
+        columns={fixedExpenseColumns} 
+        dataSource={data} 
+        title={() => (
+          <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}> Gastos Fijos </h4>
+        )}
+        locale={{emptyText: <span>Aun no existen gastos fijos en el mes</span>}}
+      />
+    </>
+  );
+};

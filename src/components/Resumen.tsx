@@ -1,16 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 
 import { Card, Space } from "antd";
-
 import Title from "antd/es/typography/Title";
+
 import { ResumenProps } from "./intercafeComponents";
+
 import { DiffContext } from "../context/DiffPersonContextProvider";
 
 export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
 
   const [expenses, setExpenses] = useState<string | undefined>(undefined);  
   const [fixedExpense, setFixedExpense] = useState<string | undefined>(undefined);
-  
+
   const { diffContext, setDiffContext } = useContext(DiffContext);
   
   useEffect(() => {
@@ -70,7 +71,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
                 (type=='gastos fijos' || type=='gasto historico') && 
                 <>
                   <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.spent_type}:</span>
-                  <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.total?.toLocaleString('es-ES')}</span>
+                  <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.monto?.toLocaleString('es-ES')}</span>
                 </>
               }
               {

@@ -1,99 +1,90 @@
-import { useContext, useState } from "react";
-import { Controller, useForm, SubmitHandler } from "react-hook-form";
+import { ChangeEvent, useEffect, useState } from "react";
 
-import { Form, Input, Select } from "antd";
+import { Table } from "antd";
+import { ColumnsType } from "antd/es/table";
 
-import { YearContext } from "../context/YearContextProvider";
-import { MonthContext } from "../context/MonthContextProvider";
+import * as XLSX from 'xlsx';
 
-import { ButtonAdd } from "./ButtonAdd";
+import { useActualDate } from "../hooks/useActualDate";
 
-import { useBtnRefresh } from "../hooks/useBtnRefresh";
-
-import { FormExtraExpenesesInputs } from "./intercafeComponents";
+import { ExtraItemsColumns } from "./intercafeComponents";
 
 import { updateExtraExpenses } from "../services/expensesServices";
-import { PersonContext } from "../context/PersonContextProvider";
-import { Option } from "antd/es/mentions";
 
 export const FormExtraExpenses:  React.FC = () => {
-  const {isBlockBtn, toggleBlockBtn, toggleRefresh} = useBtnRefresh()
 
-  const { control, handleSubmit, formState: { errors } } = useForm<FormExtraExpenesesInputs>();
+  const [data, setData] = useState([]);
+  const {anioActual, mesActual} = useActualDate()
   
-  const { yearContext } = useContext(YearContext);
-  const { monthContext } = useContext(MonthContext);
-  const { personContext } = useContext(PersonContext);
-  
-  const [anioActual] = useState(yearContext[yearContext.length - 1])
-  
-  const mesActual = monthContext[monthContext.length - 1]?.id;
+  useEffect(() => {
+    setData(mesActual.extra_items as [])
+ }, [mesActual.extra_items])
 
-  const onSubmitExtraSpent: SubmitHandler<FormExtraExpenesesInputs> = async(data) => {
-    toggleBlockBtn();
-    try {
-      await updateExtraExpenses(data, anioActual.id!, mesActual!);
-      toggleRefresh();
-      toggleBlockBtn();
+  const handleFileUploadFixedExpense = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files![0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const binaryStr = e.target!.result as ArrayBuffer;    
+        const workbook = XLSX.read(binaryStr, { type: 'binary' });
+        const worksheet = workbook.Sheets[workbook.SheetNames[2]];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as [];
 
-    } catch (error) {
-     console.log('error', error) 
+        const objectTable = jsonData.slice(1, 50).map(l => {
+          return {
+            person_name : l[0],
+            monto       : l[1],
+          }
+       }) as [];      
+        setData(objectTable);
+        updateExtraExpenses(objectTable, anioActual.id!, mesActual.id!)
+      };
+      reader.readAsArrayBuffer(file);
     }
   };
+ 
+  const extraItemsColumns: ColumnsType<ExtraItemsColumns> = [
+    {
+      title: 'Persona',
+      dataIndex: 'person_name',
+      key: 'person_name',
+      align: 'center',
+    },
+    {
+      title: 'Monto',
+      dataIndex: 'monto',
+      key: 'monto',
+      align: 'center',
+    },
+    // {
+    //   title: 'Acción',
+    //   dataIndex: 'eliminar',
+    //   key: 'eliminar',
+    //   align: 'center',
+    //   render: (_, expense) => (
+    //     <ButtonDelete 
+    //       disabled={isBlockBtnDelete} 
+    //       fn={() => deleteExtraItems(expense, toggleBlockBtnDelete, toggleRefresh, anioActual.id!, mesActual.id!) } 
+    //     />
+    //   )
+    // }
+  ];
+
   return (
-    <Form layout="vertical" onFinish={handleSubmit(onSubmitExtraSpent)}>
-      <Form.Item
-        validateStatus={errors.user ? 'error' : ''}
-        help={errors.user ? errors.user.message : ''}
-      >
-        <Controller
-          name="user"
-          control={control}
-          rules={{ required: "Este campo es obligatorio"}}
-          render={({ field }) => (
-            <Select {...field} placeholder= "Persona que realizo el pago">
-              {
-                personContext.map( (i) => (
-                  <Option key={i.id} value={i.person_name}>{i.person_name}</Option>
-                ))
-              }
-            </Select>
+    <>
+       <input type="file" accept=".xlsx" onChange={handleFileUploadFixedExpense} />  
+        <Table 
+          columns={extraItemsColumns} 
+          dataSource={data} 
+          title={() => (
+            <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}>
+              Gastos Extra
+            </h4>
           )}
-        />
-      </Form.Item>
-      <Form.Item 
-        validateStatus={errors.monto ? 'error' : ''}
-        help={errors.monto ? errors.monto.message : ''}
-        >
-        <Controller
-          name="monto"
-          control={control}
-          rules={{ 
-            required: "Este campo es obligatorio",
-            validate: {
-              positiveNumber: (value: number) => {
-                return value > 0 || "El monto no puede ser negativo";
-              }
-            }
+          locale={{
+            emptyText: <span>Aun no existen gastos extra en el mes</span> 
           }}
-          render={({ field: { onChange, onBlur, value, ref } }) => (
-            <Input
-              type="number"
-              placeholder="Monto"
-              value={value}
-              onChange={(e: { target:{ value: string}}) => {
-                const numericValue = parseFloat(e.target.value); 
-                onChange(isNaN(numericValue) ? '' : numericValue); 
-              }}
-              onBlur={onBlur}
-              inputRef={ref}
-            />
-          )}
         />
-      </Form.Item>
-      <Form.Item>
-        <ButtonAdd disabled={isBlockBtn} title='Agregar Gasto Extra'/>
-      </Form.Item>
-    </Form>
+    </>
   );
 };
