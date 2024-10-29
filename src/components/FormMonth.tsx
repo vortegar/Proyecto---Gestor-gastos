@@ -6,15 +6,15 @@ import { Option } from 'antd/es/mentions';
 
 import { useBtnRefresh } from '../hooks/useBtnRefresh';
 
-import { ButtonAdd } from './ButtonAdd';
+import { ButtonSearch } from './ButtonSearch';
 
+import { YearContext } from '../context/YearContextProvider';
 import { MonthContext } from '../context/MonthContextProvider';
 
 import { getMonthById } from '../services/monthServides';
 
 import { Month } from '../interface/MonthInterface';
 import { FormMonthProps } from './intercafeComponents';
-import { YearContext } from '../context/YearContextProvider';
 
 export const FormMonth: React.FC<FormMonthProps>  = ({fn}) => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<Month>();
@@ -22,9 +22,9 @@ export const FormMonth: React.FC<FormMonthProps>  = ({fn}) => {
   const { yearContext } = useContext(YearContext);
   const { monthContext } = useContext(MonthContext);
   
-  const [anioActual] = useState(yearContext[yearContext.length - 1])
+  const [anioActual] = useState(yearContext[yearContext.length - 1]);
 
-  const {isBlockBtn, toggleBlockBtn} = useBtnRefresh()
+  const {isBlockBtn, toggleBlockBtn} = useBtnRefresh();
 
   const onSearchMonth: SubmitHandler<Month> = async(data) => {
     toggleBlockBtn()
@@ -34,25 +34,22 @@ export const FormMonth: React.FC<FormMonthProps>  = ({fn}) => {
 
   return (
     <>
-      <Form layout="vertical" onFinish={handleSubmit(onSearchMonth)}>
+      <Form style={{display: 'flex', gap: "0.8vw"}} onFinish={handleSubmit(onSearchMonth)}>
         <Form.Item
           validateStatus={errors.month ? 'error' : ''}
           help={errors.month ? errors.month.message : ''}
         >
           <Controller
-            name="month"
-            control={control}
-            rules={{ required: "Este campo es obligatorio" }}
-            render={({ field }) => (
+            name    = "month"
+            control = {control}
+            rules   = {{ required: "Este campo es obligatorio" }}
+            render  = {({ field }) => (
               <>
-                <Select {...field} placeholder= "Buscar Mes">
+                <Select {...field} placeholder= "Selecciona un mes" style={{width: '20vw'}}>
                     {
                       monthContext.map( (i) => (
-                        <Option key={i.id} value={i.id}>
-                          {i.month}
-                        </Option>
-                      )
-                      )
+                        <Option key={i.id} value={i.id}> {i.month} </Option>
+                      ))
                     }
                   </Select>
               </>
@@ -60,7 +57,7 @@ export const FormMonth: React.FC<FormMonthProps>  = ({fn}) => {
           />
         </Form.Item>
         <Form.Item>
-          <ButtonAdd disabled={isBlockBtn} title='Buscar Mes'/>
+          <ButtonSearch disabled={isBlockBtn} title='Buscar mes'/>
         </Form.Item>
       </Form>
     </>

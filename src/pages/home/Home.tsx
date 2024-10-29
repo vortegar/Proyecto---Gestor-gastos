@@ -4,7 +4,7 @@ import { YearContext } from '../../context/YearContextProvider';
 import { MonthContext } from '../../context/MonthContextProvider';
 
 import { Button, Divider } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { CalculatorOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { Resumen } from '../../components/Resumen';
 import { Grafico } from '../../components/Grafico';
@@ -99,26 +99,28 @@ export const Home: React.FC = () => {
 
   return (
     <>
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '3vw', paddingRight: '1vw' }}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div>
-        <h2 style={{ margin: '0'}}>Resumen del gastos mes actual: {mesActual?.month}</h2>
+        <h2 style={{ margin: '0'}}>Gastos del mes: {mesActual?.month}</h2>
         <h2 style={{ marginTop: '0'}}>Año: {anioActual?.year} </h2>
         <FormMonth fn={setMesActual}/>
       </div>
-      <Button onClick={() => showCalculateModal()} className="custom-button">
-        Calcular diferencia
-        <PlusOutlined />
-      </Button>
-      <Button onClick={() => showMonthModal()} className="custom-button">
-        Crear nuevo Mes
-        <PlusOutlined />
-      </Button>
-      <Button onClick={() => showYearhModal()} className="custom-button">
-        Nuevo Periodo Anual
-        <PlusOutlined />
-      </Button>
+      <div style={{display: 'flex', gap: '0.8vw'}}>
+        <Button onClick={() => showCalculateModal()} className="custom-button">
+          Calcular diferencia
+          <CalculatorOutlined />
+        </Button>
+        <Button onClick={() => showMonthModal()} className="custom-button">
+          Crear nuevo mes
+          <PlusOutlined />
+        </Button>
+        <Button onClick={() => showYearhModal()} className="custom-button">
+          Crear nuevo periodo anual
+          <PlusOutlined />
+        </Button>
+      </div>
     </div>
-    <Divider style={{ marginTop: 0 }}/>
+    <Divider style={{ marginTop: '2vw' }}/>
       <ModalCreateYear estado={isYearModalVisible} modificador={setIsYearModalVisible} fn={toggleRefresh} />
       <ModalCreateMes estado={isMonthModalVisible} modificador={setIsMonthModalVisible} fn={toggleRefresh} />
       <ModalCalculate 
@@ -132,13 +134,13 @@ export const Home: React.FC = () => {
         monthContext.length > 0
         ?
         <>
-          <div style={{ display: 'flex'}}>
-            <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: '3vw', paddingRight: '3vw' }}>
+          <div style={{ display: 'flex', flexDirection: 'column'}}>
+            <div style={{ display: 'flex', gap: '2vw' }}>
+              <Resumen data={personResumen} title='Resumen Gasto por persona' type='persona'/>
               <Resumen data={mesActual?.fixed_expenses} title='Resumen Gasto Fijo' type='gastos fijos'/>
               <Resumen data={expensesResumen} title='Resumen Gasto Variable' type='gastos varios'/>
-              <Resumen data={personResumen} title='Resumen Gasto por persona' type='persona'/>
             </div>
-            <div style={{ display: 'flex',  flexDirection: 'column'}}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
               <Grafico resumen={mesActual?.fixed_expenses} title='Gastos fijos del mes'/>
               <Grafico resumen={expensesResumen} title='Gastos variables del mes'/>
             </div>

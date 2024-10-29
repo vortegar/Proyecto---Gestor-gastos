@@ -55,7 +55,7 @@ export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
   };
   
   return (
-    <div style={{ width: '550px', height: '400px', marginTop: '20px', marginInlineStart: '20px' }}>
+    <div style={{ width: '60vw', marginTop: '5vw'}}>
       <Bar data={data} options={options} />
     </div>
   );

@@ -23,13 +23,13 @@ export   interface OnSubmitYearParams {
   }
 
 export interface OptionItem {
-    id: string | number; 
+    id  : string | number; 
     name: string;
 }
 export interface ResumenProps {
-  data   : ResumenI[];
-  title  : string;
-  type  ?: string;
+  data  : ResumenI[];
+  title : string;
+  type ?: string;
 }
 
 export interface TotalPerson {
@@ -37,8 +37,9 @@ export interface TotalPerson {
 }
 
 export type FixedExpenseInputs = {
-  spent_type    : string;
-  total         : number;
+  id        ?: number;
+  spent_type : string;
+  total      : number;
 };
 
 export type ExtraItemsColumns = {
@@ -68,14 +69,14 @@ export interface IDivisionRow {
 }
 
 export interface IExtraItemsRow {
-  monto     : number;        
-  person    : string;
+  monto  : number;        
+  person : string;
 }
 
 interface IFormValuesDivision {
-  items: {
-    user : string;
-    total: number;
+  items : {
+    user  : string;
+    total : number;
   }[];
 }
 

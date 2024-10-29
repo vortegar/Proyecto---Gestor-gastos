@@ -19,6 +19,7 @@
   padding: 0.42vw 0.83vw;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  gap: 0.8vw;
 }
 
 /* Estilos para el botón al hacer hover */
@@ -31,8 +32,11 @@
 .custom-card-head .ant-card-head {
   background-color: var(--primary-color);
   color: var(--quaternary-color);
-  width: 100%; 
   text-align: center; 
+}
+
+.ant-card-body {
+  width: 22vw;
 }
 
 /*  Estilos de tabla */
@@ -40,6 +44,4 @@
   background-color: var(--primary-color);
   color: var(--quaternary-color);
   margin-top: 1.04vw;
-  /* width: 15.63vw; */
-  /* text-align: center */
 }

@@ -1,4 +1,4 @@
-export interface ButtonAddProps {
+export interface ButtonProps {
   title   : string;
   disabled: boolean;
   }

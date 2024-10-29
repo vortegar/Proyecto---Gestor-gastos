@@ -46,11 +46,11 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
           ?
           data?.map( v => {
             return(
-            <div id={v.id?.toString()} style={{ display: 'flex', width: '100%' }}>
+            <div id={v.id?.toString()} style={{display: 'flex'}}>
               {
                 (type=='persona') && 
                 <>
-                  <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.user}:</span>
+                  <span style={{ flexGrow: 1, textAlign: 'left' }}><strong> {v.user} </strong>:</span>
                   <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.total?.toLocaleString('es-ES')}</span>
                 </>
               }
@@ -76,14 +76,14 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
         }
         {
           (type=='gastos fijos') && 
-          <div style={{ display: 'flex', width: '100%' }}>
+          <div style={{ display: 'flex' }}>
             <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Total:</strong></span>
             <span style={{ flexGrow: 1, textAlign: 'right' }}> <strong>$ {fixedExpense}</strong></span>
           </div>
         }
         {
           (type=='gastos varios') && 
-          <div style={{ display: 'flex', width: '100%' }}>
+          <div style={{ display: 'flex' }}>
             <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Total:</strong></span>
             <span style={{ flexGrow: 1, textAlign: 'right' }}> <strong>$ {expenses}</strong></span>
           </div>

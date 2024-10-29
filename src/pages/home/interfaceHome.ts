@@ -1,5 +1,5 @@
 export interface ResumenI {
-    id           : number;
+    id          ?: number;
     spent_type  ?: string,
     user        ?: string;
     total        : number;
