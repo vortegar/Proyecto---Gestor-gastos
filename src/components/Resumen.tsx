@@ -1,28 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Card, Space } from "antd";
 import Title from "antd/es/typography/Title";
 
 import { ResumenProps } from "./intercafeComponents";
 
-import { DiffContext } from "../context/DiffPersonContextProvider";
-
 export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
 
   const [expenses, setExpenses] = useState<string | undefined>(undefined);  
   const [fixedExpense, setFixedExpense] = useState<string | undefined>(undefined);
 
-  const { diffContext, setDiffContext } = useContext(DiffContext);
-  
-  useEffect(() => {
-    if (type === 'persona' && data.length > 0) {
-      const maxPerson = data.reduce((prev, curr) => (prev?.total > curr?.total ? prev : curr));
-      const minPerson = data.reduce((prev, curr) => (prev?.total < curr?.total ? prev : curr));
-
-      setDiffContext({ user: maxPerson.user as string, total: (maxPerson?.total - minPerson?.total)});
-    }
-  }, [data, type, setDiffContext]);
- 
   useEffect(() => {
     if (type=='gastos varios') {
       const totalExpenses = data?.reduce((prev, curr) => {
@@ -71,7 +58,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
                 (type=='gastos fijos' || type=='gasto historico') && 
                 <>
                   <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.spent_type}:</span>
-                  <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.monto?.toLocaleString('es-ES')}</span>
+                  <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.total?.toLocaleString('es-ES')}</span>
                 </>
               }
               {
@@ -87,12 +74,6 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
           :
           <span>No hay datos</span>
         }
-        {type === 'persona' && diffContext.total !== undefined && (
-          <div style={{ display: 'flex', width: '100%' }}>
-            <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Se debe a {diffContext.user}:</strong></span>
-            <span style={{ textAlign: 'right' }}><strong>$ {diffContext.total?.toLocaleString('es-ES')}</strong></span>
-          </div>
-        )}
         {
           (type=='gastos fijos') && 
           <div style={{ display: 'flex', width: '100%' }}>

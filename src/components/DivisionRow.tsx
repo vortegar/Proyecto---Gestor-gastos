@@ -1,14 +1,14 @@
+import { useContext } from 'react';
 import { Controller } from 'react-hook-form';
 
+import { Option } from 'antd/es/mentions';
 import { Col, Form, Input, Row, Select } from 'antd';
 
 import { IDivisionRow } from './intercafeComponents';
-import { useContext } from 'react';
+
 import { PersonContext } from '../context/PersonContextProvider';
-import { Option } from 'antd/es/mentions';
 
 export const DivisionRow:React.FC<IDivisionRow> = ({spentType , total, control, index, errors}) => {
-
   const { personContext } = useContext(PersonContext);
 
   return (
@@ -21,7 +21,7 @@ export const DivisionRow:React.FC<IDivisionRow> = ({spentType , total, control, 
       <Col span={6}> 
         <Form.Item>
           <Controller
-            name={`items.${index}.monto`}
+            name={`items.${index}.total`}
             control={control}
             render={({ field: { onChange, onBlur, value, ref } }) => (
               <Input
@@ -30,7 +30,7 @@ export const DivisionRow:React.FC<IDivisionRow> = ({spentType , total, control, 
                 value={value}
                 onChange={(e: { target:{ value: string}}) => {
                   const numericValue = parseFloat(e.target.value); 
-                  onChange(isNaN(numericValue) ? '' : spentType.toUpperCase() === 'ALQUILER DEPTO' 
+                  onChange(isNaN(numericValue) ? '' : spentType.toUpperCase() === 'ARRIENDO' 
                                                     ? (total * 0.4) : (total/ numericValue)
                   ); 
                 }}
@@ -43,11 +43,11 @@ export const DivisionRow:React.FC<IDivisionRow> = ({spentType , total, control, 
       </Col>
       <Col span={6}> 
         <Form.Item
-          validateStatus={errors?.items?.[index]?.person ? 'error' : ''}
-          help={errors?.items?.[index]?.person?.message as React.ReactNode} 
+          validateStatus={errors?.items?.[index]?.user ? 'error' : ''}
+          help={errors?.items?.[index]?.user?.message as React.ReactNode} 
         >
           <Controller
-            name={`items.${index}.person`}      
+            name={`items.${index}.user`}      
             control={control}
             rules={{ required: "Este campo es obligatorio" }}
             render={({ field }) => (

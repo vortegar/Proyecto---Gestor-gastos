@@ -13,6 +13,7 @@ export interface ModalCalculateDiff {
   modificador  : (arg: boolean) => void;
   extraItems   : ExtraItemsInputs[];
   fixedExpenses: FixedExpenseInputs[];
+  personResumen: ResumenI[];
 }
 export   interface OnSubmitMesParams {
     name: string; 
@@ -37,7 +38,7 @@ export interface TotalPerson {
 
 export type FixedExpenseInputs = {
   spent_type    : string;
-  monto         : number;
+  total         : number;
 };
 
 export type ExtraItemsColumns = {
@@ -47,22 +48,23 @@ export type ExtraItemsColumns = {
 };
 
 export type FormExtraExpenesesInputs = {
-  person_name : string;
-  monto: number;
+  user        : string;
+  total       : number;
+  descripcion : string;
 };
 
 export type ExtraItemsInputs = {
-  id              : number;
-  person_name     : string;
-  total           : number;
+  id    : number;
+  user  : string;
+  total : number;
 };
 
 export interface IDivisionRow {
   spentType: string;
-  total: number;        
-  control: Control<IFormValuesDivision>; 
-  index: number;        
-  errors: FieldErrors<IFormValuesDivision>;  
+  total    : number;        
+  control  : Control<IFormValuesDivision>; 
+  index    : number;        
+  errors   : FieldErrors<IFormValuesDivision>;  
 }
 
 export interface IExtraItemsRow {
@@ -72,15 +74,15 @@ export interface IExtraItemsRow {
 
 interface IFormValuesDivision {
   items: {
-    person: string;
-    monto: number;
+    user : string;
+    total: number;
   }[];
 }
 
 export interface IFormValueCalculate {
   items: {
-    person: string;
-    monto: number;
+    user : string;
+    total: number;
   }[];
 }
 export type SpentsInputs = {spent_name: string};

@@ -33,10 +33,10 @@ export const FormFixedExpenses:  React.FC = () => {
         const objectTable = jsonData.map(l => {
           return {
             spent_type  : l[0],
-            monto       : l[1],
+            total       : l[1],
           }
         }) as [];
-        
+        console.log(objectTable)
         setData(objectTable);
         updateFixedExpenses(objectTable, anioActual.id!, mesActual.id!)
       };
@@ -52,9 +52,9 @@ export const FormFixedExpenses:  React.FC = () => {
       align: 'center',
     },
     {
-      title: 'Monto',
-      dataIndex: 'monto',
-      key: 'monto',
+      title: 'Total',
+      dataIndex: 'total',
+      key: 'total',
       align: 'center',
     },
     // {

@@ -32,9 +32,10 @@ export const FormExtraExpenses:  React.FC = () => {
 
         const objectTable = jsonData.slice(1, 50).map(l => {
           return {
-            person_name : l[0],
-            monto       : l[1],
-          }
+            user        : l[0],
+            total       : l[1],
+            descripcion : l[2],
+          };
        }) as [];      
         setData(objectTable);
         updateExtraExpenses(objectTable, anioActual.id!, mesActual.id!)
@@ -46,14 +47,20 @@ export const FormExtraExpenses:  React.FC = () => {
   const extraItemsColumns: ColumnsType<ExtraItemsColumns> = [
     {
       title: 'Persona',
-      dataIndex: 'person_name',
-      key: 'person_name',
+      dataIndex: 'user',
+      key: 'user',
       align: 'center',
     },
     {
-      title: 'Monto',
-      dataIndex: 'monto',
-      key: 'monto',
+      title: 'Total',
+      dataIndex: 'total',
+      key: 'total',
+      align: 'center',
+    },
+    {
+      title: 'Descripcion',
+      dataIndex: 'descripcion',
+      key: 'descripcion',
       align: 'center',
     },
     // {

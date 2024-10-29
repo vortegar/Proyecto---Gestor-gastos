@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Col, Form, Modal, Row } from 'antd';
@@ -7,48 +7,52 @@ import { ExtraImtes } from './ExtraItems';
 import { DivisionRow } from './DivisionRow';
 
 import { IFormValueCalculate, ModalCalculateDiff } from './intercafeComponents';
-import { DiffContext } from '../context/DiffPersonContextProvider';
 
-export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador, fixedExpenses, extraItems}) => {
+import { amountCalculate, getPersonToPay } from '../helpers/calculate';
+
+export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador, fixedExpenses, extraItems, personResumen}) => {
 
   const { control, handleSubmit, reset, formState: {errors} } = useForm({ defaultValues: {
     items: [],
   }});
 
-  const { diffContext, setDiffContext } = useContext(DiffContext);
+  const [diff, setDiff] = useState({user: '', total: 0})
    
     const handleCancel = () => {
       modificador(false);
       reset();
     };
-    const onSubmitCalulate = (data:IFormValueCalculate) => {
-      const totalPorPersona = data.items.reduce((acc, curr) => {
-      if (acc[curr.person]) {
-        acc[curr.person] += curr.monto;
-      } else {
-        acc[curr.person] = curr.monto;
-      }
-      return acc;
-    }, {} as { [key: string]: number });
-    
-    const arrayTotalPorPersona = Object.keys(totalPorPersona).map(person => {
-      return totalPorPersona[person];
-    });
-    
-    const arrayTotalExtraItemsPorPersona = extraItems.map(item => {
-      return item.total
-    });
-    const diferenciaEntrePersonas = arrayTotalPorPersona.reduce((acc, curr) => acc - curr);
-    
-    //TODO: Arreglar no funciona en caso de ser dos personas solo funciona con 1 persona
-    const diferenciaExtraItems = arrayTotalExtraItemsPorPersona.reduce((acc, curr) => acc - curr);
-    
-    setDiffContext((u) => ({
-      ...u, 
-      total: (diferenciaEntrePersonas < 0) ? Number(u.total) + diferenciaExtraItems + diferenciaEntrePersonas : Number(u.total) + diferenciaExtraItems  - diferenciaEntrePersonas
-    }));
-    }
 
+    const onSubmitCalulate = (data:IFormValueCalculate) => {
+      
+      const arrayDataAgrupada = [ ...extraItems, ...personResumen];
+      const totalPorPersona = arrayDataAgrupada.reduce((acc, curr) => {
+      if (acc[curr.user!]) {
+        acc[curr.user!] += curr.total;
+      } else {
+        acc[curr.user!] = curr.total;
+      }
+      return acc; 
+    }, {} as { [key: string]: number });
+
+    const totalDataItems = data.items.reduce((acc, curr) => {
+      if (acc[curr.user]) {
+        acc[curr.user] += curr.total;
+      } else {
+        acc[curr.user] = curr.total;
+      }
+      return acc; 
+    }, {} as { [key: string]: number });
+
+    const firtsPerson = amountCalculate(totalDataItems.Andreina, totalPorPersona.Andreina);
+    const secondPerson = amountCalculate(totalDataItems.Victorio, totalPorPersona.Victorio);
+    const total = amountCalculate(firtsPerson, secondPerson);
+    const user = getPersonToPay(firtsPerson, secondPerson);
+
+    setDiff(() => {
+      return{user, total}
+      })
+    };
   return (
     <Modal
       width={800}
@@ -63,20 +67,26 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
           <span style={{fontWeight: 'bold', marginTop: '1vw', paddingBottom: '1vw', display: 'inline-block'}}>Gastos Fijos</span>
           <Form layout="vertical">
             {fixedExpenses?.map((f, index) => (
-              <DivisionRow spentType={f.spent_type} total={f.total} control={control} index={index} errors={errors}/>
+              <DivisionRow 
+                spentType = {f.spent_type} 
+                total     = {f.total} 
+                control   = {control} 
+                index     = {index} 
+                errors    = {errors}
+              />
             ))}
           </Form>
         </Col>
         <Col span={10}>
           <span style={{fontWeight: 'bold', marginTop: '1vw', paddingBottom: '1vw', display: 'inline-block'}}>Gastos Adicionales</span>
           {extraItems?.map((f) => (
-            <ExtraImtes key={f.id} person={f.person_name} monto={f.total}/>
+            <ExtraImtes key={f.id} person={f.user} monto={f.total}/>
           ))}
         </Col>
       </Row>
       <div style={{ display: 'flex', width: '100%' }}>
-        <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Total a transferir a {diffContext.user}:</strong></span>
-        <span style={{ textAlign: 'right' }}><strong>$ {diffContext?.total?.toLocaleString('es-ES')}</strong></span>
+        <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Transferir a:{diff.user}:</strong></span>
+        <span style={{ textAlign: 'right' }}><strong>$ {diff?.total?.toLocaleString('es-ES')}</strong></span>
       </div>      
     </Modal>
   )

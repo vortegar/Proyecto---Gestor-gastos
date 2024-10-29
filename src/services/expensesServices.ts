@@ -24,9 +24,10 @@ export const updateExtraExpenses = async (data: FormExtraExpenesesInputs[], year
       extra_items:  
         data.map((d) => {
           return{
-          id         :  uuidv4(),
-          person_name:d.person_name,
-          monto      : d.monto,
+          id          :  uuidv4(),
+          user        :d.user,
+          total       : d.total,
+          descripcion : d.descripcion,
           }
         })
       };
@@ -58,10 +59,11 @@ export const updateFixedExpenses = async (data: [], year: string, monthId: strin
       fixed_expenses: data.map((d: FixedExpenseInputs) => ({
         id        :  uuidv4(),
         spent_type: d.spent_type,
-        monto     : d.monto
+        total     : d.total
       }))
     };
 
+    console.log(updatedMonth)
     const updatedMonths = [
       ...months.slice(0, monthIndex),
       updatedMonth,

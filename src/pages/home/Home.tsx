@@ -11,7 +11,7 @@ import { Grafico } from '../../components/Grafico';
 import { getDataMonth } from '../../services/monthServides';
 import { ModalCreateMes } from '../../components/ModalCreateMes';
 
-import { PersonResumen } from './interfaceHome';
+import { ResumenI } from './interfaceHome';
 import { ExpensesResumen } from '../../interface/ExpensesInterface';
 
 import { FormMonth } from '../../components/FormMonth';
@@ -50,17 +50,20 @@ export const Home: React.FC = () => {
   }, [monthContext])
   
   const acumuladorPerson = mesActual?.expenses.reduce((acc: { [key: string]: number }, item) => {
-    const { user, monto } = item;
-    if (!acc[user]) {
-      acc[user] = 0;
-    }
-    const sumaActual = acc[user] + + monto;
-    acc[user] = sumaActual
+    const { user_1, user_2 } = item;
+    
+    if (acc['Victorio'] === undefined) acc['Victorio'] = 0;
+    if (acc['Andreina'] === undefined) acc['Andreina'] = 0;
+
+    acc['Victorio'] += +user_1;
+    acc['Andreina'] += +user_2;
+
     return acc;
   }, {});
-  
-  let personResumen: PersonResumen[] = []
+
+  let personResumen: ResumenI[] = []
   if(acumuladorPerson != undefined){
+
     personResumen = Object.keys(acumuladorPerson).map((user, index) => ({
       id: index,
       user,
@@ -119,10 +122,11 @@ export const Home: React.FC = () => {
       <ModalCreateYear estado={isYearModalVisible} modificador={setIsYearModalVisible} fn={toggleRefresh} />
       <ModalCreateMes estado={isMonthModalVisible} modificador={setIsMonthModalVisible} fn={toggleRefresh} />
       <ModalCalculate 
-        estado={isCalculateModalVisible} 
-        extraItems= {mesActual?.extra_items}
-        modificador={setIsCalculateModalVisible} 
+        estado        = {isCalculateModalVisible} 
+        extraItems    = {mesActual?.extra_items}
+        modificador   = {setIsCalculateModalVisible} 
         fixedExpenses = {mesActual?.fixed_expenses}  
+        personResumen = {personResumen}
       />
       {
         monthContext.length > 0
