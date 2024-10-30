@@ -100,7 +100,7 @@ export const Home: React.FC = () => {
   return (
     <>
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div>
+      <div style={{ marginBottom: '1vw'}}>
         <h2 style={{ margin: '0'}}>Gastos del mes: {mesActual?.month}</h2>
         <h2 style={{ marginTop: '0'}}>Año: {anioActual?.year} </h2>
         <FormMonth fn={setMesActual}/>

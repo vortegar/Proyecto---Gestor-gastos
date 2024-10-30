@@ -3,5 +3,5 @@ export const amountCalculate = (itemsAmount: number, dataAmount: number): number
 };
 
 export const getPersonToPay = (firstPersonAmoutn: number, secondPersonAmount: number): string => {
-    return firstPersonAmoutn < secondPersonAmount ? 'Victorio' : 'Andreina'
+    return firstPersonAmoutn < secondPersonAmount ? 'Andreina' : 'Victorio'
 };

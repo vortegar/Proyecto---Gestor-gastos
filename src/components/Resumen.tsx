@@ -57,7 +57,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
               {
                 (type=='gastos fijos' || type=='gasto historico') && 
                 <>
-                  <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.spent_type}:</span>
+                  <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>{v.spent_type}:</strong></span>
                   <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.total?.toLocaleString('es-ES')}</span>
                 </>
               }

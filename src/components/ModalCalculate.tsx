@@ -84,10 +84,13 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
           ))}
         </Col>
       </Row>
+      {
+        diff.total > 0 &&
       <div style={{ display: 'flex', width: '100%' }}>
-        <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Transferir a:{diff.user}:</strong></span>
+        <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Transferir a: {diff.user}</strong></span>
         <span style={{ textAlign: 'right' }}><strong>$ {diff?.total?.toLocaleString('es-ES')}</strong></span>
       </div>      
+      }
     </Modal>
   )
 }

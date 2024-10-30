@@ -95,6 +95,11 @@ export const FormPersons: React.FC = () => {
       <Table 
         columns={namesColums} 
         dataSource={personContext} 
+        title={() => (
+          <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}>
+            Usuarios
+          </h4>
+          )}
         locale={{
           emptyText: <span>Sin información</span> 
         }}

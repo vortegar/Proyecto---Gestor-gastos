@@ -96,6 +96,11 @@ export const FormFixedSpents: React.FC = () => {
       <Table 
         columns={fixedSpentsColumns} 
         dataSource={fixedSpentContext} 
+        title={() => (
+          <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}>
+            Gastos Fijos
+          </h4>
+          )}
         locale={{
           emptyText: <span>Sin información</span> 
         }}

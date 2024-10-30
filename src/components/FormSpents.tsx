@@ -98,6 +98,11 @@ export const FormSpents: React.FC = () => {
       <Table 
         columns={spentsColumns} 
         dataSource={spentContext} 
+        title={() => (
+          <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}>
+            Gastos Variables
+          </h4>
+          )}
         locale={{
           emptyText: <span>Sin información</span> 
         }}

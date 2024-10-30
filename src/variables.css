@@ -45,3 +45,13 @@
   color: var(--quaternary-color);
   margin-top: 1.04vw;
 }
+
+.title-suma-total {
+  background-color: var(--primary-color);
+  color: var(--quaternary-color);
+}
+
+/* Estilos input */
+.ant-form-item {
+  margin-bottom: 0.5vw;
+}

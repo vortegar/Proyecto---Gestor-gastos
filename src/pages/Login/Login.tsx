@@ -49,7 +49,7 @@ export const LoginPage = () => {
   const { Title } = Typography;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-    <Title style={{ padding: '0.42vw'}}level={1}>Bienvenido a: TusgastosApp</Title>
+    <img src="/img/home-img.jpg" alt="inicio" style={{position: 'absolute', width: '100%'}} />
       <Button
         disabled={isBlockBtn}
         type="primary"
@@ -58,8 +58,8 @@ export const LoginPage = () => {
       >
         Iniciar sesión con Google <GoogleOutlined />
       </Button>
-      <Title level={4} style={{ marginTop: '5vw'}}>Una app creada para llevar tus gastos de forma ordenada!!!</Title>
-      <p style={{ textAlign: 'center', fontStyle: 'italic' }}>Creado por: Victorio Ortega🏅</p>
+      <Title level={4} style={{ marginTop: '5vw', zIndex: '1', color: '#ffd60a'}}>Una app creada para llevar tus gastos de forma ordenada!!!</Title>
+      <p style={{ textAlign: 'center', fontStyle: 'italic', zIndex: '1', color: '#ffd60a' }}>Creado por: Victorio Ortega🏅</p>
   </div>
   );
 };
