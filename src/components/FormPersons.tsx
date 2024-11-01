@@ -96,7 +96,7 @@ export const FormPersons: React.FC = () => {
         columns={namesColums} 
         dataSource={personContext} 
         title={() => (
-          <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}>
+          <h4 className="!text-yellow-500 !text-sm !mb-0 font-bold text-center">
             Usuarios
           </h4>
           )}

@@ -48,18 +48,20 @@ export const LoginPage = () => {
 
   const { Title } = Typography;
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-    <img src="/img/home-img.jpg" alt="inicio" style={{position: 'absolute', width: '100%'}} />
+    <div  className="flex flex-col items-center">
+    <img src="/img/home-img.jpg" alt="inicio" className="absolute inset-0 w-full h-full object-cover" />
       <Button
         disabled={isBlockBtn}
         type="primary"
         onClick={handleLogin}
-        className="custom-button"
+        className="w-60 lg:mt-72  sm:mt-96 bg-yellow-500 hover:!bg-yellow-600 text-black hover:!text-black"
       >
         Iniciar sesión con Google <GoogleOutlined />
       </Button>
-      <Title level={4} style={{ marginTop: '5vw', zIndex: '1', color: '#ffd60a'}}>Una app creada para llevar tus gastos de forma ordenada!!!</Title>
-      <p style={{ textAlign: 'center', fontStyle: 'italic', zIndex: '1', color: '#ffd60a' }}>Creado por: Victorio Ortega🏅</p>
+      <Title className="z-20 lg:mt-24 sm:mt-96 !text-yellow-500" level={4}>
+        Una app creada para llevar tus gastos de forma ordenada.
+      </Title>
+      <p className="z-10 text-yellow-500">Creado por: Victorio Ortega🏅</p>
   </div>
   );
 };

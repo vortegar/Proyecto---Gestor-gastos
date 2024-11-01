@@ -22,30 +22,30 @@ export const Navbar: React.FC = () => {
   }
 
   return (
-    <Sider  width={200}  style={{ height: '100vh', position: 'fixed', backgroundColor: 'var(--primary-color)' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '3vw' }}>
-        <Title level={4} style={{ color: 'white', paddingTop: '3vw', marginBottom: '0' }}>Bienvenido</Title>
-        <Title level={4} style={{ color: 'white', marginTop: '0' }}>{username}</Title>
+    <Sider className="!bg-slate-950">
+      <div>
+        <Title level={4} className="text-center !text-white mt-10">Bienvenido</Title>
+        <Title level={4} className="text-center !text-white !mt-0">{username}</Title>
       </div>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{ backgroundColor: 'var(--primary-color)', marginTop: '2vw'}}>
-        <Menu.Item key="1" icon={<HomeOutlined />}>
-            <Link to="/home">Inicio</Link>
+      <Menu className="!bg-slate-950" mode="inline" defaultSelectedKeys={['1']}>
+        <Menu.Item key="1" icon={<HomeOutlined className="!text-white"/>}>
+            <Link className="!text-white" to="/home">Inicio</Link>
         </Menu.Item>
         {
           monthContext.length > 0 &&
           <>  
-            <Menu.Item key="2" icon={<UserOutlined />}>
-                <Link to="/expenses">Gastos</Link>
+            <Menu.Item key="2" icon={<UserOutlined  className="!text-white"/>}>
+                <Link className="!text-white" to="/expenses">Gastos</Link>
             </Menu.Item>
-            <Menu.Item key="3" icon={<FileTextOutlined/>}>
-                <Link to="/history">Historico Anual</Link>
+            <Menu.Item key="3" icon={<FileTextOutlined className="!text-white"/>}>
+                <Link className="!text-white "to="/history">Historico Anual</Link>
             </Menu.Item>
           </>
         }
-        <Menu.Item key="4" icon={<SettingOutlined />}>
-            <Link to="/configurate">Configuración</Link>
+        <Menu.Item key="4" icon={<SettingOutlined className="!text-white"/>}>
+            <Link className="!text-white" to="/configurate">Configuración</Link>
         </Menu.Item>
-        <Menu.Item key="5" icon={<ApiOutlined />}>
+        <Menu.Item key="5" icon={<ApiOutlined className="!text-white"/>}>
             <a onClick={handleLogout} style={{ color: 'white', textDecoration: 'none' }}>Salir</a>
         </Menu.Item>
       </Menu>

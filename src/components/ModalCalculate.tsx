@@ -59,12 +59,13 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
       open={estado}
       onCancel={handleCancel}
       onOk={handleSubmit(onSubmitCalulate)}
-      okButtonProps={{ className: 'custom-button' }}
-      title={<div style={{fontWeight: 'bold'}}>Calcular Diferencia</div>}
+      okButtonProps={{ className: "bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500" }}
+      cancelButtonProps={{ className: "border hover:!border-yellow-500 hover:!text-yellow-500"}}
+      title={<div className="font-bold underline">Calcular Diferencia</div>}
     >
       <Row gutter={16}>
         <Col span={14}>
-          <span style={{fontWeight: 'bold', marginTop: '1vw', paddingBottom: '1vw', display: 'inline-block'}}>Gastos Fijos</span>
+          <span className="font-bold mb-4 inline-block">Gastos Fijos:</span>
           <Form layout="vertical">
             {fixedExpenses?.map((f, index) => (
               <DivisionRow 
@@ -78,7 +79,7 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
           </Form>
         </Col>
         <Col span={10}>
-          <span style={{fontWeight: 'bold', marginTop: '1vw', paddingBottom: '1vw', display: 'inline-block'}}>Gastos Adicionales</span>
+          <span className="font-bold mb-4 inline-block">Gastos Adicionales</span>
           {extraItems?.map((f) => (
             <ExtraImtes key={f.id} person={f.user} monto={f.total}/>
           ))}
@@ -86,9 +87,9 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
       </Row>
       {
         diff.total > 0 &&
-      <div style={{ display: 'flex', width: '100%' }}>
-        <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Transferir a: {diff.user}</strong></span>
-        <span style={{ textAlign: 'right' }}><strong>$ {diff?.total?.toLocaleString('es-ES')}</strong></span>
+      <div className="flex">
+        <span className="grow text-left font-bold">Transferir a {diff.user}:</span>
+        <span className="font-bold">$ {diff?.total?.toLocaleString('es-ES')}</span>
       </div>      
       }
     </Modal>

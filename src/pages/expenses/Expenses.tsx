@@ -26,19 +26,19 @@ export const ExpensesPage: React.FC = () => {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', paddingLeft: '24px', paddingRight: '90px' }}>
-        <div>
-          <h2 style={{ margin: '0'}}>Gastos mes actual: {mesActual?.month}</h2>
-          <h2 style={{ marginTop: '0'}}>Año: {anioActual?.year} </h2>
+      <div>
+        <div className="my-1">
+          <h2 className="mt-0 bolld font-bold">Gastos mes actual: {mesActual?.month}</h2>
+          <h2 className="mt-0 mb-4 font-bold">Año: {anioActual?.year} </h2>
         </div>
       </div>
-      <Divider style={{marginTop: '0'}}/>
-      <Row gutter={16}>
-        <Col span={10}> <FormFixedExpenses/> </Col>
-        <Col span={14}> <FormExpenses/> </Col>
+      <Divider className="mt-2"/>
+      <Row gutter={16} className="flex lg:flex-row sm:flex-col lg:items-start sm:items-center">
+        <Col className="lg:w-5/12 sm:w-full"> <FormFixedExpenses/> </Col>
+        <Col className="lg:w-7/12 sm:w-full"> <FormExpenses/> </Col>
       </Row>
       <Row gutter={16}>
-        <Col span={10}> <FormExtraExpenses/> </Col>  
+        <Col className="lg:w-5/12 sm:w-full"> <FormExtraExpenses/> </Col>  
       </Row>
     </div>
   );  

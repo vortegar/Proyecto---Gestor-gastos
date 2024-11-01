@@ -29,43 +29,42 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
   }, [type, data])
   
   return (
-    <Space direction="vertical" size={16}>
+    <Space direction="vertical" size={16} className="w-80">
       <Card
       className="custom-card-head"
         title={
           <div >
-            <Title level={4} style={{ display: 'inline', fontSize:'16px', color: 'var(--quaternary-color)' }}>
+            <Title level={4} className="!text-yellow-500 !text-sm !mb-0">
               {title}
             </Title>
           </div>
         }
-        style={{ textAlign: 'center', marginTop: '2vw' }}
       >
         {
           data?.length > 0 
           ?
           data?.map( v => {
             return(
-            <div id={v.id?.toString()} style={{display: 'flex'}}>
+            <div id={v.id?.toString()} className="flex">
               {
                 (type=='persona') && 
                 <>
-                  <span style={{ flexGrow: 1, textAlign: 'left' }}><strong> {v.user} </strong>:</span>
-                  <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.total?.toLocaleString('es-ES')}</span>
+                  <span className="grow text-left"><strong> {v.user} </strong>:</span>
+                  <span className="grow text-right">$ {v.total?.toLocaleString('es-ES')}</span>
                 </>
               }
               {
                 (type=='gastos fijos' || type=='gasto historico') && 
                 <>
-                  <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>{v.spent_type}:</strong></span>
-                  <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.total?.toLocaleString('es-ES')}</span>
+                  <span className="grow text-left"><strong>{v.spent_type}:</strong></span>
+                  <span className="grow text-right">$ {v.total?.toLocaleString('es-ES')}</span>
                 </>
               }
               {
                 (type=='gastos varios') && 
                   <>
-                    <span style={{ flexGrow: 1, textAlign: 'left' }}>{v.spent_type}:</span>
-                    <span style={{ flexGrow: 1, textAlign: 'right' }}>$ {v.total?.toLocaleString('es-ES')}</span> 
+                    <span className="grow text-left">{v.spent_type}:</span>
+                    <span className="grow text-right">$ {v.total?.toLocaleString('es-ES')}</span> 
                   </>
               }
             </div>
@@ -76,16 +75,16 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
         }
         {
           (type=='gastos fijos') && 
-          <div style={{ display: 'flex' }}>
-            <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Total:</strong></span>
-            <span style={{ flexGrow: 1, textAlign: 'right' }}> <strong>$ {fixedExpense}</strong></span>
+          <div className="flex">
+            <span className="grow text-left"><strong>Total:</strong></span>
+            <span className="grow text-right"> <strong>$ {fixedExpense}</strong></span>
           </div>
         }
         {
           (type=='gastos varios') && 
-          <div style={{ display: 'flex' }}>
-            <span style={{ flexGrow: 1, textAlign: 'left' }}><strong>Total:</strong></span>
-            <span style={{ flexGrow: 1, textAlign: 'right' }}> <strong>$ {expenses}</strong></span>
+          <div className="flex">
+            <span className="grow text-left"><strong>Total:</strong></span>
+            <span className="grow text-right"> <strong>$ {expenses}</strong></span>
           </div>
         }
       </Card>

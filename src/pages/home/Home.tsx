@@ -99,28 +99,28 @@ export const Home: React.FC = () => {
 
   return (
     <>
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div style={{ marginBottom: '1vw'}}>
-        <h2 style={{ margin: '0'}}>Gastos del mes: {mesActual?.month}</h2>
-        <h2 style={{ marginTop: '0'}}>Año: {anioActual?.year} </h2>
+    <div className="flex flex-col">
+      <div className="my-1">
+        <h2 className="mt-0 bolld font-bold">Gastos del mes: {mesActual?.month}</h2>
+        <h2 className="mt-0 mb-4 font-bold">Año: {anioActual?.year} </h2>
         <FormMonth fn={setMesActual}/>
       </div>
-      <div style={{display: 'flex', gap: '0.8vw'}}>
-        <Button onClick={() => showCalculateModal()} className="custom-button">
+      <div className="flex gap-2 mt-4">
+        <Button onClick={() => showCalculateModal()} className="bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500">
           Calcular diferencia
           <CalculatorOutlined />
         </Button>
-        <Button onClick={() => showMonthModal()} className="custom-button">
+        <Button onClick={() => showMonthModal()} className="bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500">
           Crear nuevo mes
           <PlusOutlined />
         </Button>
-        <Button onClick={() => showYearhModal()} className="custom-button">
+        <Button onClick={() => showYearhModal()} className="bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500">
           Crear nuevo periodo anual
           <PlusOutlined />
         </Button>
       </div>
     </div>
-    <Divider style={{ marginTop: '2vw' }}/>
+    <Divider className="mt-2"/>
       <ModalCreateYear estado={isYearModalVisible} modificador={setIsYearModalVisible} fn={toggleRefresh} />
       <ModalCreateMes estado={isMonthModalVisible} modificador={setIsMonthModalVisible} fn={toggleRefresh} />
       <ModalCalculate 
@@ -134,13 +134,13 @@ export const Home: React.FC = () => {
         monthContext.length > 0
         ?
         <>
-          <div style={{ display: 'flex', flexDirection: 'column'}}>
-            <div style={{ display: 'flex', gap: '2vw' }}>
+          <div className="flex flex-col">
+            <div className="flex gap-5 lg:flex-row sm:flex-col lg:items-start sm:items-center">
               <Resumen data={personResumen} title='Resumen Gasto por persona' type='persona'/>
               <Resumen data={mesActual?.fixed_expenses} title='Resumen Gasto Fijo' type='gastos fijos'/>
               <Resumen data={expensesResumen} title='Resumen Gasto Variable' type='gastos varios'/>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <div className="flex flex-col items-center">
               <Grafico resumen={mesActual?.fixed_expenses} title='Gastos fijos del mes'/>
               <Grafico resumen={expensesResumen} title='Gastos variables del mes'/>
             </div>

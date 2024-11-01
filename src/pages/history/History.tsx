@@ -72,21 +72,21 @@ export const History = () => {
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}>
-        <h2 style={{ marginTop: '0'}}>Historial de Gastos Año - {anioActual?.year} </h2>
+      <div className="my-1">
+        <h2 className="mt-0 bolld font-bold">Historial de Gastos Año - {anioActual?.year} </h2>
       </div>
-      <Divider style={{marginTop: '0'}}/>
-      <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-        <div style={{ marginTop: '4.5vw' }}>
+      <Divider className="mt-2"/>
+      <div className="flex justify-between">
+        <div className="mt-20">
           <Resumen data={expensesHistory} title='Totales de Gastos por Mes' type='gasto historico'/>
-          <div className='title-suma-total' style={{padding: '1vw', borderRadius: '0.8vw', textAlign: 'center', marginTop: '1.5vw'}}>
+          <div className="text-center text-yellow-500 bg-green-950 mt-4 p-4 rounded font-bold">
             Total Gastado en el Año: <strong>$ {sumYearTotalExpenses.toLocaleString('es-ES')}</strong>
           </div>
           <Table 
             columns={monthColumns} 
             dataSource={monthContext} 
             title={() => (
-            <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}>
+            <h4 className="font-bold text-center text-yellow-500">
               Meses Creados
             </h4>
             )}

@@ -37,9 +37,10 @@ export const ModalCreateYear:React.FC<ModalCreateMesProps> = ({estado, modificad
       open={estado}
       onOk={handleSubmit(onSubmitYear)}
       onCancel={handleCancel}
-      okButtonProps={{ className: 'custom-button' }}
+      okButtonProps={{ className: "bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500" }}
+      cancelButtonProps={{ className: "border hover:!border-yellow-500 hover:!text-yellow-500"}}
     >
-    <h2>Escribe el nuevo periodo Anual</h2>
+    <h2 className="font-bold mb-5">Escribe el nuevo periodo Anual</h2>
     <Form layout="vertical">
       <Form.Item>
         <Controller

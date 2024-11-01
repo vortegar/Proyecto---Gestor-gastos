@@ -84,7 +84,7 @@ export const FormExtraExpenses:  React.FC = () => {
           columns={extraItemsColumns} 
           dataSource={data} 
           title={() => (
-            <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}>
+            <h4 className="text-center font-bold text-yellow-500">
               Gastos Extra
             </h4>
           )}

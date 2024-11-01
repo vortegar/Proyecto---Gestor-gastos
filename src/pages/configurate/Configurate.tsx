@@ -16,29 +16,23 @@ const downloadDocument = () => {
 }
   return (
     <>
-      <div>
-        <h2 style={{ margin: '0'}}>Configuración</h2>
-        <h2 style={{ margin: '0'}}>Añade los gastos necesarios aqui</h2>
+      <div className="my-1">
+        <h2 className="mt-0 bolld font-bold">Configuración</h2>
+        <h2 className="mt-0 mb-4 font-bold">Añade los gastos necesarios aqui</h2>
         <Button 
           style={{ marginTop: '1vw'}} 
           onClick={() => downloadDocument()} 
-          className="custom-button"
+          className="mt-4 bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500"
         >
           Descargar Plantilla <CloudDownloadOutlined />
         </Button>
 
       </div>
-      <Divider style={{ marginTop: '0'}}/>
-      <Row gutter={16} style={{marginTop: '50px'}}>
-        <Col span={8}>
-         <FormPersons/>     
-        </Col>
-        <Col span={8}>
-         <FormSpents/>
-        </Col>
-        <Col span={8}>
-          <FormFixedSpents/>     
-        </Col>
+      <Divider className="mt-2"/>
+      <Row gutter={16} className="flex lg:flex-row sm:flex-col items-center">
+        <Col className="lg:w-1/3 sm:w-full"> <FormPersons/> </Col>
+        <Col className="lg:w-1/3 sm:w-full"> <FormSpents/> </Col>
+        <Col className="lg:w-1/3 sm:w-full"> <FormFixedSpents/> </Col>
       </Row>
     </>
   );  

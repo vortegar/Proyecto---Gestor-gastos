@@ -97,7 +97,7 @@ export const FormExpenses:  React.FC = () => {
         columns={columns} 
         dataSource={data} 
         title={() => (
-            <h4 style={{ textAlign: 'center', fontWeight: 'bold', margin: '0' }}> Gastos Variables </h4>
+            <h4 className="text-center font-bold text-yellow-500"> Gastos Variables </h4>
             )}
         locale={{
           emptyText: <span>Aun no existen gastos en el mes</span> 

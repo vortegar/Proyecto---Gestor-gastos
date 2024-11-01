@@ -1,3 +1,4 @@
+
 :root {
   --primary-color: #000814;
   --secondary-color: #001d3d;
@@ -9,17 +10,6 @@
 /* Estilos para el item seleccionado */
 .ant-menu-item-selected {
   background-color: var(--quinary-color) !important;
-}
-
-/* Estilos para el botón */
-.custom-button {
-  background-color: var(--primary-color); 
-  color: var(--quaternary-color);
-  border: none;
-  padding: 0.42vw 0.83vw;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  gap: 0.8vw;
 }
 
 /* Estilos para el botón al hacer hover */

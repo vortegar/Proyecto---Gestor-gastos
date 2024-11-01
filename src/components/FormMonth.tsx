@@ -34,7 +34,7 @@ export const FormMonth: React.FC<FormMonthProps>  = ({fn}) => {
 
   return (
     <>
-      <Form style={{display: 'flex', gap: "0.8vw"}} onFinish={handleSubmit(onSearchMonth)}>
+      <Form className="flex gap-4" onFinish={handleSubmit(onSearchMonth)}>
         <Form.Item
           validateStatus={errors.month ? 'error' : ''}
           help={errors.month ? errors.month.message : ''}
@@ -45,7 +45,7 @@ export const FormMonth: React.FC<FormMonthProps>  = ({fn}) => {
             rules   = {{ required: "Este campo es obligatorio" }}
             render  = {({ field }) => (
               <>
-                <Select {...field} placeholder= "Selecciona un mes" style={{width: '20vw'}}>
+                <Select {...field} placeholder= "Selecciona un mes" className="w-60">
                     {
                       monthContext.map( (i) => (
                         <Option key={i.id} value={i.id}> {i.month} </Option>

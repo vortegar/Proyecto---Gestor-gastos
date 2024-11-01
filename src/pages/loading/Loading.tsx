@@ -51,12 +51,12 @@ export const LoadingScreen: React.FC = () => {
       }, [])
     
  return   (
-  <div className='loading-overlay'>
-
-    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+  <div className="fixed w-screen h-screen flex justify-center items-center inset-0 bg-gray-950">
+    <div className="flex flex-col justify-center items-center h-screen">
         <Spin size="large" />
-        <Title style={{color: 'white'}} level={4}>Cargando información...</Title>        
+        <Title className="!text-white mt-4" level={4}>Cargando información...</Title>        
     </div>
   </div>
     );
 }
+

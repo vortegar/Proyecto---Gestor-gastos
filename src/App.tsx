@@ -15,6 +15,8 @@ import { Configurate } from './pages/configurate/Configurate';
 const { Content } = Layout;
 
 import './variables.css'
+import './index.css';
+
 import { LoadingScreen } from './pages/loading/Loading';
 
 export const App: React.FC = () => {
@@ -24,10 +26,10 @@ export const App: React.FC = () => {
       <Layout style={{ minWidth: '98.8vw'}}>
         {(isAuthenticated && uploadedData) && <Navbar />}
 
-        <Layout className="site-layout" style={{ marginLeft: isAuthenticated ? '14vw' : 0, minHeight: '100vh' }}>
-          <Content style={{ margin: '2vw 2vw 0', overflow: 'initial' }}>
+        <Layout >
+          <Content className="mx-10 my-10">
     
-            <div className="site-layout-background" style={{ padding: '2vw', minHeight: '50vw' }}>
+            <div>
               <Routes>
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/load" element={<LoadingScreen />} />

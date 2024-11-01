@@ -59,10 +59,10 @@ export const ModalCreateMes:React.FC<ModalCreateMesProps> = ({estado, modificado
       open={estado}
       onOk={handleSubmit(onSubmitMes)}
       onCancel={handleCancel}
-      okButtonProps={{ className: 'custom-button' }}
-
+      okButtonProps={{ className: "bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500" }}
+      cancelButtonProps={{ className: "border hover:!border-yellow-500 hover:!text-yellow-500"}}
     >
-    <h2>Selecciona el Mes</h2>
+    <h2 className="font-bold mb-5">Selecciona el mes a crear</h2>
     <Form layout="vertical">
       <Form.Item>
         <Controller
