@@ -31,8 +31,8 @@ const downloadDocument = () => {
       <Divider className="mt-2"/>
       <Row gutter={16} className="flex lg:flex-row sm:flex-col items-center">
         <Col className="lg:w-1/3 sm:w-full"> <FormPersons/> </Col>
-        <Col className="lg:w-1/3 sm:w-full"> <FormSpents/> </Col>
-        <Col className="lg:w-1/3 sm:w-full"> <FormFixedSpents/> </Col>
+        {/* <Col className="lg:w-1/3 sm:w-full"> <FormSpents/> </Col> */}
+        {/* <Col className="lg:w-1/3 sm:w-full"> <FormFixedSpents/> </Col> */}
       </Row>
     </>
   );  

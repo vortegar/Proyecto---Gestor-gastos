@@ -10,7 +10,7 @@ import { updateDoc, arrayUnion } from "firebase/firestore";
 import { Month } from '../interface/MonthInterface';
 import { FnState } from '../components/intercafeComponents';
 
-import { MESSAGE_DELETE_ITEM, MESSAGE_ERROR } from '../constants/constantesServices';
+import {MESSAGE_ADD_MONTH, MESSAGE_DELETE_ITEM, MESSAGE_ERROR, MESSAGE_FIND_MONTH } from '../constants/constantesServices';
 
 import { message } from 'antd';
 
@@ -34,6 +34,7 @@ export const addMonth = async (year: string, monthData: string) => {
     await updateDoc(yearDocRef, {
       month: arrayUnion(newMonth)
     });
+    message.success(MESSAGE_ADD_MONTH);
 
   } catch (e) {
     message.error(MESSAGE_ERROR);
@@ -74,9 +75,8 @@ export const getMonthById = async (yearId: string, monthId: string, fn: Dispatch
       if (monthData) {
         fn(monthData);
         fnBlock();
-      } else {
-        console.log("No se encontró un mes con el ID proporcionado");
-      }
+        message.success(MESSAGE_FIND_MONTH);
+      } 
     } else {
       console.log("No se encontró el documento del año");
     }

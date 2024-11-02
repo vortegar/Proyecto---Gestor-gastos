@@ -39,8 +39,8 @@ export const FormExpenses:  React.FC = () => {
           }
        }) as [];
 
-        setData(objectTable);
-        updateExpenses(objectTable, anioActual.id!, mesActual.id!)
+       updateExpenses(objectTable, anioActual.id!, mesActual.id!);
+       setData(objectTable);
       };
       reader.readAsArrayBuffer(file);
     }

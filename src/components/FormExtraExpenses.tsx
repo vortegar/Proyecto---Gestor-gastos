@@ -37,8 +37,8 @@ export const FormExtraExpenses:  React.FC = () => {
             descripcion : l[2],
           };
        }) as [];      
-        setData(objectTable);
-        updateExtraExpenses(objectTable, anioActual.id!, mesActual.id!)
+       updateExtraExpenses(objectTable, anioActual.id!, mesActual.id!);
+       setData(objectTable);
       };
       reader.readAsArrayBuffer(file);
     }

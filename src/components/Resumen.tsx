@@ -49,7 +49,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
               {
                 (type=='persona') && 
                 <>
-                  <span className="grow text-left"><strong> {v.user} </strong>:</span>
+                  <span className="grow text-left font-bold">En gastos var. {v.user} debe:</span>
                   <span className="grow text-right">$ {v.total?.toLocaleString('es-ES')}</span>
                 </>
               }

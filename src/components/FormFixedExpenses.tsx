@@ -36,9 +36,8 @@ export const FormFixedExpenses:  React.FC = () => {
             total       : l[1],
           }
         }) as [];
-        console.log(objectTable)
+        updateFixedExpenses(objectTable, anioActual.id!, mesActual.id!);
         setData(objectTable);
-        updateFixedExpenses(objectTable, anioActual.id!, mesActual.id!)
       };
       reader.readAsArrayBuffer(file);
     }

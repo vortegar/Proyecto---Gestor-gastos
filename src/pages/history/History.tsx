@@ -79,7 +79,7 @@ export const History = () => {
       <div className="flex justify-between">
         <div className="mt-20">
           <Resumen data={expensesHistory} title='Totales de Gastos por Mes' type='gasto historico'/>
-          <div className="text-center text-yellow-500 bg-green-950 mt-4 p-4 rounded font-bold">
+          <div className="text-center text-yellow-500 bg-gray-950 mt-4 p-4 rounded font-bold">
             Total Gastado en el Año: <strong>$ {sumYearTotalExpenses.toLocaleString('es-ES')}</strong>
           </div>
           <Table 

@@ -8,7 +8,7 @@ import { DivisionRow } from './DivisionRow';
 
 import { IFormValueCalculate, ModalCalculateDiff } from './intercafeComponents';
 
-import { amountCalculate, getPersonToPay } from '../helpers/calculate';
+import { amountCalculate, calculateAmountToPay, getPersonToPay } from '../helpers/calculate';
 
 export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador, fixedExpenses, extraItems, personResumen}) => {
 
@@ -46,9 +46,10 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
 
     const firtsPerson = amountCalculate(totalDataItems.Andreina, totalPorPersona.Andreina);
     const secondPerson = amountCalculate(totalDataItems.Victorio, totalPorPersona.Victorio);
-    const total = amountCalculate(firtsPerson, secondPerson);
-    const user = getPersonToPay(firtsPerson, secondPerson);
 
+    const total = calculateAmountToPay(firtsPerson, secondPerson);
+    const user = getPersonToPay(firtsPerson, secondPerson);
+console.log(total)
     setDiff(() => {
       return{user, total}
       })
