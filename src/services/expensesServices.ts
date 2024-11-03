@@ -13,7 +13,13 @@ import { MESSAGE_ERROR, MESSAGE_SUCCES } from "../constants/constantesServices";
 import { checkMonthExistence, findMonthById } from "../helpers/validateMonths";
 
 // Metodos para  Actualizar Gastos
-export const updateExtraExpenses = async (data: FormExtraExpenesesInputs[], year: string, monthId: string) => {
+export const updateExtraExpenses = async (
+  data: FormExtraExpenesesInputs[], 
+  year: string, 
+  monthId: string,
+  setData: React.Dispatch<React.SetStateAction<FormExtraExpenesesInputs[]>>
+
+) => {
   try {
     const {months, yearDocRef} = await findMonthById(year);
     const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
@@ -39,15 +45,20 @@ export const updateExtraExpenses = async (data: FormExtraExpenesesInputs[], year
     ];
 
     await updateDoc(yearDocRef, {month: updatedMonths});
-  
     message.success(MESSAGE_SUCCES);
+    setData(data)
   } catch (e) {
     message.error(MESSAGE_ERROR);
     console.error(MESSAGE_ERROR, e);
   }
 };
 
-export const updateFixedExpenses = async (data: [], year: string, monthId: string) => {
+export const updateFixedExpenses = async (
+  data: [], 
+  year: string, 
+  monthId: string, 
+  setData: React.Dispatch<React.SetStateAction<FixedExpenseInputs[]>>
+) => {
   try {
 
     const {months, yearDocRef} = await findMonthById(year);
@@ -71,15 +82,21 @@ export const updateFixedExpenses = async (data: [], year: string, monthId: strin
     ];
 
     await updateDoc(yearDocRef, {month: updatedMonths});
-    
     message.success(MESSAGE_SUCCES);
+    setData(data)
   } catch (e) {
     message.error(MESSAGE_ERROR);
     console.error(MESSAGE_ERROR, e);
   }
 };
 
-export const updateExpenses = async (data: InputsExpenses[],year: string, monthId: string) => {
+export const updateExpenses = async (
+  data: InputsExpenses[],
+  year: string, 
+  monthId: 
+  string,
+  setData: React.Dispatch<React.SetStateAction<InputsExpenses[]>>
+) => {
   try {
     const {months, yearDocRef} = await findMonthById(year);
     const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
@@ -107,10 +124,9 @@ export const updateExpenses = async (data: InputsExpenses[],year: string, monthI
       ...months.slice(monthIndex + 1)
     ];
 
-    console.log(updatedMonths)
     await updateDoc(yearDocRef, {month: updatedMonths});
-    
     message.success(MESSAGE_SUCCES);
+    setData(data)
   } catch (e) {
     message.error(MESSAGE_ERROR);
     console.error(MESSAGE_ERROR, e);

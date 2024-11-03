@@ -7,13 +7,14 @@ import * as XLSX from 'xlsx';
 
 import { useActualDate } from "../hooks/useActualDate";
 
-import { ExtraItemsColumns } from "./intercafeComponents";
+import { FormExtraExpenesesInputs } from "./intercafeComponents";
 
 import { updateExtraExpenses } from "../services/expensesServices";
 
 export const FormExtraExpenses:  React.FC = () => {
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<FormExtraExpenesesInputs[]>([]);
+
   const {anioActual, mesActual} = useActualDate()
   
   useEffect(() => {
@@ -37,14 +38,14 @@ export const FormExtraExpenses:  React.FC = () => {
             descripcion : l[2],
           };
        }) as [];      
-       updateExtraExpenses(objectTable, anioActual.id!, mesActual.id!);
-       setData(objectTable);
+       updateExtraExpenses(objectTable, anioActual.id!, mesActual.id!, setData);
+      //  setData(objectTable);
       };
       reader.readAsArrayBuffer(file);
     }
   };
  
-  const extraItemsColumns: ColumnsType<ExtraItemsColumns> = [
+  const extraItemsColumns: ColumnsType<FormExtraExpenesesInputs> = [
     {
       title: 'Persona',
       dataIndex: 'user',

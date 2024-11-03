@@ -5,12 +5,12 @@ import { ColumnsType } from "antd/es/table";
 
 import * as XLSX from 'xlsx';
 
-import { Expenses } from "../interface/ExpensesInterface";
+import { InputsExpenses } from "../interface/ExpensesInterface";
 import { updateExpenses } from "../services/expensesServices";
 import { useActualDate } from "../hooks/useActualDate";
 
 export const FormExpenses:  React.FC = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<InputsExpenses[]>([]);
   const {anioActual, mesActual} = useActualDate()
 
   useEffect(() => {
@@ -39,14 +39,14 @@ export const FormExpenses:  React.FC = () => {
           }
        }) as [];
 
-       updateExpenses(objectTable, anioActual.id!, mesActual.id!);
-       setData(objectTable);
+       updateExpenses(objectTable, anioActual.id!, mesActual.id!, setData);
+      //  setData(objectTable);
       };
       reader.readAsArrayBuffer(file);
     }
   };
 
- const columns: ColumnsType<Expenses> = [
+ const columns: ColumnsType<InputsExpenses> = [
   {
     title: 'Gasto',
     dataIndex: 'spent_type',

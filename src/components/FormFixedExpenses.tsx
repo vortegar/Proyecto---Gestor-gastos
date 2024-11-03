@@ -12,7 +12,7 @@ import { FixedExpenseInputs } from "./intercafeComponents";
 import { updateFixedExpenses } from "../services/expensesServices";
 
 export const FormFixedExpenses:  React.FC = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<FixedExpenseInputs[]>([]);
   const {anioActual, mesActual} = useActualDate()
 
   useEffect(() => {
@@ -36,8 +36,7 @@ export const FormFixedExpenses:  React.FC = () => {
             total       : l[1],
           }
         }) as [];
-        updateFixedExpenses(objectTable, anioActual.id!, mesActual.id!);
-        setData(objectTable);
+        updateFixedExpenses(objectTable, anioActual.id!, mesActual.id!, setData);
       };
       reader.readAsArrayBuffer(file);
     }
