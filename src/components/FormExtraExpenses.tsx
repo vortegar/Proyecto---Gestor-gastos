@@ -84,6 +84,7 @@ export const FormExtraExpenses:  React.FC = () => {
         <Table 
           columns={extraItemsColumns} 
           dataSource={data} 
+          pagination={{ pageSize: 5 }} 
           title={() => (
             <h4 className="text-center font-bold text-yellow-500">
               Gastos Extra

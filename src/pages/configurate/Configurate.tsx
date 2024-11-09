@@ -1,8 +1,6 @@
 import { Row, Col, Divider, Button } from 'antd';
 
-// import { FormSpents } from '../../components/FormSpents';
 import { FormPersons } from '../../components/FormPersons';
-// import { FormFixedSpents } from '../../components/FormFixedSpents';
 import { CloudDownloadOutlined } from '@ant-design/icons';
 
 export const Configurate: React.FC = () => {
@@ -31,8 +29,6 @@ const downloadDocument = () => {
       <Divider className="mt-2"/>
       <Row gutter={16} className="flex lg:flex-row sm:flex-col items-center">
         <Col className="lg:w-1/3 sm:w-full"> <FormPersons/> </Col>
-        {/* <Col className="lg:w-1/3 sm:w-full"> <FormSpents/> </Col> */}
-        {/* <Col className="lg:w-1/3 sm:w-full"> <FormFixedSpents/> </Col> */}
       </Row>
     </>
   );  

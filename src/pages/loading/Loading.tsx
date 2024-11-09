@@ -3,15 +3,10 @@ import { useContext, useEffect } from 'react';
 
 import { Spin, Typography } from 'antd';
 
-import { getDataSpent } from '../../services/spentsServices';
 import { getDataPerson } from '../../services/formPersonServices';
 
-import { SpentContext } from '../../context/SpentContextProvider';
-import { PersonContext } from '../../context/PersonContextProvider';
-
 import { useAuth } from '../../context/AuthContextProvider';
-import { getDataFixedSpent } from '../../services/fixedExpensesServices';
-import { FixedSpentContext } from '../../context/FixedSpentContextProvider';
+import { PersonContext } from '../../context/PersonContextProvider';
 
 const { Title } = Typography;
 
@@ -23,19 +18,15 @@ export const LoadingScreen: React.FC = () => {
 
     const { uploaded } = useAuth();
 
-    const { setSpentContext } = useContext(SpentContext);
-    const { setPersonContext } = useContext(PersonContext);
-    const { setFixedSpentContext } = useContext(FixedSpentContext);
     const { setYearContext } = useContext(YearContext);
+    const { setPersonContext } = useContext(PersonContext);
 
     const navigate = useNavigate()
     
     const loadData = async () => {
         try {
           await Promise.all([
-            getDataSpent(setSpentContext),
             getDataPerson(setPersonContext),
-            getDataFixedSpent(setFixedSpentContext),
             getDataYear(setYearContext),
           ]);
           navigate('/home')

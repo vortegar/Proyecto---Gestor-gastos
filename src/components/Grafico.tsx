@@ -55,7 +55,7 @@ export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
   };
   
   return (
-    <div style={{ width: '50vw', marginTop: '5vw'}}>
+    <div className="w-4/6 mt-20 mx-auto">
       <Bar data={data} options={options} />
     </div>
   );

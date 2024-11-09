@@ -4,6 +4,7 @@ import { Card, Space } from "antd";
 import Title from "antd/es/typography/Title";
 
 import { ResumenProps } from "./intercafeComponents";
+import { InfoResumen } from "./InfoResumen";
 
 export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
 
@@ -27,7 +28,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
       setFixedExpense(totalFixedExpense?.toLocaleString('es-ES'));
     }
   }, [type, data])
-  
+  type === 'gasto historico fijo' && console.log(data)
   return (
     <Space direction="vertical" size={16} className="w-80">
       <Card
@@ -45,7 +46,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
           ?
           data?.map( v => {
             return(
-            <div id={v.id?.toString()} className="flex">
+            <div id={v.id?.toString()}>
               {
                 (type=='persona') && 
                 <>
@@ -54,18 +55,8 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
                 </>
               }
               {
-                (type=='gastos fijos' || type=='gasto historico') && 
-                <>
-                  <span className="grow text-left"><strong>{v.spent_type}:</strong></span>
-                  <span className="grow text-right">$ {v.total?.toLocaleString('es-ES')}</span>
-                </>
-              }
-              {
-                (type=='gastos varios') && 
-                  <>
-                    <span className="grow text-left">{v.spent_type}:</span>
-                    <span className="grow text-right">$ {v.total?.toLocaleString('es-ES')}</span> 
-                  </>
+                (type=='gastos varios' || type=='gastos fijos' || type=='gasto historico') 
+                  && <InfoResumen spent_type={v.spent_type} total={v.total}/>
               }
             </div>
             )
@@ -77,14 +68,14 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
           (type=='gastos fijos') && 
           <div className="flex">
             <span className="grow text-left"><strong>Total:</strong></span>
-            <span className="grow text-right"> <strong>$ {fixedExpense}</strong></span>
+            <span className="grow text-right mr-4"> <strong>$ {fixedExpense}</strong></span>
           </div>
         }
         {
           (type=='gastos varios') && 
           <div className="flex">
             <span className="grow text-left"><strong>Total:</strong></span>
-            <span className="grow text-right"> <strong>$ {expenses}</strong></span>
+            <span className="grow text-right mr-4"> <strong>$ {expenses}</strong></span>
           </div>
         }
       </Card>

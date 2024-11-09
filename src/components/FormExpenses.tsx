@@ -96,6 +96,7 @@ export const FormExpenses:  React.FC = () => {
       <Table 
         columns={columns} 
         dataSource={data} 
+        pagination={{ pageSize: 5 }}
         title={() => (
             <h4 className="text-center font-bold text-yellow-500"> Gastos Variables </h4>
             )}

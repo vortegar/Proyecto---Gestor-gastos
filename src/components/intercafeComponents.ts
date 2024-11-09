@@ -31,7 +31,10 @@ export interface ResumenProps {
   title : string;
   type ?: string;
 }
-
+export interface HistoryResumenProps {
+  data : {[key: string]: number;}
+  title: string;
+}
 export interface TotalPerson {
   total: number;
 }
