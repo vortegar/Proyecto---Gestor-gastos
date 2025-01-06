@@ -3,11 +3,17 @@ import { Control, FieldErrors } from "react-hook-form";
 import { ResumenI } from "../pages/home/interfaceHome";
 
 import { Month } from "../interface/MonthInterface";
+import { Year } from "../interface/YearInterface";
 export interface ModalCreateMesProps {
     estado: boolean;     
+    year ?: Year;
+    fn    : () => void;          
     modificador: (arg: boolean) => void;
-    fn: () => void;          
-  }
+  } 
+export interface HeaderInfoInterface {
+  year: string;     
+  month?: string;
+}
 export interface ModalCalculateDiff {
   estado       : boolean;     
   modificador  : (arg: boolean) => void;

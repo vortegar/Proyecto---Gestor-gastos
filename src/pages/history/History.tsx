@@ -5,6 +5,8 @@ import { YearContext } from '../../context/YearContextProvider';
 import { HistoryAnualByMonth } from '../../components/HistoryAnual';
 import { HistoryFixedExpenses } from '../../components/HistoryFixedExpenses';
 import Item from 'antd/es/list/Item';
+import { HistoryVariableExpenses } from '../../components/HistoryVariableExpenses';
+import { HeaderInfo } from '../../components/HeaderInfo';
 
 export const History = () => {
   const { yearContext } = useContext(YearContext);
@@ -13,7 +15,7 @@ export const History = () => {
   return (
     <>
       <div className="my-1">
-        <h2 className="mt-0 bolld font-bold">Historial de Gastos Año - {anioActual?.year} </h2>
+        <HeaderInfo year={anioActual?.year} />
       </div>
       <Divider className="mt-2"/>
       <Tabs>
@@ -25,7 +27,9 @@ export const History = () => {
         </Item>
         
         <Item tab="Historico Gastos Variables" key="3">
-         <h1>Implementar</h1>
+         {/* <h1>Implementar</h1> */}
+         <HistoryVariableExpenses/>
+
         </Item>
       </Tabs>
     </>

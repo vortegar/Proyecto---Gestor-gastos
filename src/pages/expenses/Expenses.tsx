@@ -11,6 +11,7 @@ import { FormExpenses } from '../../components/FormExpenses';
 import { YearContext } from '../../context/YearContextProvider';
 
 import { getDataMonth } from '../../services/monthServides';
+import { HeaderInfo } from '../../components/HeaderInfo';
 
 export const ExpensesPage: React.FC = () => {
   
@@ -28,8 +29,7 @@ export const ExpensesPage: React.FC = () => {
     <div>
       <div>
         <div className="my-1">
-          <h2 className="mt-0 bolld font-bold">Gastos mes actual: {mesActual?.month}</h2>
-          <h2 className="mt-0 mb-4 font-bold">Año: {anioActual?.year} </h2>
+          <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
         </div>
       </div>
       <Divider className="mt-2"/>

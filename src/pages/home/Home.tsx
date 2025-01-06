@@ -20,6 +20,7 @@ import { ModalCreateYear } from '../../components/ModalCreateYear';
 import { getDataYear } from '../../services/yearServides';
 import { useBtnRefresh } from '../../hooks/useBtnRefresh';
 import { ModalCalculate } from '../../components/ModalCalculate';
+import { HeaderInfo } from '../../components/HeaderInfo';
 
 export const Home: React.FC = () => {
   const { yearContext, setYearContext } = useContext(YearContext);
@@ -101,8 +102,7 @@ export const Home: React.FC = () => {
     <>
     <div className="flex flex-col">
       <div className="my-1">
-        <h2 className="mt-0 bolld font-bold">Gastos del mes: {mesActual?.month}</h2>
-        <h2 className="mt-0 mb-4 font-bold">Año: {anioActual?.year} </h2>
+        <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
         <FormMonth fn={setMesActual}/>
       </div>
       <div className="flex gap-2 mt-4">
@@ -122,7 +122,7 @@ export const Home: React.FC = () => {
     </div>
     <Divider className="mt-2"/>
       <ModalCreateYear estado={isYearModalVisible} modificador={setIsYearModalVisible} fn={toggleRefresh} />
-      <ModalCreateMes estado={isMonthModalVisible} modificador={setIsMonthModalVisible} fn={toggleRefresh} />
+      <ModalCreateMes estado={isMonthModalVisible} modificador={setIsMonthModalVisible} fn={toggleRefresh} year={anioActual}/>
       <ModalCalculate 
         estado        = {isCalculateModalVisible} 
         extraItems    = {mesActual?.extra_items}
@@ -136,13 +136,13 @@ export const Home: React.FC = () => {
         <>
           <div className="flex flex-col">
             <div className="flex gap-5 lg:flex-row sm:flex-col lg:items-start sm:items-center">
-              <Resumen data={personResumen} title='Resumen Gasto por persona' type='persona'/>
-              <Resumen data={mesActual?.fixed_expenses} title='Resumen Gasto Fijo' type='gastos fijos'/>
-              <Resumen data={expensesResumen} title='Resumen Gasto Variable' type='gastos varios'/>
+              <Resumen data={personResumen} title='Gastos por persona' type='persona'/>
+              <Resumen data={mesActual?.fixed_expenses} title=' Gastos Fijos' type='gastos fijos'/>
+              <Resumen data={expensesResumen} title='Gastos Variables' type='gastos varios'/>
             </div>
             <div className="flex flex-col items-center">
-              <Grafico resumen={mesActual?.fixed_expenses} title='Gastos fijos del mes'/>
-              <Grafico resumen={expensesResumen} title='Gastos variables del mes'/>
+              <Grafico resumen={mesActual?.fixed_expenses} title='Gastos Fijos'/>
+              <Grafico resumen={expensesResumen} title='Gastos Variables'/>
             </div>
           </div>
         </>

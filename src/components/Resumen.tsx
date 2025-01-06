@@ -66,14 +66,14 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
         }
         {
           (type=='gastos fijos') && 
-          <div className="flex">
+          <div className="flex mt-5">
             <span className="grow text-left"><strong>Total:</strong></span>
             <span className="grow text-right mr-4"> <strong>$ {fixedExpense}</strong></span>
           </div>
         }
         {
           (type=='gastos varios') && 
-          <div className="flex">
+          <div className="flex mt-5">
             <span className="grow text-left"><strong>Total:</strong></span>
             <span className="grow text-right mr-4"> <strong>$ {expenses}</strong></span>
           </div>

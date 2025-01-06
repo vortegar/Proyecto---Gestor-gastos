@@ -8,9 +8,10 @@ import { MonthContext } from '../context/MonthContextProvider';
 import { addMonth } from '../services/monthServides';
 import { ModalCreateMesProps, OnSubmitMesParams } from './intercafeComponents';
 import { YearContext } from '../context/YearContextProvider';
+import { Month } from '../interface/MonthInterface';
 
 const { Option } = Select;
-export const ModalCreateMes:React.FC<ModalCreateMesProps> = ({estado, modificador, fn}) => {
+export const ModalCreateMes:React.FC<ModalCreateMesProps> = ({estado, modificador, fn, year}) => {
 
   const { control, handleSubmit, reset } = useForm<OnSubmitMesParams>();
   
@@ -23,7 +24,7 @@ export const ModalCreateMes:React.FC<ModalCreateMesProps> = ({estado, modificado
       modificador(false);
       reset();
     };
-
+    
     const onSubmitMes = ({name}: OnSubmitMesParams) => {
       const monthName = monthContext.find( s => s.month?.toLowerCase() == name.toLowerCase())
       if( monthName != undefined) {
@@ -39,7 +40,7 @@ export const ModalCreateMes:React.FC<ModalCreateMesProps> = ({estado, modificado
       reset();
     }
 
-    const meses = [
+    const months = [
       { id: 1, name: 'Enero' },
       { id: 2, name: 'Febrero' },
       { id: 3, name: 'Marzo' },
@@ -51,8 +52,14 @@ export const ModalCreateMes:React.FC<ModalCreateMesProps> = ({estado, modificado
       { id: 9, name: 'Septiembre' },
       { id: 10, name: 'Octubre' },
       { id: 11, name: 'Noviembre' },
-      { id: 12, name: 'Diciembre' }
+      { id: 12, name: 'Diciembre' },
     ];
+
+    const avalibleMonths = months.filter( m => {
+      return !year!.month.some(( v:Month ) => {
+        return m.name === v.month
+      })
+    })
     
   return (
     <Modal
@@ -62,25 +69,30 @@ export const ModalCreateMes:React.FC<ModalCreateMesProps> = ({estado, modificado
       okButtonProps={{ className: "bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500" }}
       cancelButtonProps={{ className: "border hover:!border-yellow-500 hover:!text-yellow-500"}}
     >
-    <h2 className="font-bold mb-5">Selecciona el mes a crear</h2>
-    <Form layout="vertical">
-      <Form.Item>
-        <Controller
-          name="name"
-          control={control}
-          render={({ field }) => (
-            <Select {...field} placeholder= "Meses">
-              {
-                meses.map( (i) => (
-                  <Option key={i.id} value={i.name}>{i.name}</Option>
-                )
-                )
-              }
-            </Select>
-          )}
-        />
-      </Form.Item>
-    </Form>
-  </Modal>
+      {
+        avalibleMonths.length > 0 
+        ?<>
+          <h2 className="font-bold mb-5">Selecciona el mes a crear</h2>
+          <Form layout="vertical">
+            <Form.Item>
+              <Controller
+                name="name"
+                control={control}
+                render={({ field }) => (
+                  <Select {...field} placeholder= "Meses">                
+                    {
+                      avalibleMonths.map( (i) => (
+                          <Option key={i.id} value={i.name}>{i.name}</Option>
+                        ))
+                    }
+                  </Select>
+                )}
+              />
+            </Form.Item>
+          </Form>
+        </>
+        :<span>Haz creado todos los meses</span>
+      }
+    </Modal>
   )
 }

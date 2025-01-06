@@ -85,7 +85,7 @@ export const HistoryAnualByMonth = () => {
                 Meses Creados
             </h4>
             )}
-            pagination={{ pageSize: 3 }} 
+            pagination={{ pageSize: 6 }} 
             locale={{emptyText: <span>Aun no existen gastos en el mes</span>}}
           />
         </div>

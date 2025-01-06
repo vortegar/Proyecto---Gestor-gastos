@@ -10,7 +10,7 @@ import { getDataMonth } from '../services/monthServides';
 import { formatArrayMonth } from '../helpers/formatData';
 import { ResumenAnual } from './ResumenAnual';
 
-export const HistoryFixedExpenses = () => {
+export const HistoryVariableExpenses = () => {
   const { yearContext } = useContext(YearContext);
   const { monthContext, setMonthContext } = useContext(MonthContext);
 
@@ -21,8 +21,8 @@ export const HistoryFixedExpenses = () => {
   }, [setMonthContext, anioActual])
  
   const expensesHistory = monthContext.map(m => {
-    const fixedExpensesTotal = m.fixed_expenses.reduce<number>((acc, current) => {
-      return acc + current.total;
+    const fixedExpensesTotal = m.expenses.reduce<number>((acc, current) => {
+      return acc + current.monto;
     }, 0);
     return {
       spent_type: m.month,
@@ -31,12 +31,12 @@ export const HistoryFixedExpenses = () => {
   });
 
   const fixedExpenses = monthContext.flatMap(m => {
-        return m.fixed_expenses
+        return m.expenses
   });
-
+console.log(monthContext)
   const historyFixedExpenses = fixedExpenses.reduce((acc: { [key: string]: number }, item) => {
-      const {spent_type, total} = item
-      acc[spent_type] = (acc[spent_type] || 0) + total;
+      const {spent_type, monto} = item
+      acc[spent_type] = (acc[spent_type] || 0) + monto;
     return acc
     }, {})
 
@@ -52,7 +52,7 @@ export const HistoryFixedExpenses = () => {
     <div className="flex flex-col">
         <div className="mt-20 flex justify-around">
           <div>
-            <Resumen data={expensesHistory} title='Gasto fijo por mes' type='gasto historico'/>
+            <Resumen data={expensesHistory} title='Gasto variable por mes' type='gasto historico'/>
             <div className="text-center text-yellow-500 bg-gray-950 mt-4 p-4 rounded font-bold">
                 Total gasto fijo del año: $ {sumYearTotalExpenses.toLocaleString('es-ES')}
             </div>
