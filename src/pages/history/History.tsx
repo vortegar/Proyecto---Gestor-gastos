@@ -13,7 +13,7 @@ export const History = () => {
   const [anioActual] = useState(yearContext[yearContext.length - 1])
 
   return (
-    <>
+    <div className="opacity-0 animate-fadeIn">
       <div className="my-1">
         <HeaderInfo year={anioActual?.year} />
       </div>
@@ -32,6 +32,6 @@ export const History = () => {
 
         </Item>
       </Tabs>
-    </>
+    </div>
   )
 }

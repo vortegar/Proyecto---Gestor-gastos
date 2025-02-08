@@ -40,7 +40,6 @@ export const FormExpenses:  React.FC = () => {
        }) as [];
 
        updateExpenses(objectTable, anioActual.id!, mesActual.id!, setData);
-      //  setData(objectTable);
       };
       reader.readAsArrayBuffer(file);
     }
@@ -48,34 +47,34 @@ export const FormExpenses:  React.FC = () => {
 
  const columns: ColumnsType<InputsExpenses> = [
   {
-    title: 'Gasto',
+    title    : 'Gasto',
     dataIndex: 'spent_type',
-    key: 'spent_type',
-    align: 'center',
+    key      : 'spent_type',
+    align    : 'center',
   },
   {
-    title: 'Total',
+    title    : 'Total',
     dataIndex: 'monto',
-    key: 'monto',
-    align: 'center',
+    key      : 'monto',
+    align    : 'center',
   },
   {
-    title: 'Victorio',
+    title    : 'Victorio',
     dataIndex: 'user_1',
-    key: 'user_1',
-    align: 'center',
+    key      : 'user_1',
+    align    : 'center',
   },
   {
-    title: 'Andreina',
+    title    : 'Andreina',
     dataIndex: 'user_2',
-    key: 'user_2',
-    align: 'center',
+    key      : 'user_2',
+    align    : 'center',
   },
   {
-    title: 'Descripción',
+    title    : 'Descripción',
     dataIndex: 'descripcion',
-    key: 'descripcion',
-    align: 'center',
+    key      : 'descripcion',
+    align    : 'center',
   },
   // {
   //   title: 'Acción',

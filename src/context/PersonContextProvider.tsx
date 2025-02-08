@@ -1,7 +1,7 @@
 import { createContext, useState, ReactNode, FC } from 'react';
 
 interface Person {
-    id: string;
+    id         : string;
     person_name: string;
   }
   interface MyContextProviderProps {

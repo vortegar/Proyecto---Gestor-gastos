@@ -26,7 +26,7 @@ export const ExpensesPage: React.FC = () => {
   }, [ setMonthContext, anioActual])
 
   return (
-    <div>
+    <div className="opacity-0 animate-fadeIn">
       <div>
         <div className="my-1">
           <HeaderInfo year={anioActual?.year} month={mesActual?.month} />

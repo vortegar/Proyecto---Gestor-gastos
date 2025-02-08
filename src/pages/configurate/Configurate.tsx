@@ -13,7 +13,7 @@ const downloadDocument = () => {
   document.body.removeChild(link);
 }
   return (
-    <>
+    <div className="opacity-0 animate-fadeIn">
       <div className="my-1">
         <h2 className="mt-0 bolld font-bold">Configuración</h2>
         <h2 className="mt-0 mb-4 font-bold">Añade los gastos necesarios aqui</h2>
@@ -30,7 +30,7 @@ const downloadDocument = () => {
       <Row gutter={16} className="flex lg:flex-row sm:flex-col items-center">
         <Col className="lg:w-1/3 sm:w-full"> <FormPersons/> </Col>
       </Row>
-    </>
+    </div>
   );  
 };
 

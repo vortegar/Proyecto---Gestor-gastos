@@ -49,7 +49,6 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
 
     const total = calculateAmountToPay(firtsPerson, secondPerson);
     const user = getPersonToPay(firtsPerson, secondPerson);
-console.log(total)
     setDiff(() => {
       return{user, total}
       })

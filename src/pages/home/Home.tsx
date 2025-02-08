@@ -14,29 +14,31 @@ import { ModalCreateMes } from '../../components/ModalCreateMes';
 import { ResumenI } from './interfaceHome';
 import { ExpensesResumen } from '../../interface/ExpensesInterface';
 
+import { FormYear } from '../../components/FormYear';
 import { FormMonth } from '../../components/FormMonth';
+import { HeaderInfo } from '../../components/HeaderInfo';
+import { ModalCalculate } from '../../components/ModalCalculate';
 import { ModalCreateYear } from '../../components/ModalCreateYear';
 
 import { getDataYear } from '../../services/yearServides';
+
 import { useBtnRefresh } from '../../hooks/useBtnRefresh';
-import { ModalCalculate } from '../../components/ModalCalculate';
-import { HeaderInfo } from '../../components/HeaderInfo';
+import { useActualDate } from '../../hooks/useActualDate';
 
 export const Home: React.FC = () => {
-  const { yearContext, setYearContext } = useContext(YearContext);
+  const { yearContext, dispatch } = useContext(YearContext);
+  
   const { monthContext, setMonthContext } = useContext(MonthContext);
-
   const [isYearModalVisible, setIsYearModalVisible] = useState(false);
   const [isMonthModalVisible, setIsMonthModalVisible] = useState(false);
   const [isCalculateModalVisible, setIsCalculateModalVisible] = useState(false);
-
-  const [anioActual, setAnioActual] = useState(yearContext[yearContext.length - 1]);
-  const [mesActual, setMesActual] = useState(monthContext[monthContext.length - 1]);
+  
+  const {anioActual, mesActual, setAnioActual, setMesActual} = useActualDate()
 
   const { refresh, toggleRefresh} = useBtnRefresh()
   useEffect(() => {
-    getDataYear(setYearContext)
-  }, [refresh, setYearContext])
+    getDataYear(dispatch)
+  }, [refresh, dispatch])
   
   useEffect(() => {
     getDataMonth(setMonthContext, anioActual.id!)
@@ -50,7 +52,7 @@ export const Home: React.FC = () => {
     setMesActual(monthContext[monthContext.length - 1])
   }, [monthContext])
   
-  const acumuladorPerson = mesActual?.expenses.reduce((acc: { [key: string]: number }, item) => {
+  const acumuladorPerson = mesActual?.expenses?.reduce((acc: { [key: string]: number }, item) => {
     const { user_1, user_2 } = item;
     
     if (acc['Victorio'] === undefined) acc['Victorio'] = 0;
@@ -71,8 +73,7 @@ export const Home: React.FC = () => {
       total: acumuladorPerson[user]
     }));
   }  
-
-  const gruopExpenses = mesActual?.expenses.reduce((acc: { [key: string]: number }, item) => {
+  const gruopExpenses = mesActual?.expenses?.reduce((acc: { [key: string]: number }, item) => {
     const { spent_type, monto } = item;
     if (!acc[spent_type]) {
       acc[spent_type] = 0;
@@ -99,12 +100,15 @@ export const Home: React.FC = () => {
   const showCalculateModal = () => { setIsCalculateModalVisible(true);};
 
   return (
-    <>
-    <div className="flex flex-col">
-      <div className="my-1">
-        <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
-        <FormMonth fn={setMesActual}/>
-      </div>
+    <div className='opacity-0 animate-fadeIn'>
+      <div className="flex flex-col">
+        <div className="my-1">
+          <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
+          <div className='flex gap-10'>
+            <FormYear />
+            <FormMonth fn={setMesActual}/>
+          </div>
+        </div>
       <div className="flex gap-2 mt-4">
         <Button onClick={() => showCalculateModal()} className="bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500">
           Calcular diferencia
@@ -149,6 +153,6 @@ export const Home: React.FC = () => {
         : 
         <h3>No tienes ningun registro de mes</h3>
       }
-    </>    
+    </div>    
   );
 };

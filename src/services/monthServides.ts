@@ -71,7 +71,7 @@ export const getMonthById = async (yearId: string, monthId: string, fn: Dispatch
       const months: Month[] = yearData?.month;
 
       const monthData = months.find((month) => month.id === monthId); 
-
+      console.log(monthData, 'aca')
       if (monthData) {
         fn(monthData);
         fnBlock();

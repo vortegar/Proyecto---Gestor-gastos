@@ -48,7 +48,7 @@ export const LoginPage = () => {
 
   const { Title } = Typography;
   return (
-    <div  className="flex flex-col items-center">
+    <div  className="flex flex-col items-center opacity-0 animate-fadeIn">
     <img src="/img/home-img.jpg" alt="inicio" className="absolute inset-0 w-full h-full object-cover" />
       <Button
         disabled={isBlockBtn}

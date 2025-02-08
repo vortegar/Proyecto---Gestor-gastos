@@ -18,8 +18,8 @@ export const LoadingScreen: React.FC = () => {
 
     const { uploaded } = useAuth();
 
-    const { setYearContext } = useContext(YearContext);
-    const { setPersonContext } = useContext(PersonContext);
+    const { yearContext, dispatch } = useContext(YearContext);
+    const { personContext ,setPersonContext } = useContext(PersonContext);
 
     const navigate = useNavigate()
     
@@ -27,10 +27,13 @@ export const LoadingScreen: React.FC = () => {
         try {
           await Promise.all([
             getDataPerson(setPersonContext),
-            getDataYear(setYearContext),
+            getDataYear(dispatch),
           ]);
-          navigate('/home')
           uploaded();
+          
+          if ( personContext.length > 0 || yearContext.length > 0 ){
+            navigate('/home')
+          }
 
         } catch (error) {
           console.error('Ocurrió un error al cargar los datos:', error);
@@ -44,6 +47,7 @@ export const LoadingScreen: React.FC = () => {
  return   (
   <div className="fixed w-screen h-screen flex justify-center items-center inset-0 bg-gray-950">
     <div className="flex flex-col justify-center items-center h-screen">
+        
         <Spin size="large" />
         <Title className="!text-white mt-4" level={4}>Cargando información...</Title>        
     </div>

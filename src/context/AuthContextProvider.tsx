@@ -3,19 +3,20 @@ import { defaultContextAuth, MyAuthContextProviderProps } from '../interface/Aut
 
 export const AuthContext = createContext(defaultContextAuth);
 interface AuthContextType {
-  isAuthenticated: boolean;
-  login: () => void;
-  logout: () => void;
-  username?: string;
-  userUid?: string;
-  getUsername: (u: string) => void;
-  clearUsername: () => void;
-  uploaded: () => void;
+  isAuthenticated : boolean;
+  login     : () => void;
+  logout    : () => void;
+  username ?: string;
+  userUid  ?: string;
+  getUsername   : (u: string) => void;
+  clearUsername : () => void;
+  uploaded    : () => void;
   uploadedData: boolean;
-  cleanData: () => void;
-  getUserUid: (u: string) => void;
+  cleanData   : () => void;
+  getUserUid  : (u: string) => void;
   clearUserUid: () => void;
 }
+
 export const useAuth = () => useContext<AuthContextType>(AuthContext);
 
 export const AuthProvider: FC<MyAuthContextProviderProps> = ({ children }) => {
