@@ -2,9 +2,9 @@ import { HeaderInfoInterface } from "./intercafeComponents"
 
 export const HeaderInfo: React.FC<HeaderInfoInterface> = ({month, year}) => {
   return (
-    <>
-        <h2 className="mt-0 bolld font-bold text-xl">Gastos Mes De - {month}</h2>
-        <h2 className="mt-0 mb-4 font-bold text-xl">Del Año - {year} </h2>
-    </>   
+    <div className="flex gap-3 mb-3">
+        <h2 className="mt-0 text-xl">Gastos mes de <span className="font-bold">{month}</span></h2>
+        <h2 className="mt-0 mb-4 text-xl"> año <span className="font-bold">{year}</span></h2>
+    </div>   
   )
 }

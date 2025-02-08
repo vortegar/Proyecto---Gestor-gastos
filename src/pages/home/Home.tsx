@@ -109,7 +109,7 @@ export const Home: React.FC = () => {
             <FormMonth fn={setMesActual}/>
           </div>
         </div>
-      <div className="flex gap-2 mt-4">
+      <div className="flex gap-2 mt-3 mb-3">
         <Button onClick={() => showCalculateModal()} className="bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500">
           Calcular diferencia
           <CalculatorOutlined />
@@ -124,7 +124,7 @@ export const Home: React.FC = () => {
         </Button>
       </div>
     </div>
-    <Divider className="mt-2"/>
+    <Divider/>
       <ModalCreateYear estado={isYearModalVisible} modificador={setIsYearModalVisible} fn={toggleRefresh} />
       <ModalCreateMes estado={isMonthModalVisible} modificador={setIsMonthModalVisible} fn={toggleRefresh} year={anioActual}/>
       <ModalCalculate 
@@ -138,8 +138,8 @@ export const Home: React.FC = () => {
         monthContext.length > 0
         ?
         <>
-          <div className="flex flex-col">
-            <div className="flex gap-5 lg:flex-row sm:flex-col lg:items-start sm:items-center">
+          <div className="flex flex-col mt-20">
+            <div className="flex gap-14 lg:flex-row sm:flex-col lg:items-start sm:items-center justify-center">
               <Resumen data={personResumen} title='Gastos por persona' type='persona'/>
               <Resumen data={mesActual?.fixed_expenses} title=' Gastos Fijos' type='gastos fijos'/>
               <Resumen data={expensesResumen} title='Gastos Variables' type='gastos varios'/>

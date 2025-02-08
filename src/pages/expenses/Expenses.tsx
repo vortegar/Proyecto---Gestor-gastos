@@ -32,7 +32,7 @@ export const ExpensesPage: React.FC = () => {
           <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
         </div>
       </div>
-      <Divider className="mt-2"/>
+      <Divider/>
       <Row gutter={16} className="flex lg:flex-row sm:flex-col lg:items-start sm:items-center">
         <Col className="lg:w-5/12 sm:w-full"> <FormFixedExpenses/> </Col>
         <Col className="lg:w-7/12 sm:w-full"> <FormExpenses/> </Col>

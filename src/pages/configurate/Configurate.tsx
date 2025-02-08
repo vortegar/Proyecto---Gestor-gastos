@@ -15,8 +15,6 @@ const downloadDocument = () => {
   return (
     <div className="opacity-0 animate-fadeIn">
       <div className="my-1">
-        <h2 className="mt-0 bolld font-bold">Configuración</h2>
-        <h2 className="mt-0 mb-4 font-bold">Añade los gastos necesarios aqui</h2>
         <Button 
           style={{ marginTop: '1vw'}} 
           onClick={() => downloadDocument()} 
