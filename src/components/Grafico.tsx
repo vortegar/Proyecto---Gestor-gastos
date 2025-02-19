@@ -32,9 +32,9 @@ export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
         type: 'bar',
         label: 'Gasto',
         data: dataLabeValue,
-        backgroundColor: 'rgba(255, 214, 10, 0.6)',
-        borderColor: 'rgba(255, 214, 10, 1)',
-        borderWidth: 1,
+        backgroundColor: 'rgba(34, 197, 94, 0.6)',
+        borderColor: 'rgba(34, 197, 94, 1)',
+        borderWidth: 2,
       },
     ],
   };
@@ -44,14 +44,17 @@ export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
     plugins: {
       legend: {
         position: 'bottom',
-        labels: {font: { size: 10}},
+        labels: {font: { size: 10}, color: "white"},
       },
-      title: { display: true, text: title,},
+      title: { display: true, text: title, color: "white"},
     },
     scales: {
-      x: {ticks: { font: { size: 8}}},
-      y: {ticks: { font: { size: 8}}}
+      x: {ticks: { font: { size: 8}, color: "white"}},
+      y: {ticks: { font: { size: 8}, color: "white"}},
     },
+    color: {
+      
+    }
   };
   
   return (

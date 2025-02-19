@@ -53,7 +53,7 @@ export const HistoryFixedExpenses = () => {
         <div className="mt-20 flex justify-around">
           <div>
             <Resumen data={expensesHistory} title='Gasto fijo por mes' type='gasto historico'/>
-            <div className="text-center text-yellow-500 bg-gray-950 mt-4 p-4 rounded font-bold">
+            <div className="text-center bg-primary text-green-500 mt-4 p-4 rounded font-bold">
                 Total gasto fijo del año: $ {sumYearTotalExpenses.toLocaleString('es-ES')}
             </div>
           </div>

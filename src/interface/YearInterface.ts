@@ -3,7 +3,7 @@ import { Month } from './MonthInterface';
 import { Action } from '../reducers/AnioActualReducer';
 
 export interface Year {
-    id   ?: string;
+    id    : string;
     year  :string;
     month : Month[];
   }
@@ -24,14 +24,4 @@ export interface Year {
 
   export interface MyContextAnioActualProviderProps {
     children: ReactNode;
-  }
-
-  export interface MyContextAnioActualProps {
-    anioActual   : Year | undefined;
-    setAnioActual: React.Dispatch<React.SetStateAction<Year | undefined>>;
-  }
-  
-  export const defaultAnioActualContext: MyContextAnioActualProps = {
-    anioActual: { id : '',year  :'', month : [] },
-    setAnioActual: () => '',
   }

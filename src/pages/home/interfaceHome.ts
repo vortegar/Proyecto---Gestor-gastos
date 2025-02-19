@@ -4,6 +4,10 @@ export interface ResumenI {
     user        ?: string;
     total        : number;
   }
+
+  export interface InfoTotalI {
+    total          ?: string,
+  }
   
   export interface ExpensesResumen {
     id          : number;

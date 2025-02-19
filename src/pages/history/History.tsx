@@ -18,7 +18,8 @@ export const History = () => {
         <HeaderInfo year={anioActual?.year} />
       </div>
       <Divider className="mt-2"/>
-      <Tabs>
+      <Tabs
+        className="[&_.ant-tabs-tab]:!text-white">
         <Item tab="Historico Anual" key="1">
           <HistoryAnualByMonth/>
         </Item>
@@ -27,7 +28,6 @@ export const History = () => {
         </Item>
         
         <Item tab="Historico Gastos Variables" key="3">
-         {/* <h1>Implementar</h1> */}
          <HistoryVariableExpenses/>
 
         </Item>

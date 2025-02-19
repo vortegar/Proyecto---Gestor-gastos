@@ -11,7 +11,7 @@ export const ButtonDelete: React.FC<ButtonDeleteProps> = ({disabled, fn}) => {
                 disabled={disabled}
                 icon={<DeleteOutlined />}
                 onClick={() => fn()}
-               className="bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500"
+               className="bg-primary hover:!bg-secondary !text-black !border-black"
             />
         </Tooltip>  
     </span>

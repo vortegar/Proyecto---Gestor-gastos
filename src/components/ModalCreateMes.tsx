@@ -56,7 +56,7 @@ export const ModalCreateMes:React.FC<ModalCreateMesProps> = ({estado, modificado
     ];
 
     const avalibleMonths = months.filter( m => {
-      return !year!.month.some(( v:Month ) => {
+      return !year?.month.some(( v:Month ) => {
         return m.name === v.month
       })
     })

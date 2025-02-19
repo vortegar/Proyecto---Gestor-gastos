@@ -83,7 +83,7 @@ export const FormFixedExpenses:  React.FC = () => {
         dataSource={data} 
         pagination={{ pageSize: 5 }} 
         title={() => (
-          <h4 className="text-center font-bold text-yellow-500"> Gastos Fijos </h4>
+          <h4 className="text-center font-bold"> Gastos Fijos </h4>
         )}
         locale={{emptyText: <span>Aun no existen gastos fijos en el mes</span>}}
       />

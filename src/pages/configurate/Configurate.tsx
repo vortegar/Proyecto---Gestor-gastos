@@ -18,7 +18,7 @@ const downloadDocument = () => {
         <Button 
           style={{ marginTop: '1vw'}} 
           onClick={() => downloadDocument()} 
-          className="mt-4 bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500"
+          className="mt-4 bg-primary hover:!bg-secondary !text-black !border-black"
         >
           Descargar Plantilla <CloudDownloadOutlined />
         </Button>

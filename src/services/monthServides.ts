@@ -47,7 +47,7 @@ export const getDataMonth = async (fn: Dispatch<SetStateAction<Month[]>>, year: 
   try {
     const {yearDoc} = await getYear(year)
 
-    if (!yearDoc.exists()) {
+    if ( year === undefined || !yearDoc.exists()) {
       console.error("No se encontró el documento del año");
       return;
     }

@@ -86,7 +86,7 @@ export const FormExtraExpenses:  React.FC = () => {
           dataSource={data} 
           pagination={{ pageSize: 5 }} 
           title={() => (
-            <h4 className="text-center font-bold text-yellow-500">
+            <h4 className="text-center font-bold">
               Gastos Extra
             </h4>
           )}

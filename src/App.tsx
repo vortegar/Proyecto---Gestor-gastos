@@ -23,13 +23,13 @@ export const App: React.FC = () => {
   const { isAuthenticated, uploadedData } = useAuth();
   return (
     <Router>
-      <Layout style={{ minWidth: '98.8vw'}}>
+      <Layout className="min-w-[98.8vw] bg-background">
         {(isAuthenticated && uploadedData) && <Navbar />}
 
-        <Layout >
+        {/* <Layout className=' h-screen bg-background'> */}
           <Content className="mx-10 my-10">
     
-            <div>
+            {/* <div> */}
               <Routes>
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/load" element={<LoadingScreen />} />
@@ -38,10 +38,10 @@ export const App: React.FC = () => {
                 <Route path="/configurate" element={<ProtectedRoute element={Configurate} />} />
                 <Route path="/history" element={<ProtectedRoute element={History} />} />
               </Routes>
-            </div>
+            {/* </div> */}
           </Content>
         </Layout>
-      </Layout>
+      {/* </Layout> */}
     </Router>
   );
 };

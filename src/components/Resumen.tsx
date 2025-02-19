@@ -5,6 +5,7 @@ import Title from "antd/es/typography/Title";
 
 import { ResumenProps } from "./intercafeComponents";
 import { InfoResumen } from "./InfoResumen";
+import { InfoTotal } from "./InfoTotal";
 
 export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
 
@@ -35,7 +36,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
       className="custom-card-head"
         title={
           <div >
-            <Title level={4} className="!text-yellow-500 !text-sm !mb-0">
+            <Title level={4} className="!text-sm !mb-0">
               {title}
             </Title>
           </div>
@@ -49,10 +50,10 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
             <div id={v.id?.toString()}>
               {
                 (type=='persona') && 
-                <>
-                  <span className="grow text-left font-bold">En gastos var. {v.user} debe:</span>
-                  <span className="grow text-right">$ {v.total?.toLocaleString('es-ES')}</span>
-                </>
+                <div className=" flex gap-5">
+                  <span className="font-bold">En gastos var. {v.user} debe:</span>
+                  <span className="text-green-500">${v.total?.toLocaleString('es-ES')}</span>
+                </div>
               }
               {
                 (type=='gastos varios' || type=='gastos fijos' || type=='gasto historico') 
@@ -65,18 +66,10 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
           <span>No hay datos</span>
         }
         {
-          (type=='gastos fijos') && 
-          <div className="flex mt-5">
-            <span className="grow text-left"><strong>Total:</strong></span>
-            <span className="grow text-right mr-4"> <strong>$ {fixedExpense}</strong></span>
-          </div>
+          (type=='gastos fijos') && <InfoTotal total={fixedExpense}/>
         }
         {
-          (type=='gastos varios') && 
-          <div className="flex mt-5">
-            <span className="grow text-left"><strong>Total:</strong></span>
-            <span className="grow text-right mr-4"> <strong>$ {expenses}</strong></span>
-          </div>
+          (type=='gastos varios') && <InfoTotal total={expenses}/>
         }
       </Card>
     </Space>

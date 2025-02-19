@@ -97,7 +97,7 @@ export const FormExpenses:  React.FC = () => {
         dataSource={data} 
         pagination={{ pageSize: 5 }}
         title={() => (
-            <h4 className="text-center font-bold text-yellow-500"> Gastos Variables </h4>
+            <h4 className="text-center font-bold"> Gastos Variables </h4>
             )}
         locale={{
           emptyText: <span>Aun no existen gastos en el mes</span> 

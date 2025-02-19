@@ -41,7 +41,7 @@ export const Home: React.FC = () => {
   }, [refresh, dispatch])
   
   useEffect(() => {
-    getDataMonth(setMonthContext, anioActual.id!)
+    getDataMonth(setMonthContext, anioActual?.id)
   }, [refresh, setMonthContext, anioActual])
   
   useEffect(() => {
@@ -110,18 +110,22 @@ export const Home: React.FC = () => {
           </div>
         </div>
       <div className="flex gap-2 mt-3 mb-3">
-        <Button onClick={() => showCalculateModal()} className="bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500">
-          Calcular diferencia
-          <CalculatorOutlined />
-        </Button>
-        <Button onClick={() => showMonthModal()} className="bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500">
-          Crear nuevo mes
-          <PlusOutlined />
-        </Button>
-        <Button onClick={() => showYearhModal()} className="bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500">
+        {
+          (anioActual?.year !== undefined ) && 
+            <Button onClick={() => showCalculateModal()} className="bg-primary hover:!bg-secondary hover:!text-black !border-black">
+              Calcular diferencia
+              <CalculatorOutlined />
+            </Button>
+        }
+        <Button onClick={() => showYearhModal()} className="bg-primary hover:!bg-secondary hover:!text-black !border-black">
           Crear nuevo periodo anual
           <PlusOutlined />
         </Button>
+        <Button onClick={() => showMonthModal()} className="bg-primary hover:!bg-secondary hover:!text-black !border-black">
+          Crear nuevo mes
+          <PlusOutlined />
+        </Button>
+      
       </div>
     </div>
     <Divider/>

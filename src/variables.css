@@ -1,15 +1,14 @@
 
 :root {
-  --primary-color: #000814;
-  --secondary-color: #001d3d;
-  --tertiary-color: #003566;
-  --quaternary-color: #ffd60a;
-  --quinary-color: #ffc300;
+  --primary-color: #d1d2d4;
+  --secondary-color: #95999c;
+  --background-color: #08121b;
 }
 
 /* Estilos para el item seleccionado */
 .ant-menu-item-selected {
-  background-color: var(--quinary-color) !important;
+  background-color: var(--secondary-color) !important;
+  color: var(--background-color) !important;
 }
 
 /* Estilos para el botón al hacer hover */

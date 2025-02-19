@@ -49,19 +49,19 @@ export const LoginPage = () => {
   const { Title } = Typography;
   return (
     <div  className="flex flex-col items-center opacity-0 animate-fadeIn">
-    <img src="/img/home-img.jpg" alt="inicio" className="absolute inset-0 w-full h-full object-cover" />
+      <img src="/img/home-img.jpg" alt="inicio" className="absolute inset-0 w-full h-full object-cover opacity-0 animate-fadeIn" />
       <Button
         disabled={isBlockBtn}
         type="primary"
         onClick={handleLogin}
-        className="w-60 lg:mt-72  sm:mt-96 bg-yellow-500 hover:!bg-yellow-600 text-black hover:!text-black"
+        className="border-none w-60 lg:mt-32  sm:mt-96 bg-primary hover:!bg-secondary text-black hover:!text-white"
       >
         Iniciar sesión con Google <GoogleOutlined />
       </Button>
-      <Title className="z-20 lg:mt-24 sm:mt-96 !text-yellow-500" level={4}>
+      <Title className="z-10 lg:mt-80 sm:mt-96 !text-primary" level={4}>
         Una app creada para llevar tus gastos de forma ordenada.
       </Title>
-      <p className="z-10 text-yellow-500">Creado por: Victorio Ortega🏅</p>
+      <p className="z-10 text-primary">Creado por: Victorio Ortega🏅</p>
   </div>
   );
 };
