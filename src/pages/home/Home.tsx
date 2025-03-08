@@ -24,6 +24,7 @@ import { getDataYear } from '../../services/yearServides';
 
 import { useBtnRefresh } from '../../hooks/useBtnRefresh';
 import { useActualDate } from '../../hooks/useActualDate';
+import { isFullYear } from '../../helpers/validateYear';
 
 export const Home: React.FC = () => {
   const { yearContext, dispatch } = useContext(YearContext);
@@ -51,7 +52,6 @@ export const Home: React.FC = () => {
   useEffect(() => {
     setMesActual(monthContext[monthContext.length - 1])
   }, [monthContext])
-  
   const acumuladorPerson = mesActual?.expenses?.reduce((acc: { [key: string]: number }, item) => {
     const { user_1, user_2 } = item;
     
@@ -91,10 +91,8 @@ export const Home: React.FC = () => {
       total: gruopExpenses[spent_type]
     }));
   }
-
   // Constante que agrupa los gastos 
   // const combineExpenses = expensesResumen.concat(fixedExpenses);
-
   const showYearhModal = () => { setIsYearModalVisible(true);};
   const showMonthModal = () => { setIsMonthModalVisible(true);};
   const showCalculateModal = () => { setIsCalculateModalVisible(true);};
@@ -117,15 +115,18 @@ export const Home: React.FC = () => {
               <CalculatorOutlined />
             </Button>
         }
-        <Button onClick={() => showYearhModal()} className="bg-primary hover:!bg-secondary hover:!text-black !border-black">
-          Crear nuevo periodo anual
-          <PlusOutlined />
-        </Button>
         <Button onClick={() => showMonthModal()} className="bg-primary hover:!bg-secondary hover:!text-black !border-black">
           Crear nuevo mes
           <PlusOutlined />
         </Button>
-      
+        <Button 
+          onClick={() => showYearhModal()} 
+          className="custom-disabled-button bg-primary hover:!bg-secondary hover:!text-black !border-black"
+          disabled={isFullYear(monthContext)}
+        >
+          Crear nuevo periodo anual
+          <PlusOutlined />
+        </Button>
       </div>
     </div>
     <Divider/>

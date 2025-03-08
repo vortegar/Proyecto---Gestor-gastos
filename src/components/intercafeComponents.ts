@@ -1,5 +1,5 @@
 // MODAL CREAR MES
-import { Control, FieldErrors } from "react-hook-form";
+import { Control, FieldErrors, UseFormSetValue } from "react-hook-form";
 import { ResumenI } from "../pages/home/interfaceHome";
 
 import { Month } from "../interface/MonthInterface";
@@ -69,11 +69,16 @@ export type ExtraItemsInputs = {
   total : number;
 };
 
+export type FormValues = {
+  items: { user: string; total: number }[];
+};
+
 export interface IDivisionRow {
   spentType: string;
   total    : number;        
   control  : Control<IFormValuesDivision>; 
   index    : number;        
+  setValue: UseFormSetValue<FormValues>;
   errors   : FieldErrors<IFormValuesDivision>;  
 }
 

@@ -6,12 +6,12 @@ export const ExtraImtes: React.FC<IExtraItemsRow> = ({ person, monto }) => {
     <Row gutter={16} align="middle">
       <Col span={8}>
         <Form.Item >
-          <Input disabled value={person} />
+          <Input disabled value={person} className="custom-disabled-input" />
         </Form.Item>
       </Col>
       <Col span={8}>
         <Form.Item>
-         <Input disabled value={monto} />
+         <Input disabled value={monto} className="custom-disabled-input" />
         </Form.Item>
       </Col>
     </Row>

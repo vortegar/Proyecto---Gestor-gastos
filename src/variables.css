@@ -2,6 +2,8 @@
 :root {
   --primary-color: #d1d2d4;
   --secondary-color: #95999c;
+  --purple-color: #874089;
+  --green-color: #22c55e;
   --background-color: #08121b;
 }
 
@@ -9,6 +11,12 @@
 .ant-menu-item-selected {
   background-color: var(--secondary-color) !important;
   color: var(--background-color) !important;
+}
+
+.custom-disabled-button.ant-btn[disabled], .custom-disabled-input.ant-input[disabled]  {
+  background-color: var(--purple-color) !important; 
+  color: white !important; 
+  border-color: var(--purple-color) !important;
 }
 
 /* Estilos para el botón al hacer hover */

@@ -6,13 +6,13 @@ import { Col, Form, Modal, Row } from 'antd';
 import { ExtraImtes } from './ExtraItems';
 import { DivisionRow } from './DivisionRow';
 
-import { IFormValueCalculate, ModalCalculateDiff } from './intercafeComponents';
+import { FormValues, IFormValueCalculate, ModalCalculateDiff } from './intercafeComponents';
 
 import { amountCalculate, calculateAmountToPay, getPersonToPay } from '../helpers/calculate';
 
 export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador, fixedExpenses, extraItems, personResumen}) => {
-
-  const { control, handleSubmit, reset, formState: {errors} } = useForm({ defaultValues: {
+  
+  const { control, handleSubmit, reset, setValue, formState: {errors} } = useForm<FormValues>({ defaultValues: {
     items: [],
   }});
 
@@ -24,7 +24,6 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
     };
 
     const onSubmitCalulate = (data:IFormValueCalculate) => {
-      
       const arrayDataAgrupada = [ ...extraItems, ...personResumen];
       const totalPorPersona = arrayDataAgrupada.reduce((acc, curr) => {
       if (acc[curr.user!]) {
@@ -46,6 +45,8 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
 
     const firtsPerson = amountCalculate(totalDataItems.Andreina, totalPorPersona.Andreina);
     const secondPerson = amountCalculate(totalDataItems.Victorio, totalPorPersona.Victorio);
+    console.log( totalDataItems)
+    console.log( totalPorPersona.Andreina)
 
     const total = calculateAmountToPay(firtsPerson, secondPerson);
     const user = getPersonToPay(firtsPerson, secondPerson);
@@ -59,8 +60,8 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
       open={estado}
       onCancel={handleCancel}
       onOk={handleSubmit(onSubmitCalulate)}
-      okButtonProps={{ className: "bg-gray-950 hover:!bg-gray-800 text-yellow-500 hover:!text-yellow-500" }}
-      cancelButtonProps={{ className: "border hover:!border-yellow-500 hover:!text-yellow-500"}}
+      okButtonProps={{ className: "bg-gray-950 hover:!bg-gray-800 text-[var(--purple-color)] hover:!text-[var(--green-color)]" }}
+      cancelButtonProps={{ className: "border hover:!border-[var(--green-color)] hover:!text-[var(--green-color)]"}}
       title={<div className="font-bold underline">Calcular Diferencia</div>}
     >
       <Row gutter={16}>
@@ -73,6 +74,7 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
                 total     = {f.total} 
                 control   = {control} 
                 index     = {index} 
+                setValue  = {setValue}
                 errors    = {errors}
               />
             ))}

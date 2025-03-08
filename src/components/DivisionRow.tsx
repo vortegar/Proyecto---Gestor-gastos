@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 
 import { Option } from 'antd/es/mentions';
@@ -8,14 +8,19 @@ import { IDivisionRow } from './intercafeComponents';
 
 import { PersonContext } from '../context/PersonContextProvider';
 
-export const DivisionRow:React.FC<IDivisionRow> = ({spentType , total, control, index, errors}) => {
+export const DivisionRow:React.FC<IDivisionRow> = ({spentType , total, control, index, setValue, errors}) => {
   const { personContext } = useContext(PersonContext);
 
+  useEffect(() => {
+    const calculatedValue = spentType.toUpperCase() === "ARRIENDO" ? total * 0.4 : total / 2;
+    setValue(`items.${index}.total`, calculatedValue);
+  }, [total, spentType, setValue, index]);
+  
   return (
     <Row gutter={16} align="middle">
       <Col span={10}> 
         <Form.Item>
-          <Input disabled={true} defaultValue={`${spentType}: ${total}`} />
+          <Input disabled={true} defaultValue={`${spentType}: ${total}`} className="custom-disabled-input"/>
         </Form.Item>
       </Col>
       <Col span={6}> 
@@ -23,17 +28,12 @@ export const DivisionRow:React.FC<IDivisionRow> = ({spentType , total, control, 
           <Controller
             name={`items.${index}.total`}
             control={control}
-            render={({ field: { onChange, onBlur, value, ref } }) => (
+            render={({ field: { onChange, value, onBlur, ref } }) => (
               <Input
                 type="number"
                 placeholder="Divisor"
                 value={value}
-                onChange={(e: { target:{ value: string}}) => {
-                  const numericValue = parseFloat(e.target.value); 
-                  onChange(isNaN(numericValue) ? '' : spentType.toUpperCase() === 'ARRIENDO' 
-                                                    ? (total * 0.4) : (total/ numericValue)
-                  ); 
-                }}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {onChange(e.target.value)}}
                 onBlur={onBlur}
                 inputRef={ref}
               />
