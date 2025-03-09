@@ -54,14 +54,14 @@ export const LoginPage = () => {
         disabled={isBlockBtn}
         type="primary"
         onClick={handleLogin}
-        className="border-none w-60 lg:mt-32  sm:mt-96 bg-primary hover:!bg-secondary text-black hover:!text-white"
+        className="border-none w-60 lg:mt-32  sm:mt-96 bg-[var(--purple-color)] hover:!bg-[var(--purple-dark-color)]"
       >
         Iniciar sesión con Google <GoogleOutlined />
       </Button>
       <Title className="z-10 lg:mt-80 sm:mt-96 !text-primary" level={4}>
         Una app creada para llevar tus gastos de forma ordenada.
       </Title>
-      <p className="z-10 text-primary">Creado por: Victorio Ortega🏅</p>
+      <p className="z-10 text-[var(--purple-color)]">Creado por: Victorio Ortega 🏅</p>
   </div>
   );
 };

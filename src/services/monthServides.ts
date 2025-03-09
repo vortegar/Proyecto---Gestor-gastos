@@ -69,7 +69,7 @@ export const getMonthById = async (yearId: string, monthId: string, fn: Dispatch
     if (yearDoc.exists()) {
       const yearData = yearDoc.data();
       const months: Month[] = yearData?.month;
-
+      console.log(yearData)
       const monthData = months.find((month) => month.id === monthId); 
       console.log(monthData, 'aca')
       if (monthData) {

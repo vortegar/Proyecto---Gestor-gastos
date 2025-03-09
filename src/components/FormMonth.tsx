@@ -8,26 +8,24 @@ import { useBtnRefresh } from '../hooks/useBtnRefresh';
 
 import { ButtonSearch } from './ButtonSearch';
 
-// import { YearContext } from '../context/YearContextProvider';
 import { MonthContext } from '../context/MonthContextProvider';
 
 import { getMonthById } from '../services/monthServides';
 
 import { Month } from '../interface/MonthInterface';
 import { FormMonthProps } from './intercafeComponents';
-import { YearContext } from '../context/YearContextProvider';
+import { useActualDate } from '../hooks/useActualDate';
 
 export const FormMonth: React.FC<FormMonthProps>  = ({fn}) => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<Month>();
 
   const { monthContext } = useContext(MonthContext);
-  const { yearContext } = useContext(YearContext);
+  const { anioActual } = useActualDate();
   
   const {isBlockBtn, toggleBlockBtn} = useBtnRefresh();
-
   const onSearchMonth: SubmitHandler<Month> = async(data) => {
     toggleBlockBtn()
-    getMonthById( yearContext[0].id! ,data.month!, fn, toggleBlockBtn)
+    getMonthById( anioActual.id! ,data.month!, fn, toggleBlockBtn)
     reset()
   };
 

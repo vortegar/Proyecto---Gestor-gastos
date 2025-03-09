@@ -13,12 +13,12 @@ const downloadDocument = () => {
   document.body.removeChild(link);
 }
   return (
-    <div className="opacity-0 animate-fadeIn">
-      <div className="my-1">
+    <div className="opacity-0 animate-fadeIn h-screen">
+      <div>
         <Button 
           style={{ marginTop: '1vw'}} 
           onClick={() => downloadDocument()} 
-          className="mt-4 bg-primary hover:!bg-secondary !text-black !border-black"
+          className=" bg-primary hover:!bg-secondary !text-black !border-black"
         >
           Descargar Plantilla <CloudDownloadOutlined />
         </Button>

@@ -49,8 +49,21 @@ export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
       title: { display: true, text: title, color: "white"},
     },
     scales: {
-      x: {ticks: { font: { size: 8}, color: "white"}},
-      y: {ticks: { font: { size: 8}, color: "white"}},
+      x: {
+        ticks: { font: { size: 8}, color: "white"},
+        grid: {
+          display: true, 
+          color: 'rgba(200, 200, 200, 0.5)',
+        },
+      
+      },
+      y: {
+        ticks: { font: { size: 8}, color: "white"},
+        grid: {
+          display: true, 
+          color: 'rgba(200, 200, 200, 0.5)',
+        },
+      },
     },
     color: {
       
