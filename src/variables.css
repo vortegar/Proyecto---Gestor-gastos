@@ -27,8 +27,9 @@
 }
 
 /* Estilos del Card */
-.custom-card-head .ant-card-head {
-  background-color: var(--primary-color);
+.custom-card-head .ant-card-head, .ant-table-title {
+  background-color: var(--purple-color) !important;
+  border-color: var(--purple-color) !important;
   color: var(--quaternary-color);
   text-align: center; 
 }
@@ -37,19 +38,27 @@
   width: 22vw;
 }
 
-/*  Estilos de tabla */
-.ant-table-title {
-  background-color: var(--primary-color);
-  color: var(--quaternary-color);
-  margin-top: 1.04vw;
-}
-
 .title-suma-total {
   background-color: var(--primary-color);
   color: var(--quaternary-color);
 }
 
 /* Estilos input */
+input[type="file"]::file-selector-button {
+  background-color: var(--purple-color); 
+  color: white; 
+  border: none;
+  padding: 8px 16px; 
+  border-radius: 5px; 
+  font-size: 12px;
+  cursor: pointer; 
+}
+
+/* Sobrescribir el color de la pestaña activa */
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--purple-color); 
+}
+
 .ant-form-item {
   margin-bottom: 0.5vw;
 }

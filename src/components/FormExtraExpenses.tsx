@@ -80,13 +80,13 @@ export const FormExtraExpenses:  React.FC = () => {
 
   return (
     <>
-       <input type="file" accept=".xlsx" onChange={handleFileUploadFixedExpense} />  
+       <input className="mb-4" type="file" accept=".xlsx" onChange={handleFileUploadFixedExpense} />  
         <Table 
           columns={extraItemsColumns} 
           dataSource={data} 
           pagination={{ pageSize: 5 }} 
           title={() => (
-            <h4 className="text-center font-bold">
+            <h4 className="text-center font-bold text-white">
               Gastos Extra
             </h4>
           )}

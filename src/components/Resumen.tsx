@@ -36,7 +36,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
       className="custom-card-head"
         title={
           <div >
-            <Title level={4} className="!text-sm !mb-0">
+            <Title level={4} className="!text-sm !mb-0 !text-white">
               {title}
             </Title>
           </div>

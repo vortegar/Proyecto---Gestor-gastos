@@ -71,19 +71,14 @@ export const FormFixedExpenses:  React.FC = () => {
 
   return (
     <>
-      <input 
-        type="file" 
-        accept=".xlsx" 
-        onChange={handleFileUploadFixedExpense} 
-      
-      />
+      <input type="file" accept=".xlsx" onChange={handleFileUploadFixedExpense} className="mb-4 input"/>
       
       <Table 
         columns={fixedExpenseColumns} 
         dataSource={data} 
         pagination={{ pageSize: 5 }} 
         title={() => (
-          <h4 className="text-center font-bold"> Gastos Fijos </h4>
+          <h4 className="custom-card-head text-center font-bold text-white"> Gastos Fijos </h4>
         )}
         locale={{emptyText: <span>Aun no existen gastos fijos en el mes</span>}}
       />

@@ -91,13 +91,13 @@ export const FormExpenses:  React.FC = () => {
 ];
   return (
     <>
-      <input type="file" accept=".xlsx" onChange={handleFileUpload} />
+      <input className="mb-4" type="file" accept=".xlsx" onChange={handleFileUpload} />
       <Table 
         columns={columns} 
         dataSource={data} 
         pagination={{ pageSize: 5 }}
         title={() => (
-            <h4 className="text-center font-bold"> Gastos Variables </h4>
+            <h4 className="text-center font-bold text-white"> Gastos Variables </h4>
             )}
         locale={{
           emptyText: <span>Aun no existen gastos en el mes</span> 
