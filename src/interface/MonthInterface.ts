@@ -1,13 +1,14 @@
 import { ReactNode } from 'react';
 import { Expenses } from './ExpensesInterface';
-import { ExtraItemsInputs, FixedExpenseInputs } from '../components/intercafeComponents';
+import { ExtraItemsInputs, FixedExpenseInputs, FormMonetarySavings } from '../components/intercafeComponents';
 
 export interface Month {
-    id           ?: string;
-    month         : string;
-    expenses      : Expenses[];
-    fixed_expenses: FixedExpenseInputs[];
-    extra_items   : ExtraItemsInputs[];
+    id              ?: string;
+    month            : string;
+    expenses         : Expenses[];
+    fixed_expenses   : FixedExpenseInputs[];
+    extra_items      : ExtraItemsInputs[];
+    monetary_savings : FormMonetarySavings[]
   }
 
   export interface MyContextProviderProps {

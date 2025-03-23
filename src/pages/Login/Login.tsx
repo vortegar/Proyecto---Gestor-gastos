@@ -56,6 +56,7 @@ export const LoginPage = () => {
       </div>
 
     <div className="flex flex-col justify-center items-center w-1/4 p-4 bg-[var(--purple-dark-color)] h-screen fixed right-0 top-0">
+      <h2 className="z-10 text-white pb-40">A llegado la hora de gestionar tu vida financiera</h2>
       <Button
         disabled={isBlockBtn}
         type="primary"

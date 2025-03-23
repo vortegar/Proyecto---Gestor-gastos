@@ -25,10 +25,11 @@ export const addMonth = async (year: string, monthData: string) => {
 
     const newMonthId = uuidv4();
     const newMonth = {
-      id: newMonthId,
-      month: monthData,
-      expenses: [],
-      fixed_expenses: []
+      id              : newMonthId,
+      month           : monthData,
+      expenses        : [],
+      fixed_expenses  : [],
+      monetary_savings: []
     };
 
     await updateDoc(yearDocRef, {

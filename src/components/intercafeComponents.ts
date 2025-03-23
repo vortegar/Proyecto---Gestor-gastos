@@ -63,6 +63,13 @@ export type FormExtraExpenesesInputs = {
   descripcion : string;
 };
 
+export type FormMonetarySavings = {
+  meta       : number,
+  concepto   : string,
+  porcentaje : number,
+  ahorroMes  : number,
+  ahorroTotal: number,
+};
 export type ExtraItemsInputs = {
   id    : number;
   user  : string;

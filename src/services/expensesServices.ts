@@ -3,7 +3,7 @@ import { updateDoc } from "firebase/firestore";
 import { FixedExpense } from "../interface/ComponentsInterface";
 import { Expenses, InputsExpenses } from "../interface/ExpensesInterface";
 
-import { ExtraItemsColumns, FixedExpenseInputs, FnState, FormExtraExpenesesInputs } from "../components/intercafeComponents";
+import { ExtraItemsColumns, FixedExpenseInputs, FnState, FormExtraExpenesesInputs, FormMonetarySavings } from "../components/intercafeComponents";
 
 import { message } from "antd";
 import { v4 as uuidv4 } from 'uuid';
@@ -268,3 +268,46 @@ export const updateExpenses = async (
       console.error(MESSAGE_ERROR, error);
     }
   };
+
+
+  // Metodos para  Actualizar Gastos
+export const updateMonetarySaving = async (
+  data: FormMonetarySavings[], 
+  year: string, 
+  monthId: string,
+  setData: React.Dispatch<React.SetStateAction<FormMonetarySavings[]>>
+
+) => {
+  try {
+    const {months, yearDocRef} = await findMonthById(year);
+    const monthIndex = months.findIndex((month: { id: string }) => month.id === monthId);
+    checkMonthExistence(monthIndex);
+    const updatedMonth = {
+      ...months[monthIndex],
+      monetary_savings:  
+        data.map((d) => {
+          return{
+          id         :  uuidv4(),
+          meta       : d.meta,
+          concepto   : d.concepto,
+          porcentaje : d.porcentaje,
+          ahorroMes  : d.ahorroMes,
+          ahorroTotal: d.ahorroTotal,
+          }
+        })
+      };
+
+    const updatedMonths = [
+      ...months.slice(0, monthIndex),
+      updatedMonth,
+      ...months.slice(monthIndex + 1)
+    ];
+    console.log(data)
+    await updateDoc(yearDocRef, {month: updatedMonths});
+    message.success(MESSAGE_SUCCES);
+    setData(data)
+  } catch (e) {
+    message.error(MESSAGE_ERROR);
+    console.error(MESSAGE_ERROR, e);
+  }
+};

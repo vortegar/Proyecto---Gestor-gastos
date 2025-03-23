@@ -22,34 +22,33 @@ export const Navbar: React.FC = () => {
   }
 
   return (
-    <Sider className="!bg-primary">
+    <Sider className="!bg-[var(--purple-color)]">
       <div className='sticky mt-20  top-20'>
-        <Title level={4} className="text-center mt-10">Bienvenido</Title>
-        <Title level={4} className="text-center !mt-0">{username}</Title>
-      {/* </div> */}
-      <Menu className="!bg-primary mt-20" mode="inline" defaultSelectedKeys={['1']}>
-        <Menu.Item key="1" icon={<HomeOutlined/>}>
-          <Link to="/home">Inicio</Link>
+        <Title level={4} className="text-center mt-10 !mb-0 !text-white">Bienvenido</Title>
+        <Title level={3} className="text-center !mt-0 !text-white">{username}</Title>
+      <Menu className="!bg-[var(--purple-color)] mt-20" mode="inline" defaultSelectedKeys={['1']}>
+        <Menu.Item key="1" icon={<HomeOutlined/>} className='!text-white'>
+          <Link to="/home" className='!text-white'>Inicio</Link>
         </Menu.Item>
         {
           monthContext.length > 0 &&
           <>  
-            <Menu.Item key="2" icon={<UserOutlined/>}>
-                <Link to="/expenses">Gastos</Link>
+            <Menu.Item key="2" icon={<UserOutlined />} className='!text-white'>
+                <Link to="/expenses" className='!text-white'>Datos</Link>
             </Menu.Item>
-            <Menu.Item key="3" icon={<FileTextOutlined/>}>
-                <Link to="/history">Historico Anual</Link>
+            <Menu.Item key="3" icon={<FileTextOutlined/>} className='!text-white'>
+                <Link to="/history" className='!text-white'>Historico</Link>
             </Menu.Item>
-            <Menu.Item key="4" icon={<BankOutlined />}>
-                <Link to="/objetive">Objetivos</Link>
+            <Menu.Item key="4" icon={<BankOutlined />} className='!text-white'>
+                <Link to="/objetive" className='!text-white'>Objetivos</Link>
             </Menu.Item>/
           </>
         }
-        <Menu.Item key="5" icon={<SettingOutlined />}>
-          <Link to="/configurate">Configuración</Link>
+        <Menu.Item key="5" icon={<SettingOutlined />} className='!text-white'>
+          <Link to="/configurate" className='!text-white'>Configuración</Link>
         </Menu.Item>
-        <Menu.Item key="6" icon={<ApiOutlined/>}>
-            <a onClick={handleLogout} style={{ textDecoration: 'none' }}>Salir</a>
+        <Menu.Item key="6" icon={<ApiOutlined/>} className='!text-white'>
+            <a onClick={handleLogout}  className='!text-white' style={{ textDecoration: 'none' }}>Salir</a>
         </Menu.Item>
       </Menu>
       </div>

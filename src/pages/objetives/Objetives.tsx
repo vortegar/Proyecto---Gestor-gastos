@@ -1,13 +1,27 @@
+import { useContext, useEffect, useState } from "react";
+
+import { Row } from "antd";
 import { Pie, Bar } from "react-chartjs-2";
+
 import '../../utils/chartConfig'
-import { Flex } from "antd";
+
 import { HeaderInfo } from "../../components/HeaderInfo";
-import { useContext, useState } from "react";
+import { FormMonetarySavings } from "../../components/intercafeComponents";
+
 import { YearContext } from "../../context/YearContextProvider";
 
-export const Objetives = () => {
+import { useActualDate } from "../../hooks/useActualDate";
 
-  const { yearContext } = useContext(YearContext);
+export const Objetives = () => {
+  
+  const { mesActual } = useActualDate()
+  const [data, setData] = useState<FormMonetarySavings[]>([]);
+  
+  useEffect(() => {
+    setData(mesActual.monetary_savings as [])
+ }, [mesActual.monetary_savings])
+
+ const { yearContext } = useContext(YearContext);
   const [anioActual] = useState(yearContext[yearContext.length - 1])
   
   const options = {
@@ -17,49 +31,83 @@ export const Objetives = () => {
       legend: {
         display: true,
         position: 'right', 
+        labels: {
+          color: '#ffffff',  // Color blanco para el texto de la leyenda
+        },
+      },
+    },
+  } as const;
+
+  const optionsBars = {
+    responsive: true,
+    maintainAspectRatio: false,
+  
+    plugins: {
+      legend: {
+        display: true,
+        position: 'right',
+        labels: {
+          color: '#ffffff',  // Color blanco para el texto de la leyenda
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: '#ffffff',  // Color blanco para el texto de las etiquetas del eje X
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.2)',  // Color blanco semitransparente para la cuadrícula del eje X
+        },
+        stacked: true,  // Apilar las barras en el eje X
+      },
+      y: {
+        ticks: {
+          color: '#ffffff',  // Color blanco para el texto de las etiquetas del eje Y
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.2)',  // Color blanco semitransparente para la cuadrícula del eje Y
+        },
+        stacked: true,  // Apilar las barras en el eje Y
       },
     },
   } as const;
   
-    const data = {
-        labels: ["Inversión", "Fondo de retiro", "Proyectos", "Estudios", "Donaciones", "Cosas personales"],
+    const dataPie = {
+        labels: data.map(v => v.concepto),
         datasets: [
           {
-            data: [270000, 135000, 135000, 90000, 45000, 225000], 
-            backgroundColor: ["#4CAF50", "#2196F3", "#FF9800", "#9C27B0", "#F44336", "#FFC107"],
+            data: data.map(v => v.porcentaje),
+            backgroundColor: [ "#E1BEE7", "#CE93D8", "#BA68C8", "#AB47BC", "#9C27B0", "#8E24AA",  "#7B1FA2",  "#6A1B9A", "#4A148C"]
           },
         ],
       };
 
       const dataBar = {
-        labels: ["Fondo de retiro", "Proyectos", "Estudios", "Donaciones", "Cosas personales"],
+        labels: data.map(v => v.concepto),
         datasets: [
           {
             label: "Ahorro actual",
-            data: [3000000, 200000, 10000, 50000, 800000], // Valores de ahorro actual
+            data: data.map(v => v.ahorroTotal),
             backgroundColor: "#4CAF50",
           },
           {
             label: "Tope máximo",
-            data: [5000000, 3000000, 1500000, 1000000, 1000000], // Valores de tope
+            data: data.map(v => v.meta),
             backgroundColor: "#95999c",
           },
         ],
       };
-      
-      
-      
+            
   return (
-  <div className="mx-auto max-w-screen-lg"> 
-    <HeaderInfo year={anioActual?.year} />
-    <Flex  className="mt-[10%] justify-center"> 
-      <div style={{ width: "85vh", height: "85vh" }}>
-        <Bar data={dataBar} options={{ scales: { x: { stacked: true }, y: { stacked: true } } }} />
-      </div>
-      <div style={{ width: "40vh", height: "40vh" }}>
-        <Pie data={data} options={options} />
-      </div>
-    </Flex>
+  <div className="mx-auto max-w-screen-lg h-auto"> 
+    <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
+    <Row gutter={16} className="flex lg:flex-row sm:flex-col lg:items-start sm:items-center w-[80%] h-[45%]">
+      <Bar data={dataBar} options={optionsBars} />
+    </Row>
+    <Row gutter={16} className="flex lg:flex-row sm:flex-col lg:items-start sm:items-center w-[40%] h-[15%] mt-5">
+      <Pie data={dataPie} options={options} />
+    </Row>
   </div>
   )
 }

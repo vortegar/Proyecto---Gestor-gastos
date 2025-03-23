@@ -7,11 +7,11 @@ export const HeaderInfo: React.FC<HeaderInfoInterface> = ({month, year}) => {
          (year !== undefined) 
          ? (
           <>
-            <h2 className="mt-0 text-xl text-primary">Gastos mes de <span className="font-bold">{month}</span></h2>
-            <h2 className="mt-0 mb-4 text-xl text-primary"> año <span className="font-bold">{year}</span></h2>
+            <h2 className="mt-0 text-xl text-white">Análisis mes de <span className="font-bold">{month}</span></h2>
+            <h2 className="mt-0 mb-4 text-xl text-white"> año <span className="font-bold">{year}</span></h2>
           </>
         )
-        : <h2 className="mt-0 mb-4 text-xl text-primary">Debes crear un año</h2>
+        : <h2 className="mt-0 mb-4 text-xl text-white">Debes crear un año</h2>
       }
     </div>   
   )

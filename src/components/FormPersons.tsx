@@ -96,7 +96,7 @@ export const FormPersons: React.FC = () => {
         columns={namesColums} 
         dataSource={personContext} 
         title={() => (
-          <h4 className="!text-sm !mb-0 font-bold text-center">
+          <h4 className="!text-sm text-white !mb-0 font-bold text-center">
             Usuarios
           </h4>
           )}

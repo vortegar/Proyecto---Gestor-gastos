@@ -12,6 +12,7 @@ import { YearContext } from '../../context/YearContextProvider';
 
 import { getDataMonth } from '../../services/monthServides';
 import { HeaderInfo } from '../../components/HeaderInfo';
+import { FormMonetary } from '../../components/FormMonetary';
 
 export const ExpensesPage: React.FC = () => {
   
@@ -37,8 +38,9 @@ export const ExpensesPage: React.FC = () => {
         <Col className="lg:w-5/12 sm:w-full"> <FormFixedExpenses/> </Col>
         <Col className="lg:w-7/12 sm:w-full"> <FormExpenses/> </Col>
       </Row>
-      <Row gutter={16}>
+      <Row gutter={16} className="flex lg:flex-row sm:flex-col lg:items-start sm:items-center">
         <Col className="lg:w-5/12 sm:w-full"> <FormExtraExpenses/> </Col>  
+        <Col className="lg:w-7/12 sm:w-full"> <FormMonetary/> </Col>  
       </Row>
     </div>
   );  
