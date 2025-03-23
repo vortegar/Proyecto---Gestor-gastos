@@ -18,6 +18,7 @@ import './variables.css'
 import './index.css';
 
 import { LoadingScreen } from './pages/loading/Loading';
+import { Objetives } from './pages/objetives/Objetives';
 
 export const App: React.FC = () => {
   const { isAuthenticated, uploadedData } = useAuth();
@@ -26,22 +27,19 @@ export const App: React.FC = () => {
       <Layout className="min-w-[98.8vw] bg-background">
         {(isAuthenticated && uploadedData) && <Navbar />}
 
-        {/* <Layout className=' h-screen bg-background'> */}
           <Content className="mx-10 my-10">
-    
-            {/* <div> */}
               <Routes>
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/load" element={<LoadingScreen />} />
                 <Route path="/home" element={<ProtectedRoute element={Home} />} />
                 <Route path="/expenses" element={<ProtectedRoute element={ExpensesPage} />} />
                 <Route path="/configurate" element={<ProtectedRoute element={Configurate} />} />
+                <Route path="/objetive" element={<ProtectedRoute element={Objetives} />} />
+
                 <Route path="/history" element={<ProtectedRoute element={History} />} />
               </Routes>
-            {/* </div> */}
           </Content>
         </Layout>
-      {/* </Layout> */}
     </Router>
   );
 };
