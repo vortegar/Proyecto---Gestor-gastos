@@ -66,9 +66,9 @@ export const Objetives = () => {
           color: '#ffffff',  // Color blanco para el texto de las etiquetas del eje Y
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.2)',  // Color blanco semitransparente para la cuadrícula del eje Y
+          color: 'rgba(255, 255, 255, 0.2)',  
         },
-        stacked: true,  // Apilar las barras en el eje Y
+        stacked: true,  
       },
     },
   } as const;
@@ -100,12 +100,14 @@ export const Objetives = () => {
       };
             
   return (
-  <div className="mx-auto max-w-screen-lg h-auto"> 
+  <div className="mx-auto max-w-screen-lg"> 
     <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
-    <Row gutter={16} className="flex lg:flex-row sm:flex-col lg:items-start sm:items-center w-[80%] h-[45%]">
+    <h3 className="text-white mt-5">Progreso</h3>
+    <Row gutter={16} className="flex lg:flex-row sm:flex-col w-[80%] h-[45%]">
       <Bar data={dataBar} options={optionsBars} />
     </Row>
-    <Row gutter={16} className="flex lg:flex-row sm:flex-col lg:items-start sm:items-center w-[40%] h-[15%] mt-5">
+      <h3 className="text-white mt-5">Distribución de ahorros</h3>
+    <Row gutter={16} className="flex lg:flex-row sm:flex-col w-[40%] h-[15%] mt-5">
       <Pie data={dataPie} options={options} />
     </Row>
   </div>
