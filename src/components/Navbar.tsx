@@ -10,6 +10,7 @@ import { MonthContext } from '../context/MonthContextProvider';
 const { Sider } = Layout;
 const { Title } = Typography;
 
+
 export const Navbar: React.FC = () => {
   const useAuth = () => useContext(AuthContext);
   const { logout, username, clearUsername, cleanData } = useAuth();
@@ -22,7 +23,7 @@ export const Navbar: React.FC = () => {
   }
 
   return (
-    <Sider className="!bg-[var(--purple-color)]">
+    <Sider className='!bg-gradient-to-t from-[#02207F] to-[#056DDC]'>
       <div className='sticky mt-20  top-20'>
         <Title level={4} className="text-center mt-10 !mb-0 !text-white">Bienvenido</Title>
         <Title level={3} className="text-center !mt-0 !text-white">{username}</Title>

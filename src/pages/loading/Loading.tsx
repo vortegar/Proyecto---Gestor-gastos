@@ -45,7 +45,7 @@ export const LoadingScreen: React.FC = () => {
       }, [])
     
  return   (
-  <div className="fixed w-screen h-screen flex justify-center items-center inset-0 bg-gray-950">
+  <div className="fixed w-screen h-screen flex justify-center items-center inset-0 bg-gradient-to-t from-[#02207F] to-[#056DDC]">
     <div className="flex flex-col justify-center items-center h-screen">
         
         <Spin size="large" />

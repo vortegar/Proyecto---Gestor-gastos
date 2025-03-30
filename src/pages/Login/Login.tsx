@@ -48,25 +48,30 @@ export const LoginPage = () => {
 
   return (
     <>
-     <div className="flex flex-col justify-center items-center text-center w-3/4 mt-10 fixed left-0 top-0">
-        <img src="/img/home-img.jpg" alt="inicio" className="w-[40%] max-w-full h-auto mx-auto" />
-        <h4 className="text-primary mt-4">
+      <div className="w-2/3 mt-52 mx-auto">
+        <h2 className= "text-white font-bold text-4xl">
+          GoFinance
+        </h2>
+        <p className= "text-white">
           Una app creada para llevar tus gastos de forma ordenada.
-        </h4>
+        </p>
+        <img src="/img/minimalist.png" alt="ahorro" className="absolute left-0 bottom-0 max-w-2xl" />
       </div>
-
-    <div className="flex flex-col justify-center items-center w-1/4 p-4 bg-[var(--purple-dark-color)] h-screen fixed right-0 top-0">
-      <h2 className="z-10 text-white pb-40">A llegado la hora de gestionar tu vida financiera</h2>
-      <Button
-        disabled={isBlockBtn}
-        type="primary"
-        onClick={handleLogin}
-        className="border-none w-60 bg-[var(--purple-color)] hover:!bg-white hover:!text-[var(--purple-color)] h-14" >
-        Iniciar sesión con Google <GoogleOutlined />
-      </Button>
-      <p className="z-10 text-white mt-4">Creado por: Victorio Ortega 🏅</p>
-    </div>
-  </>
+      <div className="flex flex-col justify-center items-center w-1/3 p-4 bg-white h-screen fixed right-0 top-0">
+        <div className="z-10 pb-20">
+          <h2 className=" text-2xl font-bold mb-2">Hola de nuevo!</h2>
+          <h2 className="">Bienvenido de vuelta</h2>
+          <h2 className="">A llegado la hora de gestionar tu vida financiera</h2>
+        </div>
+        <Button
+          disabled={isBlockBtn}
+          type="primary"
+          onClick={handleLogin}
+          className="border-none w-80 bg-[var(--blue-color)] h-14 rounded-full" >
+          Iniciar sesión con Google <GoogleOutlined />
+        </Button>
+      </div>
+    </>
   );
 };
 

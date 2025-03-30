@@ -24,7 +24,9 @@ export const App: React.FC = () => {
   const { isAuthenticated, uploadedData } = useAuth();
   return (
     <Router>
-      <Layout className="min-w-[98.8vw] bg-background">
+      <Layout 
+        className={`min-w-[98.8vw] h-screen w-full ${isAuthenticated ? 'bg-white' : 'bg-gradient-to-t from-[#02207F] to-[#056DDC]'}`}
+      >
         {(isAuthenticated && uploadedData) && <Navbar />}
 
           <Content className="mx-10 my-10">

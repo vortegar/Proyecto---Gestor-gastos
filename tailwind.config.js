@@ -6,11 +6,6 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        primary: "#d1d2d4",
-        secondary: "#95999c", 
-        background: "#08121b",   
-      },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },

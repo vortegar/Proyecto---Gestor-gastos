@@ -47,26 +47,26 @@ export const Objetives = () => {
         display: true,
         position: 'right',
         labels: {
-          color: '#ffffff',  // Color blanco para el texto de la leyenda
+          color: '#aaaaa',  // Color blanco para el texto de la leyenda
         },
       },
     },
     scales: {
       x: {
         ticks: {
-          color: '#ffffff',  // Color blanco para el texto de las etiquetas del eje X
+          color: '#aaaaa',  // Color blanco para el texto de las etiquetas del eje X
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.2)',  // Color blanco semitransparente para la cuadrícula del eje X
+          color: 'rgba(0, 0, 0, 0.2)',  // Color blanco semitransparente para la cuadrícula del eje X
         },
         stacked: true,  // Apilar las barras en el eje X
       },
       y: {
         ticks: {
-          color: '#ffffff',  // Color blanco para el texto de las etiquetas del eje Y
+          color: '#aaaaa',  // Color blanco para el texto de las etiquetas del eje Y
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.2)',  
+          color: 'rgba(0, 0, 0, 0.2)',  
         },
         stacked: true,  
       },
@@ -102,11 +102,11 @@ export const Objetives = () => {
   return (
   <div className="mx-auto max-w-screen-lg"> 
     <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
-    <h3 className="text-white mt-5">Progreso</h3>
+    <h3 className=" mt-5">Progreso</h3>
     <Row gutter={16} className="flex lg:flex-row sm:flex-col w-[80%] h-[45%]">
       <Bar data={dataBar} options={optionsBars} />
     </Row>
-      <h3 className="text-white mt-5">Distribución de ahorros</h3>
+      <h3 className=" mt-5">Distribución de ahorros</h3>
     <Row gutter={16} className="flex lg:flex-row sm:flex-col w-[40%] h-[15%] mt-5">
       <Pie data={dataPie} options={options} />
     </Row>

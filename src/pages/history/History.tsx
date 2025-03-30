@@ -23,7 +23,7 @@ export const History = () => {
       </div>
       <Divider className="mt-2"/>
       <Tabs
-        className="[&_.ant-tabs-tab]:!text-white">
+        className="">
         <Item tab="Historico Anual" key="1">
           <HistoryAnualByMonth/>
         </Item>

@@ -110,18 +110,17 @@ export const Home: React.FC = () => {
       <div className="flex gap-2 mt-3 mb-3">
         {
           (anioActual?.year !== undefined ) && 
-            <Button onClick={() => showCalculateModal()} className="bg-primary hover:!bg-secondary hover:!text-black !border-black">
+            <Button onClick={() => showCalculateModal()} className="">
               Calcular diferencia
               <CalculatorOutlined />
             </Button>
         }
-        <Button onClick={() => showMonthModal()} className="bg-primary hover:!bg-secondary hover:!text-black !border-black">
+        <Button onClick={() => showMonthModal()} className="">
           Crear nuevo mes
           <PlusOutlined />
         </Button>
         <Button 
           onClick={() => showYearhModal()} 
-          className="custom-disabled-button bg-primary hover:!bg-secondary hover:!text-black !border-black"
           disabled={isFullYear(monthContext)}
         >
           Crear nuevo periodo anual
