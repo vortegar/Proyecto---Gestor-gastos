@@ -47,23 +47,23 @@ export const Objetives = () => {
         display: true,
         position: 'right',
         labels: {
-          color: '#aaaaa',  // Color blanco para el texto de la leyenda
+          color: '#aaaaa',  
         },
       },
     },
     scales: {
       x: {
         ticks: {
-          color: '#aaaaa',  // Color blanco para el texto de las etiquetas del eje X
+          color: '#aaaaa',
         },
         grid: {
-          color: 'rgba(0, 0, 0, 0.2)',  // Color blanco semitransparente para la cuadrícula del eje X
+          color: 'rgba(0, 0, 0, 0.2)',  
         },
-        stacked: true,  // Apilar las barras en el eje X
+        stacked: true, 
       },
       y: {
         ticks: {
-          color: '#aaaaa',  // Color blanco para el texto de las etiquetas del eje Y
+          color: '#aaaaa', 
         },
         grid: {
           color: 'rgba(0, 0, 0, 0.2)',  

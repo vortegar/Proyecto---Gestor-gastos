@@ -30,8 +30,11 @@ export const FormExtraExpenses:  React.FC = () => {
         const workbook = XLSX.read(binaryStr, { type: 'binary' });
         const worksheet = workbook.Sheets[workbook.SheetNames[2]];
         const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as [];
+        const filtredData = jsonData.map((v: [string, string, string]) => {
+           if (v.length > 0) return v
+        }).filter( u => u != undefined)
 
-        const objectTable = jsonData.slice(1, 50).map(l => {
+        const objectTable = filtredData.slice(1).map(l => {
           return {
             user        : l[0],
             total       : l[1],

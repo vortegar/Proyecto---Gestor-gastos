@@ -39,8 +39,6 @@
 
 /* Estilos input */
 input[type="file"]::file-selector-button {
-  background-color: var(--purple-color); 
-  color: white; 
   border: none;
   padding: 8px 16px; 
   border-radius: 5px; 
