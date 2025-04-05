@@ -45,8 +45,6 @@ export const ModalCalculate:React.FC<ModalCalculateDiff> = ({estado, modificador
 
     const firtsPerson = amountCalculate(totalDataItems.Andreina, totalPorPersona.Andreina);
     const secondPerson = amountCalculate(totalDataItems.Victorio, totalPorPersona.Victorio);
-    console.log( totalDataItems)
-    console.log( totalPorPersona.Andreina)
 
     const total = calculateAmountToPay(firtsPerson, secondPerson);
     const user = getPersonToPay(firtsPerson, secondPerson);

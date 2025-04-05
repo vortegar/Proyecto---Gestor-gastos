@@ -1,9 +1,8 @@
 
 :root {
-  --primary-color: #d1d2d4;
+  --white-color: #ffffff;
   --secondary-color: #95999c;
-  --blue-color: #0575e6;
-  --purple-dark-color: #3b1c3c;
+  --blue-color: #0569d7;
   --green-color: #22c55e;
   --background-color: #08121b;
 }
@@ -22,10 +21,8 @@
 
 /* Estilos del Card */
 .custom-card-head .ant-card-head, .ant-table-title {
-  background-color: var(--purple-color) !important;
-  border-color: var(--purple-color) !important;
-  color: var(--quaternary-color);
-  text-align: center; 
+  background-color: var(--blue-color) !important;
+  text-align: center;  
 }
 
 .ant-card-body {

@@ -23,7 +23,7 @@ export const Navbar: React.FC = () => {
   }
 
   return (
-    <Sider className='!bg-gradient-to-t from-[#02207F] to-[#056DDC]'>
+    <Sider className='!bg-gradient-to-t from-[#02207F] to-[#056DDC] '>
       <div className='sticky mt-20  top-20'>
         <Title level={4} className="text-center mt-10 !mb-0 !text-white">Bienvenido</Title>
         <Title level={3} className="text-center !mt-0 !text-white">{username}</Title>

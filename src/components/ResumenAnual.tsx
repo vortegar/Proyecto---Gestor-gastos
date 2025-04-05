@@ -8,10 +8,10 @@ export const ResumenAnual: React.FC<HistoryResumenProps> = ({ data, title }) => 
   return (
     <Space direction="vertical" size={16} className="w-120">
       <Card
-      className="custom-card-head"
+      className="custom-card-head border-blue-500"
         title={
           <div >
-            <Title level={4} className="!text-yellow-50| !text-sm !mb-0">
+            <Title level={4} className="!text-white !text-sm !mb-0">
               {title}
             </Title>
           </div>

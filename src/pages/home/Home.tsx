@@ -110,12 +110,12 @@ export const Home: React.FC = () => {
       <div className="flex gap-2 mt-3 mb-3">
         {
           (anioActual?.year !== undefined ) && 
-            <Button onClick={() => showCalculateModal()} className="">
+            <Button onClick={() => showCalculateModal()} className="bg-blue-600 text-white">
               Calcular diferencia
               <CalculatorOutlined />
             </Button>
         }
-        <Button onClick={() => showMonthModal()} className="">
+        <Button onClick={() => showMonthModal()} className="bg-blue-600 text-white">
           Crear nuevo mes
           <PlusOutlined />
         </Button>
@@ -148,7 +148,7 @@ export const Home: React.FC = () => {
               <Resumen data={mesActual?.fixed_expenses} title=' Gastos Fijos' type='gastos fijos'/>
               <Resumen data={expensesResumen} title='Gastos Variables' type='gastos varios'/>
             </div>
-            <div className="flex flex-col items-center">
+            <div className="flex items-center">
               <Grafico resumen={mesActual?.fixed_expenses} title='Gastos Fijos'/>
               <Grafico resumen={expensesResumen} title='Gastos Variables'/>
             </div>

@@ -26,24 +26,24 @@ export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
     plugins: {
       legend: {
         position: 'bottom',
-        labels: {font: { size: 10}, color: "white"},
+        labels: {font: { size: 10}, color: "black"},
       },
-      title: { display: true, text: title, color: "white"},
+      title: { display: true, text: title, color: "black"},
     },
     scales: {
       x: {
-        ticks: { font: { size: 8}, color: "white"},
+        ticks: { font: { size: 8}, color: "black"},
         grid: {
           display: true, 
-          color: 'rgba(200, 200, 200, 0.5)',
+          color: 'rgba(0, 0, 0, 0.5)',
         },
       
       },
       y: {
-        ticks: { font: { size: 8}, color: "white"},
+        ticks: { font: { size: 8}, color: "black"},
         grid: {
           display: true, 
-          color: 'rgba(200, 200, 200, 0.5)',
+          color: 'rgba(0, 0, 0, 0.5)',
         },
       },
     },
@@ -53,7 +53,7 @@ export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
   };
   
   return (
-    <div className="w-4/6 mt-20 mx-auto">
+    <div className="w-4/5 mt-20 mx-auto">
       <Bar data={data} options={options} />
     </div>
   );

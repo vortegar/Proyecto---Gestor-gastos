@@ -74,7 +74,6 @@ export const updateFixedExpenses = async (
       }))
     };
 
-    console.log(updatedMonth)
     const updatedMonths = [
       ...months.slice(0, monthIndex),
       updatedMonth,
@@ -302,7 +301,6 @@ export const updateMonetarySaving = async (
       updatedMonth,
       ...months.slice(monthIndex + 1)
     ];
-    console.log(data)
     await updateDoc(yearDocRef, {month: updatedMonths});
     message.success(MESSAGE_SUCCES);
     setData(data)

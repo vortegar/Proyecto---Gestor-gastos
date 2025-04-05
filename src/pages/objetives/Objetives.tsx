@@ -21,9 +21,9 @@ export const Objetives = () => {
     setData(mesActual.monetary_savings as [])
  }, [mesActual.monetary_savings])
 
- const { yearContext } = useContext(YearContext);
+
+  const { yearContext } = useContext(YearContext);
   const [anioActual] = useState(yearContext[yearContext.length - 1])
-  
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -32,7 +32,7 @@ export const Objetives = () => {
         display: true,
         position: 'right', 
         labels: {
-          color: '#ffffff',  // Color blanco para el texto de la leyenda
+          color: '#000000',  
         },
       },
     },
@@ -47,14 +47,14 @@ export const Objetives = () => {
         display: true,
         position: 'right',
         labels: {
-          color: '#aaaaa',  
+          color: '#000000',  
         },
       },
     },
     scales: {
       x: {
         ticks: {
-          color: '#aaaaa',
+          color: '#000000',
         },
         grid: {
           color: 'rgba(0, 0, 0, 0.2)',  
@@ -63,7 +63,7 @@ export const Objetives = () => {
       },
       y: {
         ticks: {
-          color: '#aaaaa', 
+          color: '#000000', 
         },
         grid: {
           color: 'rgba(0, 0, 0, 0.2)',  
@@ -72,24 +72,26 @@ export const Objetives = () => {
       },
     },
   } as const;
-  
+    
+  const dataSort = data .sort((a, b) => a.porcentaje - b.porcentaje);
+
     const dataPie = {
-        labels: data.map(v => v.concepto),
+        labels: dataSort.map(v => `${v.concepto} - ${v?.porcentaje}`),
         datasets: [
           {
             data: data.map(v => v.porcentaje),
-            backgroundColor: [ "#E1BEE7", "#CE93D8", "#BA68C8", "#AB47BC", "#9C27B0", "#8E24AA",  "#7B1FA2",  "#6A1B9A", "#4A148C"]
+            backgroundColor: ["#E1BEE7", "#CE93D8", "#BA68C8", "#AB47BC", "#9C27B0", "#8E24AA",  "#7B1FA2",  "#6A1B9A", "#4A148C"]
           },
         ],
       };
-
+ 
       const dataBar = {
-        labels: data.map(v => v.concepto),
+        labels: dataSort.map(v => v.concepto),
         datasets: [
           {
             label: "Ahorro actual",
             data: data.map(v => v.ahorroTotal),
-            backgroundColor: "#4CAF50",
+            backgroundColor: "#7B1FA2",
           },
           {
             label: "Tope máximo",
@@ -102,14 +104,18 @@ export const Objetives = () => {
   return (
   <div className="mx-auto max-w-screen-lg"> 
     <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
-    <h3 className=" mt-5">Progreso</h3>
-    <Row gutter={16} className="flex lg:flex-row sm:flex-col w-[80%] h-[45%]">
-      <Bar data={dataBar} options={optionsBars} />
-    </Row>
-      <h3 className=" mt-5">Distribución de ahorros</h3>
-    <Row gutter={16} className="flex lg:flex-row sm:flex-col w-[40%] h-[15%] mt-5">
-      <Pie data={dataPie} options={options} />
-    </Row>
+    <div className="mt-20">
+      <h2 className="font-bold">Progreso</h2>
+      <Row gutter={16} className="flex lg:flex-row sm:flex-col mt-5 !h-[200px]">
+        <Bar data={dataBar} options={optionsBars} />
+      </Row>
+    </div>
+    <div className="mt-20">
+      <h2 className="font-bold">Distribución de ahorros</h2>
+      <Row gutter={16} className="flex lg:flex-row sm:flex-col  mt-5">
+        <Pie data={dataPie} options={options} />
+      </Row>
+    </div>
   </div>
   )
 }

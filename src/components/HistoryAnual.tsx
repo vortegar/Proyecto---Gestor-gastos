@@ -70,7 +70,7 @@ export const HistoryAnualByMonth = () => {
   return (
     <div className="flex flex-col">
       <div className="mt-20 flex justify-around">
-        <div className="mt-5">
+        <div>
           <Resumen data={expensesHistory} title='Totales de Gastos por Mes' type='gasto historico'/>
           <div className="text-center bg-primary text-green-500 mt-4 p-4 rounded font-bold">
               Total Gastado en el Año: <strong>$ {sumYearTotalExpenses.toLocaleString('es-ES')}</strong>
@@ -81,7 +81,7 @@ export const HistoryAnualByMonth = () => {
             columns={monthColumns} 
             dataSource={monthContext} 
             title={() => (
-            <h4 className="font-bold text-cente">
+            <h4 className="font-bold text-cente text-white">
                 Meses Creados
             </h4>
             )}

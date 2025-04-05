@@ -5,7 +5,7 @@ import { ButtonProps } from '../interface/ComponentsInterface';
 
 export const ButtonSearch: React.FC<ButtonProps> = ({disabled, title}) => {
   return (
-    <Button disabled={disabled} htmlType="submit" className="">
+    <Button disabled={disabled} htmlType="submit" className="bg-blue-600 text-white">
     {
       disabled 
       ? "Cargando"

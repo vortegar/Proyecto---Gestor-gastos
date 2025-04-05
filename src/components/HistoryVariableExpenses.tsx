@@ -33,7 +33,6 @@ export const HistoryVariableExpenses = () => {
   const fixedExpenses = monthContext.flatMap(m => {
         return m.expenses
   });
-console.log(monthContext)
   const historyFixedExpenses = fixedExpenses.reduce((acc: { [key: string]: number }, item) => {
       const {spent_type, monto} = item
       acc[spent_type] = (acc[spent_type] || 0) + monto;

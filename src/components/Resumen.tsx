@@ -33,10 +33,10 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
   return (
     <Space direction="vertical" size={16} className="w-80">
       <Card
-      className="custom-card-head"
+        className="custom-card-head border-blue-500"
         title={
           <div >
-            <Title level={4} className="!text-sm !mb-0">
+            <Title level={4} className="!text-sm !mb-0 !text-white">
               {title}
             </Title>
           </div>

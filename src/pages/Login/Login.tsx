@@ -67,7 +67,7 @@ export const LoginPage = () => {
           disabled={isBlockBtn}
           type="primary"
           onClick={handleLogin}
-          className="border-none w-80 bg-[var(--blue-color)] h-14 rounded-full" >
+          className="border-none w-80 h-14 rounded-full" >
           Iniciar sesión con Google <GoogleOutlined />
         </Button>
       </div>
