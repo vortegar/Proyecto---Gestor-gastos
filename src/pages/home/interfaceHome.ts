@@ -3,6 +3,7 @@ export interface ResumenI {
     spent_type  ?: string,
     user        ?: string;
     total        : number;
+    numberCol   ?: number;
   }
 
   export interface InfoTotalI {

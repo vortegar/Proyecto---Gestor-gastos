@@ -13,13 +13,13 @@ import { ResumenAnual } from './ResumenAnual';
 export const HistoryFixedExpenses = () => {
   const { yearContext } = useContext(YearContext);
   const { monthContext, setMonthContext } = useContext(MonthContext);
-
+  console.log(monthContext.length)
   const [anioActual] = useState(yearContext[yearContext.length - 1])
   
   useEffect(() => {
     getDataMonth(setMonthContext, anioActual.id!)
   }, [setMonthContext, anioActual])
- 
+
   const expensesHistory = monthContext.map(m => {
     const fixedExpensesTotal = m.fixed_expenses.reduce<number>((acc, current) => {
       return acc + current.total;
@@ -57,7 +57,7 @@ export const HistoryFixedExpenses = () => {
                 Total gasto fijo del año: $ {sumYearTotalExpenses.toLocaleString('es-ES')}
             </div>
           </div>
-            <ResumenAnual data={historyFixedExpenses} title='Detalle'/>
+            <ResumenAnual data={historyFixedExpenses} title='Detalle' numberMonth={monthContext.length}/>
         </div>
           <Grafico resumen={formatExpenseHistory} title='Historico Anual Gastos Mensuales'/>
     </div>

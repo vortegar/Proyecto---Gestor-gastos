@@ -40,7 +40,9 @@ export interface ResumenProps {
 export interface HistoryResumenProps {
   data : {[key: string]: number;}
   title: string;
+  numberMonth: number;
 }
+
 export interface TotalPerson {
   total: number;
 }

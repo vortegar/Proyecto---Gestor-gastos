@@ -57,7 +57,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
               }
               {
                 (type=='gastos varios' || type=='gastos fijos' || type=='gasto historico') 
-                  && <InfoResumen spent_type={v.spent_type} total={v.total}/>
+                  && <InfoResumen spent_type={v.spent_type} total={v.total} numberCol={2}/>
               }
             </div>
             )

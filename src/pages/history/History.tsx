@@ -1,10 +1,13 @@
 import { useContext, useState } from 'react';
 
 import { Divider, Tabs } from 'antd';
+
 import { YearContext } from '../../context/YearContextProvider';
 import { HistoryAnualByMonth } from '../../components/HistoryAnual';
 import { HistoryFixedExpenses } from '../../components/HistoryFixedExpenses';
+
 import Item from 'antd/es/list/Item';
+
 import { HistoryVariableExpenses } from '../../components/HistoryVariableExpenses';
 import { HeaderInfo } from '../../components/HeaderInfo';
 import { MonthContext } from '../../context/MonthContextProvider';

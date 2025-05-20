@@ -56,7 +56,7 @@ export const HistoryVariableExpenses = () => {
                 Total gasto fijo del año: $ {sumYearTotalExpenses.toLocaleString('es-ES')}
             </div>
           </div>
-            <ResumenAnual data={historyFixedExpenses} title='Detalle'/>
+            <ResumenAnual data={historyFixedExpenses} title='Detalle' numberMonth={monthContext.length}/>
         </div>
           <Grafico resumen={formatExpenseHistory} title='Historico Anual Gastos Mensuales'/>
     </div>
