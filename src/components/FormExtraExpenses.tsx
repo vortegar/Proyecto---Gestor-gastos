@@ -34,7 +34,7 @@ export const FormExtraExpenses:  React.FC = () => {
            if (v.length > 0) return v
         }).filter( u => u != undefined)
 
-        const objectTable = filtredData.slice(1,2).map(l => {
+        const objectTable = filtredData.slice(1,3).map(l => {
           return {
             user        : l[0],
             total       : l[1],
