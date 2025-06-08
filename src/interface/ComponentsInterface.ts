@@ -1,11 +1,8 @@
 export interface ButtonProps {
+  type    : string;
   title   : string;
   disabled: boolean;
-  }
-
-export interface ButtonDeleteProps {
-    disabled: boolean;
-    fn      : () => void;
+  fn      : () => void;
   }
 
 export interface FixedSpent {

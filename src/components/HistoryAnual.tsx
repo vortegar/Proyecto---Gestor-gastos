@@ -53,18 +53,6 @@ export const HistoryAnualByMonth = () => {
       key: 'month',
       align: 'center',
     },
-    // {
-    //   title: 'Acción',
-    //   dataIndex: 'eliminar',
-    //   key: 'eliminar',
-    //   align: 'center',
-    //   render: (_, expense) => (
-    //     <ButtonDelete 
-    //       disabled={isBlockBtnDelete} 
-    //       fn={() => deleteMonthById(anioActual.id!, expense.id!, toggleBlockBtnDelete, toggleRefresh)}
-    //     />
-    //   )
-    // }
   ];
 
   return (

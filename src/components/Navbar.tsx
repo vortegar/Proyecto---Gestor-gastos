@@ -43,12 +43,15 @@ export const Navbar: React.FC = () => {
             <Menu.Item key="4" icon={<BankOutlined />} className='!text-white'>
                 <Link to="/objetive" className='!text-white'>Objetivos</Link>
             </Menu.Item>/
+            {/* <Menu.Item key="5" icon={<DollarCircleOutlined/>} className='!text-white'>
+              <Link to="/investing" className='!text-white'>Inversión</Link>
+            </Menu.Item>/ */}
           </>
         }
-        <Menu.Item key="5" icon={<SettingOutlined />} className='!text-white'>
+        <Menu.Item key="6" icon={<SettingOutlined />} className='!text-white'>
           <Link to="/configurate" className='!text-white'>Configuración</Link>
         </Menu.Item>
-        <Menu.Item key="6" icon={<ApiOutlined/>} className='!text-white'>
+        <Menu.Item key="7" icon={<ApiOutlined/>} className='!text-white'>
             <a onClick={handleLogout}  className='!text-white' style={{ textDecoration: 'none' }}>Salir</a>
         </Menu.Item>
       </Menu>

@@ -9,6 +9,8 @@ import { Navbar } from './components/Navbar';
 import { Home } from './pages/home/Home';
 import { LoginPage } from './pages/Login/Login';
 import { History } from './pages/history/History';
+import { Objetives } from './pages/objetives/Objetives';
+import { LoadingScreen } from './pages/loading/Loading';
 import { ExpensesPage } from './pages/expenses/Expenses';
 import { Configurate } from './pages/configurate/Configurate';
 
@@ -16,9 +18,8 @@ const { Content } = Layout;
 
 import './variables.css'
 import './index.css';
+// import { Investig } from './pages/Inversion/Investing';
 
-import { LoadingScreen } from './pages/loading/Loading';
-import { Objetives } from './pages/objetives/Objetives';
 
 export const App: React.FC = () => {
   const { isAuthenticated, uploadedData } = useAuth();
@@ -37,6 +38,7 @@ export const App: React.FC = () => {
                 <Route path="/expenses" element={<ProtectedRoute element={ExpensesPage} />} />
                 <Route path="/configurate" element={<ProtectedRoute element={Configurate} />} />
                 <Route path="/objetive" element={<ProtectedRoute element={Objetives} />} />
+                {/* <Route path="/investing" element={<ProtectedRoute element={Investig} />} /> */}
 
                 <Route path="/history" element={<ProtectedRoute element={History} />} />
               </Routes>

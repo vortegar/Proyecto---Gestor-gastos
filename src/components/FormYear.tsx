@@ -5,13 +5,11 @@ import { Form, Select } from 'antd';
 import { Option } from 'antd/es/mentions';
 
 import { useBtnRefresh } from '../hooks/useBtnRefresh';
-
-import { ButtonSearch } from './ButtonSearch';
-
 import { YearContext } from '../context/YearContextProvider';
 
 import { Year } from '../interface/YearInterface';
 import { getYearById } from '../services/yearServides';
+import { Btns } from './Btns';
 
 export const FormYear: React.FC  = () => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<Year>();
@@ -50,7 +48,7 @@ export const FormYear: React.FC  = () => {
           />
         </Form.Item>
         <Form.Item>
-          <ButtonSearch disabled={isBlockBtn} title='Buscar Año'/>
+          <Btns disabled={isBlockBtn} title='Buscar Año' type='Cargando' fn={() => console.log('implementar')} />
         </Form.Item>
       </Form>
     </>

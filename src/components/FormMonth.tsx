@@ -6,8 +6,6 @@ import { Option } from 'antd/es/mentions';
 
 import { useBtnRefresh } from '../hooks/useBtnRefresh';
 
-import { ButtonSearch } from './ButtonSearch';
-
 import { MonthContext } from '../context/MonthContextProvider';
 
 import { getMonthById } from '../services/monthServides';
@@ -15,6 +13,7 @@ import { getMonthById } from '../services/monthServides';
 import { Month } from '../interface/MonthInterface';
 import { FormMonthProps } from './intercafeComponents';
 import { useActualDate } from '../hooks/useActualDate';
+import { Btns } from './Btns';
 
 export const FormMonth: React.FC<FormMonthProps>  = ({fn}) => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<Month>();
@@ -54,7 +53,7 @@ export const FormMonth: React.FC<FormMonthProps>  = ({fn}) => {
           />
         </Form.Item>
         <Form.Item>
-          <ButtonSearch disabled={isBlockBtn} title='Buscar Mes'/>
+          <Btns disabled={isBlockBtn} title='Buscar Mes' type='Cargando' fn={() => console.log('implementar')}/>
         </Form.Item>
       </Form>
     </>

@@ -8,13 +8,10 @@ import { PersonContext } from '../context/PersonContextProvider';
 import { addPerson, deletePerson, getDataPerson } from '../services/formPersonServices';
 
 import { useBtnRefresh } from '../hooks/useBtnRefresh';
-
-import { ButtonAdd } from './ButtonAdd';
-import { ButtonDelete } from './ButtonDelete';
-
 import { PersonInputs } from './intercafeComponents';
 import { Person } from '../interface/ComponentsInterface';
 import { MESSAGE_ADD_ITEM, MESSAGE_ERROR } from '../constants/constantesServices';
+import { Btns } from './Btns';
 
 export const FormPersons: React.FC = () => {
   const { control, handleSubmit, formState: { errors }, reset } = useForm<PersonInputs>();
@@ -59,7 +56,9 @@ export const FormPersons: React.FC = () => {
       width: 50,
       align: 'center',
       render: (_:string, name) => (
-        <ButtonDelete 
+        <Btns
+          type='Eliminar' 
+          title= ''
           disabled={isBlockBtnDelete} 
           fn={() => deletePerson(name?.id, toggleBlockBtnDelete, toggleRefresh) } 
         />
@@ -89,7 +88,7 @@ export const FormPersons: React.FC = () => {
           />
         </Form.Item>
         <Form.Item>
-          <ButtonAdd disabled={isBlockBtn} title='Agregar Usuario'/>
+          <Btns disabled={isBlockBtn} title='Agregar Usuario' type='Agregar' fn={()=> console.log('implementar')} />
         </Form.Item>
       </Form>
       <Table 

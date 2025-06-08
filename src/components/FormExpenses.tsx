@@ -76,18 +76,6 @@ export const FormExpenses:  React.FC = () => {
     key      : 'descripcion',
     align    : 'center',
   },
-  // {
-  //   title: 'Acción',
-  //   dataIndex: 'eliminar',
-  //   key: 'eliminar',
-  //   align: 'center',
-  //   render: (_, expense) => (
-  //     <ButtonDelete 
-  //       disabled={isBlockBtnDelete} 
-  //       fn={() => deleteExpense(expense, toggleBlockBtnDelete, toggleRefresh, anioActual.id!, mesActual.id!) } 
-  //     />
-  //   )
-  // }
 ];
   return (
     <>

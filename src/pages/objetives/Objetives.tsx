@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Row } from "antd";
 import { Pie, Bar } from "react-chartjs-2";
@@ -8,22 +8,17 @@ import '../../utils/chartConfig'
 import { HeaderInfo } from "../../components/HeaderInfo";
 import { FormMonetarySavings } from "../../components/intercafeComponents";
 
-import { YearContext } from "../../context/YearContextProvider";
-
 import { useActualDate } from "../../hooks/useActualDate";
 
 export const Objetives = () => {
   
-  const { mesActual } = useActualDate()
+  const { mesActual, anioActual } = useActualDate()
   const [data, setData] = useState<FormMonetarySavings[]>([]);
   
   useEffect(() => {
     setData(mesActual.monetary_savings as [])
  }, [mesActual.monetary_savings])
 
-
-  const { yearContext } = useContext(YearContext);
-  const [anioActual] = useState(yearContext[yearContext.length - 1])
   const options = {
     responsive: true,
     maintainAspectRatio: false,

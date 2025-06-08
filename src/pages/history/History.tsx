@@ -1,8 +1,5 @@
-import { useContext, useState } from 'react';
-
 import { Divider, Tabs } from 'antd';
 
-import { YearContext } from '../../context/YearContextProvider';
 import { HistoryAnualByMonth } from '../../components/HistoryAnual';
 import { HistoryFixedExpenses } from '../../components/HistoryFixedExpenses';
 
@@ -10,15 +7,11 @@ import Item from 'antd/es/list/Item';
 
 import { HistoryVariableExpenses } from '../../components/HistoryVariableExpenses';
 import { HeaderInfo } from '../../components/HeaderInfo';
-import { MonthContext } from '../../context/MonthContextProvider';
+import { useActualDate } from '../../hooks/useActualDate';
 
 export const History = () => {
-  const { yearContext } = useContext(YearContext);
-  const { monthContext } = useContext(MonthContext);
-  
-  const [anioActual] = useState(yearContext[yearContext.length - 1])
-  const mesActual = monthContext[monthContext.length - 1];
-
+  const {anioActual, mesActual} = useActualDate()
+    
   return (
     <div className="opacity-0 animate-fadeIn">
       <div className="my-1">

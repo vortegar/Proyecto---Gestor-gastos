@@ -34,7 +34,7 @@ export const FormExtraExpenses:  React.FC = () => {
            if (v.length > 0) return v
         }).filter( u => u != undefined)
 
-        const objectTable = filtredData.slice(1).map(l => {
+        const objectTable = filtredData.slice(1,2).map(l => {
           return {
             user        : l[0],
             total       : l[1],
@@ -67,18 +67,6 @@ export const FormExtraExpenses:  React.FC = () => {
       key: 'descripcion',
       align: 'center',
     },
-    // {
-    //   title: 'Acción',
-    //   dataIndex: 'eliminar',
-    //   key: 'eliminar',
-    //   align: 'center',
-    //   render: (_, expense) => (
-    //     <ButtonDelete 
-    //       disabled={isBlockBtnDelete} 
-    //       fn={() => deleteExtraItems(expense, toggleBlockBtnDelete, toggleRefresh, anioActual.id!, mesActual.id!) } 
-    //     />
-    //   )
-    // }
   ];
 
   return (
