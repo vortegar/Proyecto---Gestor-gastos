@@ -57,7 +57,7 @@ export const Investig = () => {
       dataIndex: 'pagado',
       key: 'pagado',
       align: 'center',
-      render: (value: boolean, record: Investments, index: number) => (
+      render: (value: boolean, _record: Investments, index: number) => (
         <Checkbox
           checked={value}
           onChange={() => {
