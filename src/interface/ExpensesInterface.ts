@@ -51,3 +51,11 @@ export type InputsExpenses = {
     user_1     : string;
     user_2     : string;
   };
+
+export type Investments = {
+      inversion:string,
+      monto:number,
+      n_cuotas:number,
+      cuota:number,
+      pagado:boolean
+}
