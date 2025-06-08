@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContextProvider';
 
 import { Layout, Menu, Typography } from 'antd';
-import { HomeOutlined, FileTextOutlined, UserOutlined, SettingOutlined, ApiOutlined, BankOutlined } from '@ant-design/icons';
+import { HomeOutlined, FileTextOutlined, UserOutlined, SettingOutlined, ApiOutlined, BankOutlined, DollarCircleOutlined } from '@ant-design/icons';
 import { MonthContext } from '../context/MonthContextProvider';
 
 const { Sider } = Layout;
@@ -42,10 +42,10 @@ export const Navbar: React.FC = () => {
             </Menu.Item>
             <Menu.Item key="4" icon={<BankOutlined />} className='!text-white'>
                 <Link to="/objetive" className='!text-white'>Objetivos</Link>
-            </Menu.Item>/
-            {/* <Menu.Item key="5" icon={<DollarCircleOutlined/>} className='!text-white'>
+            </Menu.Item>
+            <Menu.Item key="5" icon={<DollarCircleOutlined/>} className='!text-white'>
               <Link to="/investing" className='!text-white'>Inversión</Link>
-            </Menu.Item>/ */}
+            </Menu.Item>/
           </>
         }
         <Menu.Item key="6" icon={<SettingOutlined />} className='!text-white'>

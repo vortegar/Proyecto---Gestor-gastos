@@ -18,6 +18,7 @@ const { Content } = Layout;
 
 import './variables.css'
 import './index.css';
+import { Investig } from './pages/Inversion/Investing';
 // import { Investig } from './pages/Inversion/Investing';
 
 
@@ -38,7 +39,7 @@ export const App: React.FC = () => {
                 <Route path="/expenses" element={<ProtectedRoute element={ExpensesPage} />} />
                 <Route path="/configurate" element={<ProtectedRoute element={Configurate} />} />
                 <Route path="/objetive" element={<ProtectedRoute element={Objetives} />} />
-                {/* <Route path="/investing" element={<ProtectedRoute element={Investig} />} /> */}
+                <Route path="/investing" element={<ProtectedRoute element={Investig} />} />
 
                 <Route path="/history" element={<ProtectedRoute element={History} />} />
               </Routes>
