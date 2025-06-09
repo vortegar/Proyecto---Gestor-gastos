@@ -73,9 +73,10 @@ export type FormMonetarySavings = {
   ahorroTotal: number,
 };
 export type ExtraItemsInputs = {
-  id    : number;
-  user  : string;
-  total : number;
+  id         : number;
+  user       : string;
+  total      : number;
+  descripcion: string;
 };
 
 export type FormValues = {

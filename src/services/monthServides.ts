@@ -77,7 +77,7 @@ export const getMonthById = async (yearId: string, monthId: string, fn: Dispatch
         message.success(MESSAGE_FIND_MONTH);
       } 
     } else {
-      console.log("No se encontró el documento del año");
+      console.log("No se encontró el documento del mes");
     }
   } catch (e) {
     message.error(MESSAGE_ERROR);

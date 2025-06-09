@@ -18,18 +18,15 @@ export const History = () => {
         <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
       </div>
       <Divider className="mt-2"/>
-      <Tabs
-        className="">
+      <Tabs className="">
         <Item tab="Historico Anual" key="1">
           <HistoryAnualByMonth/>
         </Item>
         <Item tab="Historico Gastos Fijos" key="2">
           <HistoryFixedExpenses/>
         </Item>
-        
         <Item tab="Historico Gastos Variables" key="3">
-         <HistoryVariableExpenses/>
-
+          <HistoryVariableExpenses/>
         </Item>
       </Tabs>
     </div>
