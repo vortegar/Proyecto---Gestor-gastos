@@ -29,12 +29,12 @@ import { PaymentResolver } from '../../components/PaymentResolver';
 export const Home: React.FC = () => {
   const { yearContext, dispatch } = useContext(YearContext);
   
-  const { monthContext, setMonthContext } = useContext(MonthContext);
+  const { monthContext, monthActual , setMonthContext, setMonthActual } = useContext(MonthContext);
   const [isYearModalVisible, setIsYearModalVisible] = useState(false);
   const [isMonthModalVisible, setIsMonthModalVisible] = useState(false);
   // const [isCalculateModalVisible, setIsCalculateModalVisible] = useState(false);
   
-  const {anioActual, mesActual, setAnioActual, setMesActual} = useActualDate()
+  const {anioActual, setAnioActual, setMesActual} = useActualDate()
   const { refresh, toggleRefresh} = useBtnRefresh()
   useEffect(() => {
     getDataYear(dispatch)
@@ -100,10 +100,10 @@ export const Home: React.FC = () => {
     <div className='opacity-0 animate-fadeIn'>
       <div className="flex flex-col">
         <div className="my-1">
-          <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
+          <HeaderInfo year={anioActual?.year} month={monthActual?.month} />
           <div className='flex gap-10'>
             <FormYear />
-            <FormMonth fn={setMesActual}/>
+            <FormMonth fn={setMonthActual}/>
           </div>
         </div>
       <div className="flex gap-2 mt-3 mb-3">

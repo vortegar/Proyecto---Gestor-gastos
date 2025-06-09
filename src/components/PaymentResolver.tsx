@@ -1,17 +1,18 @@
 import { Card, Space } from "antd";
-import { useActualDate } from "../hooks/useActualDate"
 import Title from "antd/es/typography/Title";
 import { useForm } from "react-hook-form";
+import { MonthContext } from "../context/MonthContextProvider";
+import { useContext } from "react";
 
 export const PaymentResolver = () => {
-  const {mesActual} = useActualDate()
+  const { monthActual } = useContext(MonthContext);
   
-  const fixedExpenses = mesActual.fixed_expenses;
-  const extraExpenses = mesActual.extra_items;
-  console.log(mesActual);
+  const fixedExpenses = monthActual.fixed_expenses;
+  const extraExpenses = monthActual.extra_items;
+  
   const { getValues } = useForm({
     defaultValues: {
-      items: mesActual.fixed_expenses.map(v => ({
+      items: monthActual.fixed_expenses.map(v => ({
         spent_type: v.spent_type,
         total: v.total,
         total_final: (v.spent_type == 'Arriendo') ?  Number(v.total) * 0.4 : Number(v.total) / 2,
@@ -29,7 +30,7 @@ export const PaymentResolver = () => {
       return acc; 
     }, {} as { [key: string]: number });
 
-    const expensesAcumuladorPerson = mesActual?.expenses?.reduce((acc: { [key: string]: number }, item) => {
+    const expensesAcumuladorPerson = monthActual?.expenses?.reduce((acc: { [key: string]: number }, item) => {
       const { user_1, user_2 } = item;
       if (acc['Victorio'] === undefined) acc['Victorio'] = 0;
       if (acc['Andreina'] === undefined) acc['Andreina'] = 0;
@@ -46,61 +47,60 @@ export const PaymentResolver = () => {
   }
   const resultDiference = amountDiferenceUsers.Victorio - amountDiferenceUsers.Andreina
   return (
-    <>
- 
-    <Space direction="vertical" size={"large"} className="w-280">
-      <Card
-        className="custom-card-head border-blue-500"
-        title={
-          <div >
-            <Title level={4} className="!text-sm !mb-0 !text-white"> Ajuste</Title>
-          </div>
+    <div className='opacity-0 animate-fadeIn'>
+      <Space direction="vertical" size={"large"} className="w-280">
+        <Card
+          className="custom-card-head border-blue-500"
+          title={
+            <div >
+              <Title level={4} className="!text-sm !mb-0 !text-white"> Ajuste</Title>
+            </div>
+          }
+        >
+        {fixedExpenses.length > 0 ?
+          getValues('items').map((item, index) => (
+            <div key={index} className="grid grid-cols-4  border-b py-1">
+              <span className="grow text-left font-medium">{item.spent_type}</span>
+              <span className="grow text-center">{item.total}</span>
+              <span className="grow text-left">{item.total_final}</span> 
+              <span className="grow text-right">{item.user}</span>
+            </div>
+          ))
+          :
+          <h2>No Hay datos</h2>
         }
-      >
-      {fixedExpenses.length > 0 ?
-        getValues('items').map((item, index) => (
-          <div key={index} className="grid grid-cols-4  border-b py-1">
-            <span className="grow text-left font-medium">{item.spent_type}</span>
-            <span className="grow text-center">{item.total}</span>
-            <span className="grow text-left">{item.total_final}</span> 
-            <span className="grow text-right">{item.user}</span>
+        </Card>
+      </Space>
+      <Space direction="vertical" size={"large"} className="w-280">
+        <Card
+          className="custom-card-head border-blue-500"
+          title={
+            <div >
+              <Title level={4} className="!text-sm !mb-0 !text-white"> Ajuste</Title>
+            </div>
+          }
+        >
+        {fixedExpenses.length > 0 ?
+        <>
+        {
+          Object.entries(amountDiferenceUsers).map(([key,value], index)=>(
+            <div key={index} className="grid grid-cols-3  border-b py-1">
+              <span className="grow text-left font-medium">{key}</span>
+              <span className="grow text-center">{value.toFixed(2)}</span>
           </div>
         ))
-        :
-        <h2>No Hay datos</h2>
-      }
-      </Card>
-    </Space>
-     <Space direction="vertical" size={"large"} className="w-280">
-      <Card
-        className="custom-card-head border-blue-500"
-        title={
-          <div >
-            <Title level={4} className="!text-sm !mb-0 !text-white"> Ajuste</Title>
-          </div>
+        } 
+        <div  className="grid grid-cols-3  border-b py-1">
+        <span className="grow text-right">Pagar a:{resultDiference > 0 ? 'Victorio' : 'Andreina'}</span>
+        <span className="grow text-right">{resultDiference}</span>
+        </div>
+        </>
+          :
+          <h2>No Hay datos</h2>
         }
-      >
-      {fixedExpenses.length > 0 ?
-      <>
-      {
-        Object.entries(amountDiferenceUsers).map(([key,value], index)=>(
-          <div key={index} className="grid grid-cols-3  border-b py-1">
-            <span className="grow text-left font-medium">{key}</span>
-            <span className="grow text-center">{value.toFixed(2)}</span>
-         </div>
-       ))
-      } 
-      <div  className="grid grid-cols-3  border-b py-1">
-       <span className="grow text-right">Pagar a:{resultDiference > 0 ? 'Victorio' : 'Andreina'}</span>
-       <span className="grow text-right">{resultDiference}</span>
-      </div>
-      </>
-        :
-        <h2>No Hay datos</h2>
-      }
-      </Card>
-    </Space>
-         <Space direction="vertical" size={"large"} className="w-280">
+        </Card>
+      </Space>
+      <Space direction="vertical" size={"large"} className="w-280">
       <Card
         className="custom-card-head border-blue-500"
         title={
@@ -122,14 +122,14 @@ export const PaymentResolver = () => {
        
       <div  className="grid grid-cols-3  border-b py-1">
        <span className="grow text-right">Act Deuda Andreina</span>
-       <span className="grow text-right">{resultDiference > 0 ? extraExpenses[0].total - resultDiference  :extraExpenses[0].total + resultDiference}</span>
+       <span className="grow text-right">{resultDiference > 0 ? extraExpenses[0].total - resultDiference  :extraExpenses[0].total + (resultDiference * -1)}</span>
       </div>
       </>
         :
         <h2>No Hay datos</h2>
       }
       </Card>
-    </Space>
-    </>
+      </Space>
+    </div>
   )
 }

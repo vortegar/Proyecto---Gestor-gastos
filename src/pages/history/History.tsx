@@ -8,14 +8,17 @@ import Item from 'antd/es/list/Item';
 import { HistoryVariableExpenses } from '../../components/HistoryVariableExpenses';
 import { HeaderInfo } from '../../components/HeaderInfo';
 import { useActualDate } from '../../hooks/useActualDate';
+import { MonthContext } from '../../context/MonthContextProvider';
+import { useContext } from 'react';
 
 export const History = () => {
-  const {anioActual, mesActual} = useActualDate()
+  const {anioActual } = useActualDate()
+  const { monthActual } = useContext(MonthContext);
     
   return (
     <div className="opacity-0 animate-fadeIn">
       <div className="my-1">
-        <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
+        <HeaderInfo year={anioActual?.year} month={monthActual?.month} />
       </div>
       <Divider className="mt-2"/>
       <Tabs className="">

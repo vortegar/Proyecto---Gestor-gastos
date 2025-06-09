@@ -6,12 +6,14 @@ import { Checkbox, Divider } from 'antd';
 import { Table, Input, Form } from 'antd';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { Btns } from '../../components/Btns';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Investments } from '../../interface/ExpensesInterface';
 import { ColumnType } from 'antd/es/table';
+import { MonthContext } from '../../context/MonthContextProvider';
 
 export const Investig = () => {
-  const { anioActual, mesActual } = useActualDate();
+  const { anioActual } = useActualDate();
+    const { monthActual } = useContext(MonthContext);
   const { control, handleSubmit, reset, formState: { errors } } = useForm<Investments>();
 
   const [investContext, setInvestContext] = useState<Investments[]>([]);
@@ -76,7 +78,7 @@ export const Investig = () => {
 
   return (
     <>
-      <HeaderInfo year={anioActual.year} month={mesActual.month} />
+      <HeaderInfo year={anioActual.year} month={monthActual.month} />
       <Divider />
       <Form
         layout="horizontal"

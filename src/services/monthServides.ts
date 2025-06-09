@@ -63,7 +63,7 @@ export const getDataMonth = async (fn: Dispatch<SetStateAction<Month[]>>, year: 
 };
 
 // Buscar un Mes
-export const getMonthById = async (yearId: string, monthId: string, fn: Dispatch<SetStateAction<Month>>, fnBlock: FnState) => {  
+export const getMonthById = async (yearId: string, monthId: string, fn: React.Dispatch<React.SetStateAction<Month>>, fnBlock: FnState) => {  
   try {
     const {yearDoc} = await getYear(yearId)
     

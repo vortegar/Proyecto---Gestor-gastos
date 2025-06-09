@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { Row } from "antd";
 import { Pie, Bar } from "react-chartjs-2";
@@ -9,15 +9,17 @@ import { HeaderInfo } from "../../components/HeaderInfo";
 import { FormMonetarySavings } from "../../components/intercafeComponents";
 
 import { useActualDate } from "../../hooks/useActualDate";
+import { MonthContext } from "../../context/MonthContextProvider";
 
 export const Objetives = () => {
   
-  const { mesActual, anioActual } = useActualDate()
+  const { anioActual } = useActualDate()
+  const { monthActual } = useContext(MonthContext);
   const [data, setData] = useState<FormMonetarySavings[]>([]);
   
   useEffect(() => {
-    setData(mesActual.monetary_savings as [])
- }, [mesActual.monetary_savings])
+    setData(monthActual.monetary_savings as [])
+ }, [monthActual.monetary_savings])
 
   const options = {
     responsive: true,
@@ -98,7 +100,7 @@ export const Objetives = () => {
             
   return (
   <div className="mx-auto max-w-screen-lg"> 
-    <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
+    <HeaderInfo year={anioActual?.year} month={monthActual?.month} />
     <div className="mt-20">
       <h2 className="font-bold">Progreso</h2>
       <Row gutter={16} className="flex lg:flex-row sm:flex-col mt-5 !h-[200px]">

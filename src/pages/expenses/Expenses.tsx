@@ -17,11 +17,9 @@ import { FormMonetary } from '../../components/FormMonetary';
 export const ExpensesPage: React.FC = () => {
   
   const { yearContext } = useContext(YearContext);
-  const { monthContext, setMonthContext } = useContext(MonthContext);
-  
+  const { setMonthContext, monthActual } = useContext(MonthContext);  
   const [anioActual] = useState(yearContext[yearContext.length - 1]);
-  const mesActual = monthContext[monthContext.length - 1];
-  
+
   useEffect(() => {
     getDataMonth(setMonthContext, anioActual.id!);
   }, [ setMonthContext, anioActual])
@@ -30,7 +28,7 @@ export const ExpensesPage: React.FC = () => {
     <div className="opacity-0 animate-fadeIn">
       <div>
         <div className="my-1">
-          <HeaderInfo year={anioActual?.year} month={mesActual?.month} />
+          <HeaderInfo year={anioActual?.year} month={monthActual?.month} />
         </div>
       </div>
       <Divider/>

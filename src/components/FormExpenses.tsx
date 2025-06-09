@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
@@ -8,14 +8,17 @@ import * as XLSX from 'xlsx';
 import { InputsExpenses } from "../interface/ExpensesInterface";
 import { updateExpenses } from "../services/expensesServices";
 import { useActualDate } from "../hooks/useActualDate";
+import { MonthContext } from "../context/MonthContextProvider";
 
 export const FormExpenses:  React.FC = () => {
   const [data, setData] = useState<InputsExpenses[]>([]);
-  const {anioActual, mesActual} = useActualDate()
+  const { monthActual } = useContext(MonthContext);
+  
+  const {anioActual} = useActualDate()
 
   useEffect(() => {
-    setData(mesActual.expenses as [])
- }, [mesActual.expenses])
+    setData(monthActual.expenses as [])
+ }, [monthActual.expenses])
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
@@ -39,7 +42,7 @@ export const FormExpenses:  React.FC = () => {
           }
        }) as [];
 
-       updateExpenses(objectTable, anioActual.id!, mesActual.id!, setData);
+       updateExpenses(objectTable, anioActual.id!, monthActual.id!, setData);
       };
       reader.readAsArrayBuffer(file);
     }

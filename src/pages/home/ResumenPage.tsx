@@ -7,7 +7,6 @@ import { Resumen } from '../../components/Resumen';
 import { Grafico } from '../../components/Grafico';
 import { getDataMonth } from '../../services/monthServides';
 
-import { ResumenI } from './interfaceHome';
 import { ExpensesResumen } from '../../interface/ExpensesInterface';
 
 import { getDataYear } from '../../services/yearServides';
@@ -18,10 +17,9 @@ import { useActualDate } from '../../hooks/useActualDate';
 export const ResumenPage: React.FC = () => {
   const { yearContext, dispatch } = useContext(YearContext);
   
-  const { monthContext, setMonthContext } = useContext(MonthContext);
+  const { monthContext, setMonthContext, monthActual, setMonthActual } = useContext(MonthContext);
   
-  const {anioActual, mesActual, setAnioActual, setMesActual} = useActualDate()
-
+  const {anioActual, setAnioActual} = useActualDate()
   const { refresh } = useBtnRefresh()
   useEffect(() => {
     getDataYear(dispatch)
@@ -36,30 +34,10 @@ export const ResumenPage: React.FC = () => {
   }, [yearContext])
   
   useEffect(() => {
-    setMesActual(monthContext[monthContext.length - 1])
+    setMonthActual(monthContext[monthContext.length - 1])
   }, [monthContext])
-  const acumuladorPerson = mesActual?.expenses?.reduce((acc: { [key: string]: number }, item) => {
-    const { user_1, user_2 } = item;
-    
-    if (acc['Victorio'] === undefined) acc['Victorio'] = 0;
-    if (acc['Andreina'] === undefined) acc['Andreina'] = 0;
 
-    acc['Victorio'] += +user_1;
-    acc['Andreina'] += +user_2;
-
-    return acc;
-  }, {});
-
-  let personResumen: ResumenI[] = []
-  if(acumuladorPerson != undefined){
-
-    personResumen = Object.keys(acumuladorPerson).map((user, index) => ({
-      id: index,
-      user,
-      total: acumuladorPerson[user]
-    }));
-  }  
-  const gruopExpenses = mesActual?.expenses?.reduce((acc: { [key: string]: number }, item) => {
+  const gruopExpenses = monthActual?.expenses?.reduce((acc: { [key: string]: number }, item) => {
     const { spent_type, monto } = item;
     if (!acc[spent_type]) {
       acc[spent_type] = 0;
@@ -86,12 +64,11 @@ export const ResumenPage: React.FC = () => {
         <>
           <div className="flex flex-col mt-20">
             <div className="flex gap-14 lg:flex-row sm:flex-col lg:items-start sm:items-center justify-center">
-              <Resumen data={personResumen} title='Gastos por persona' type='persona'/>
-              <Resumen data={mesActual?.fixed_expenses} title=' Gastos Fijos' type='gastos fijos'/>
+              <Resumen data={monthActual?.fixed_expenses} title=' Gastos Fijos' type='gastos fijos'/>
               <Resumen data={expensesResumen} title='Gastos Variables' type='gastos varios'/>
             </div>
             <div className="flex items-center">
-              <Grafico resumen={mesActual?.fixed_expenses} title='Gastos Fijos'/>
+              <Grafico resumen={monthActual?.fixed_expenses} title='Gastos Fijos'/>
               <Grafico resumen={expensesResumen} title='Gastos Variables'/>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
@@ -10,16 +10,17 @@ import { useActualDate } from "../hooks/useActualDate";
 import { FormMonetarySavings } from "./intercafeComponents";
 
 import { updateMonetarySaving } from "../services/expensesServices";
+import { MonthContext } from "../context/MonthContextProvider";
 
 export const FormMonetary:  React.FC = () => {
 
   const [data, setData] = useState<FormMonetarySavings[]>([]);
 
-  const {anioActual, mesActual} = useActualDate()
-  
+  const {anioActual } = useActualDate()
+  const { monthActual } = useContext(MonthContext);
   useEffect(() => {
-    setData(mesActual.monetary_savings as [])
- }, [mesActual.monetary_savings])
+    setData(monthActual.monetary_savings as [])
+ }, [monthActual.monetary_savings])
 
   const handleSavingsFile = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
@@ -40,7 +41,7 @@ export const FormMonetary:  React.FC = () => {
             ahorroTotal: l[4],
           };
        }) as [];      
-       updateMonetarySaving(objectTable, anioActual.id!, mesActual.id!, setData);
+       updateMonetarySaving(objectTable, anioActual.id!, monthActual.id!, setData);
        setData(objectTable);
       };
       reader.readAsArrayBuffer(file);

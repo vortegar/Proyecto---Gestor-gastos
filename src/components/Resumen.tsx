@@ -49,13 +49,6 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
             return(
             <div id={v.id?.toString()}>
               {
-                (type=='persona') && 
-                <div className=" flex gap-5">
-                  <span className="font-bold">En gastos var. {v.user} debe:</span>
-                  <span className="text-green-500">${v.total?.toLocaleString('es-ES')}</span>
-                </div>
-              }
-              {
                 (type=='gastos varios' || type=='gastos fijos' || type=='gasto historico') 
                   && <InfoResumen spent_type={v.spent_type} total={v.total} numberCol={2}/>
               }

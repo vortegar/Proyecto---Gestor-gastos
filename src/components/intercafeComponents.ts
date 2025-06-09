@@ -120,5 +120,5 @@ export type FixedSpentInputs = {fixed_spent_name: string};
 
 // FormMonth
 export interface FormMonthProps {
-  fn: React.Dispatch<React.SetStateAction<Month>>;
+  fn: React.Dispatch<React.SetStateAction<Month>>
 }

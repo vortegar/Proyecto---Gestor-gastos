@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
@@ -10,14 +10,16 @@ import { useActualDate } from "../hooks/useActualDate";
 import { FixedExpenseInputs } from "./intercafeComponents";
 
 import { updateFixedExpenses } from "../services/expensesServices";
+import { MonthContext } from "../context/MonthContextProvider";
 
 export const FormFixedExpenses:  React.FC = () => {
   const [data, setData] = useState<FixedExpenseInputs[]>([]);
-  const {anioActual, mesActual} = useActualDate()
+  const {anioActual } = useActualDate()
+  const { monthActual } = useContext(MonthContext);
 
   useEffect(() => {
-     setData(mesActual.fixed_expenses as [])
-  }, [mesActual.fixed_expenses])
+     setData(monthActual.fixed_expenses as [])
+  }, [monthActual.fixed_expenses])
  
   const handleFileUploadFixedExpense = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
@@ -36,7 +38,7 @@ export const FormFixedExpenses:  React.FC = () => {
             total       : l[1],
           }
         }) as [];
-        updateFixedExpenses(objectTable, anioActual.id!, mesActual.id!, setData);
+        updateFixedExpenses(objectTable, anioActual.id!, monthActual.id!, setData);
       };
       reader.readAsArrayBuffer(file);
     }

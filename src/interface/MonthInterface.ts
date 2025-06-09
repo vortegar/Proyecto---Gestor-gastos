@@ -17,10 +17,14 @@ export interface Month {
   
   export interface MyContextProps {
     monthContext: Month[];
+    monthActual : Month;
+    setMonthActual: React.Dispatch<React.SetStateAction<Month>>;
     setMonthContext: React.Dispatch<React.SetStateAction<Month[]>>;
   }
   
   export const defaultContext: MyContextProps = {
     monthContext: [],
+    monthActual : {} as Month,
+    setMonthActual: () => [],
     setMonthContext: () => [],
   }
