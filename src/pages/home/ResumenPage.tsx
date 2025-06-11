@@ -55,7 +55,6 @@ export const ResumenPage: React.FC = () => {
       total: gruopExpenses[spent_type]
     }));
   }
-
   return (
     <div className='opacity-0 animate-fadeIn'>
       {
@@ -63,7 +62,7 @@ export const ResumenPage: React.FC = () => {
         ?
         <>
           <div className="flex flex-col mt-20">
-            <div className="flex gap-14 lg:flex-row sm:flex-col lg:items-start sm:items-center justify-center">
+            <div className="flex gap-10 lg:flex-row sm:flex-col lg:items-start sm:items-center justify-center">
               <Resumen data={monthActual?.fixed_expenses} title=' Gastos Fijos' type='gastos fijos'/>
               <Resumen data={expensesResumen} title='Gastos Variables' type='gastos varios'/>
             </div>

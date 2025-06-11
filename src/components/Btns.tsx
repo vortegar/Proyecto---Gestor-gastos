@@ -1,9 +1,21 @@
 import { Button, Tooltip } from 'antd';
 import { DeleteOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { usePDF } from '@react-pdf/renderer';
 
 import { ButtonProps } from '../interface/ComponentsInterface';
+import { PdfResumen } from './PdfResumen';
+import { useContext, useEffect } from 'react';
+import { MonthContext } from '../context/MonthContextProvider';
 
 export const Btns: React.FC<ButtonProps> = ({type ,disabled, title, fn}) => {
+    const {  monthActual } = useContext(MonthContext);
+    const expenses = monthActual?.expenses?.filter((expense) => expense.spent_type !== 'sin item')
+    const [instance, update] = usePDF({ document: <PdfResumen monthActual={monthActual} expenses={expenses}/> });
+    
+    useEffect(() => {
+        update(<PdfResumen monthActual={monthActual} expenses={expenses}/>)
+      }, [monthActual, expenses]);
+
   return (
   <>
     {
@@ -34,6 +46,21 @@ export const Btns: React.FC<ButtonProps> = ({type ,disabled, title, fn}) => {
             <Button disabled={disabled} htmlType="submit" className="bg-blue-600 text-white">
                 { disabled ? "Cargando" : <div className="flex gap-2"> {title}   <SearchOutlined /> </div> } 
             </Button>
+        )
+    }
+    {
+        (type === "Pdf" && monthActual?.id !== undefined) && (
+        
+        <span>
+            <Tooltip title={title}>
+                <Button disabled={disabled} className="bg-blue-600 text-white">
+                    <a  download='test.pdf' href={instance.url || ''}>
+                        Descargar PDF
+                    </a>
+                </Button>
+            </Tooltip>  
+        </span>
+
         )
     }
   </>  

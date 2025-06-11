@@ -4,8 +4,9 @@ import { Card, Space } from "antd";
 import Title from "antd/es/typography/Title";
 
 import { ResumenProps } from "./intercafeComponents";
-import { InfoResumen } from "./InfoResumen";
+
 import { InfoTotal } from "./InfoTotal";
+import { InfoResumen } from "./InfoResumen";
 
 export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
 
@@ -29,9 +30,9 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
       setFixedExpense(totalFixedExpense?.toLocaleString('es-ES'));
     }
   }, [type, data])
-  type === 'gasto historico fijo' && console.log(data)
+
   return (
-    <Space direction="vertical" size={16} className="w-80">
+    <Space direction="vertical" size={16} className="w-480">
       <Card
         className="custom-card-head border-blue-500"
         title={
@@ -50,7 +51,7 @@ export const Resumen: React.FC<ResumenProps> = ({ data, title, type }) => {
             <div id={v.id?.toString()}>
               {
                 (type=='gastos varios' || type=='gastos fijos' || type=='gasto historico') 
-                  && <InfoResumen spent_type={v.spent_type} total={v.total} numberCol={2}/>
+                  && <InfoResumen spent_type={v.spent_type} total={v.total}/>
               }
             </div>
             )

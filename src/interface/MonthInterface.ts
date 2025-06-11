@@ -28,3 +28,8 @@ export interface Month {
     setMonthActual: () => [],
     setMonthContext: () => [],
   }
+
+  export interface PdfInterface {
+    expenses: Expenses[];
+    monthActual: Month
+}
