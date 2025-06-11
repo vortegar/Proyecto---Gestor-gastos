@@ -6,14 +6,36 @@ import { ButtonProps } from '../interface/ComponentsInterface';
 import { PdfResumen } from './PdfResumen';
 import { useContext, useEffect } from 'react';
 import { MonthContext } from '../context/MonthContextProvider';
+import { useExpenses } from '../hooks/useExpenses';
 
 export const Btns: React.FC<ButtonProps> = ({type ,disabled, title, fn}) => {
     const {  monthActual } = useContext(MonthContext);
     const expenses = monthActual?.expenses?.filter((expense) => expense.spent_type !== 'sin item')
-    const [instance, update] = usePDF({ document: <PdfResumen monthActual={monthActual} expenses={expenses}/> });
+    const {extraExpenses, fixedExpenses, resultDiference, diference, amountDiferenceUsers} = useExpenses();
+    console.log(diference)
+    const [instance, update] = usePDF({ document: 
+            <PdfResumen 
+                monthActual={monthActual} 
+                expenses={expenses}
+                extraExpenses={extraExpenses}
+                fixedExpenses={fixedExpenses}
+                resultDiference={resultDiference}
+                diference={diference}
+                amountDiferenceUsers={amountDiferenceUsers}
+            />
+     });
     
     useEffect(() => {
-        update(<PdfResumen monthActual={monthActual} expenses={expenses}/>)
+        update(
+            <PdfResumen 
+                monthActual={monthActual} 
+                expenses={expenses}
+                extraExpenses={extraExpenses}
+                fixedExpenses={fixedExpenses}
+                resultDiference={resultDiference}
+                diference={diference}
+                amountDiferenceUsers={amountDiferenceUsers}
+            />)
       }, [monthActual, expenses]);
 
   return (
@@ -60,7 +82,6 @@ export const Btns: React.FC<ButtonProps> = ({type ,disabled, title, fn}) => {
                 </Button>
             </Tooltip>  
         </span>
-
         )
     }
   </>  

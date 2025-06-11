@@ -1,53 +1,12 @@
-import { useForm } from "react-hook-form";
-import { useContext } from "react";
-
-import { MonthContext } from "../context/MonthContextProvider";
-
 import { Card, Space } from "antd";
 import Title from "antd/es/typography/Title";
 
+import { useExpenses } from "../hooks/useExpenses";
+
 export const PaymentResolver = () => {
-  const { monthActual } = useContext(MonthContext);
+
+  const {extraExpenses, fixedExpenses, resultDiference, getValues, amountDiferenceUsers} = useExpenses();
   
-  const fixedExpenses = monthActual.fixed_expenses;
-  const extraExpenses = monthActual.extra_items;
-  
-  const { getValues } = useForm({
-    defaultValues: {
-      items: monthActual.fixed_expenses.map(v => ({
-        spent_type: v.spent_type,
-        total: v.total,
-        total_final: (v.spent_type == 'Arriendo') ?  Number(v.total) * 0.4 : Number(v.total) / 2,
-        user: (v.spent_type === 'Arriendo' || v.spent_type === 'Cuota Auto') ? 'Andreina' : 'Victorio'
-      }))
-    }
-  });
-
-  const totalDataItems = getValues('items').reduce((acc, curr) => {
-      if (acc[curr.user]) {
-        acc[curr.user] += curr.total_final;
-      } else {
-        acc[curr.user] = curr.total_final;
-      }
-      return acc; 
-    }, {} as { [key: string]: number });
-
-    const expensesAcumuladorPerson = monthActual?.expenses?.reduce((acc: { [key: string]: number }, item) => {
-      const { user_1, user_2 } = item;
-      if (acc['Victorio'] === undefined) acc['Victorio'] = 0;
-      if (acc['Andreina'] === undefined) acc['Andreina'] = 0;
-      acc['Victorio'] += +user_1;
-      acc['Andreina'] += +user_2;
-    return acc;
-  }, {});
-
-  // Se suman los montos que pago caga persona en los servicios
-  // mas los que una peersona le pago a la otra
-  const amountDiferenceUsers = {
-    Victorio : totalDataItems.Victorio + expensesAcumuladorPerson.Andreina,
-    Andreina : totalDataItems.Andreina + expensesAcumuladorPerson.Victorio
-  }
-  const resultDiference = amountDiferenceUsers.Victorio - amountDiferenceUsers.Andreina
   return (
     <div className='opacity-0 animate-fadeIn flex gap-5 justify-center mt-20'>
       <Space direction="vertical" size={"large"} className="w-280">

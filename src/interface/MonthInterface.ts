@@ -30,6 +30,11 @@ export interface Month {
   }
 
   export interface PdfInterface {
-    expenses: Expenses[];
-    monthActual: Month
+    amountDiferenceUsers: { [key: string]: number };
+    expenses       : Expenses[];
+    monthActual    : Month
+    diference      : number | string;
+    resultDiference: number;
+    extraExpenses  : { descripcion: string; total: number }[]
+    fixedExpenses  : FixedExpenseInputs[]
 }
