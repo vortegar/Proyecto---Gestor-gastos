@@ -71,8 +71,7 @@ export const Btns: React.FC<ButtonProps> = ({type ,disabled, title, fn}) => {
         )
     }
     {
-        (type === "Pdf" && monthActual?.id !== undefined) && (
-        
+        (type === "Pdf" ) && (     
         <span>
             <Tooltip title={title}>
                 <Button disabled={disabled} className="bg-blue-600 text-white">
