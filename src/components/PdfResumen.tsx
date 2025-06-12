@@ -177,7 +177,12 @@ export const PdfResumen: React.FC<PdfInterface> = ({
           </View>
         </Page>
       )}
-
+        <Page size="A4" style={styles.page}>
+          <View style={styles.card}>
+            <Text style={styles.heading}>Grafico Gastos fijos</Text>
+            <Text style={styles.emptyMessage}>No hay gastos variables registrados para este mes.</Text>
+          </View>
+        </Page>
     </Document>
   );
 };

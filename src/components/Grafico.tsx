@@ -5,7 +5,7 @@ import { ChartData, ChartOptions } from '../utils/chartConfig';
 
 export const Grafico: React.FC<GraficoProps> = ({ resumen, title }) => {
   const dataLabelName = resumen?.map((v) => v?.spent_type);
-  const dataLabeValue = resumen?.map((v) => Number(v?.total));  
+  const dataLabeValue = resumen?.map((v) => Number(v?.total || v?.monto || 0));  
 
   const data: ChartData<'bar'> = {
     labels: dataLabelName,

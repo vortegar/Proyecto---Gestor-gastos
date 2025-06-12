@@ -9,6 +9,7 @@ import { MonthContext } from '../context/MonthContextProvider';
 import { getDataMonth } from '../services/monthServides';
 import { formatArrayMonth } from '../helpers/formatData';
 import { ResumenAnual } from './ResumenAnual';
+import { expensesGroupedArray } from '../helpers/expensesGroupedArray';
 
 export const HistoryVariableExpenses = () => {
   const { yearContext } = useContext(YearContext);
@@ -59,6 +60,17 @@ export const HistoryVariableExpenses = () => {
             <ResumenAnual data={historyFixedExpenses} title='Detalle' numberMonth={monthContext.length}/>
         </div>
           <Grafico resumen={formatExpenseHistory} title='Historico Anual Gastos Mensuales'/>
-    </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {
+              expensesGroupedArray(monthContext, 'expenses').map((array, index) => (
+                <Grafico 
+                  key={index} 
+                  resumen={array} 
+                  title={`Histórico Anual ${array[0]?.spent_type || 'Sin tipo'}`} 
+                />
+              ))
+            }
+          </div>
+      </div>
   )
 }

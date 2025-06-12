@@ -7,15 +7,17 @@ import { YearContext } from '../context/YearContextProvider';
 import { MonthContext } from '../context/MonthContextProvider';
 
 import { getDataMonth } from '../services/monthServides';
-import { formatArrayMonth } from '../helpers/formatData';
+
 import { ResumenAnual } from './ResumenAnual';
+
+import { formatArrayMonth } from '../helpers/formatData';
+import { expensesGroupedArray } from '../helpers/expensesGroupedArray';
 
 export const HistoryFixedExpenses = () => {
   const { yearContext } = useContext(YearContext);
   const { monthContext, setMonthContext } = useContext(MonthContext);
-  console.log(monthContext.length)
   const [anioActual] = useState(yearContext[yearContext.length - 1])
-  
+
   useEffect(() => {
     getDataMonth(setMonthContext, anioActual.id!)
   }, [setMonthContext, anioActual])
@@ -29,7 +31,7 @@ export const HistoryFixedExpenses = () => {
       total: fixedExpensesTotal,
     };
   });
-
+  
   const fixedExpenses = monthContext.flatMap(m => {
         return m.fixed_expenses
   });
@@ -48,6 +50,7 @@ export const HistoryFixedExpenses = () => {
   })
 
   const formatExpenseHistory = formatArrayMonth(expensesHistory, 'spent_type')
+
   return (
     <div className="flex flex-col">
         <div className="mt-20 flex justify-around">
@@ -59,7 +62,20 @@ export const HistoryFixedExpenses = () => {
           </div>
             <ResumenAnual data={historyFixedExpenses} title='Detalle' numberMonth={monthContext.length}/>
         </div>
+        <div className='text-center'>
           <Grafico resumen={formatExpenseHistory} title='Historico Anual Gastos Mensuales'/>
-    </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {
+            expensesGroupedArray(monthContext, 'fixed_expenses').map((array, index) => (
+              <Grafico 
+                key={index} 
+                resumen={array} 
+                title={`Histórico Anual ${array[0]?.spent_type || 'Sin tipo'}`} 
+              />
+            ))
+          }
+        </div>
+      </div>
   )
 }

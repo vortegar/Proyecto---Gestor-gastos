@@ -9,10 +9,13 @@ import { MonthContext } from '../context/MonthContextProvider';
 import { useExpenses } from '../hooks/useExpenses';
 
 export const Btns: React.FC<ButtonProps> = ({type ,disabled, title, fn}) => {
-    const {  monthActual } = useContext(MonthContext);
-    const expenses = monthActual?.expenses?.filter((expense) => expense.spent_type !== 'sin item')
+    
+    const currentDate = new Date().toLocaleDateString('es-ES');
+    const { monthActual } = useContext(MonthContext);
+
+    const expenses = monthActual?.expenses?.filter((expense) => expense.spent_type !== 'sin item');
     const {extraExpenses, fixedExpenses, resultDiference, diference, amountDiferenceUsers} = useExpenses();
-    console.log(diference)
+
     const [instance, update] = usePDF({ document: 
             <PdfResumen 
                 monthActual={monthActual} 
@@ -75,7 +78,7 @@ export const Btns: React.FC<ButtonProps> = ({type ,disabled, title, fn}) => {
         <span>
             <Tooltip title={title}>
                 <Button disabled={disabled} className="bg-blue-600 text-white">
-                    <a  download='test.pdf' href={instance.url || ''}>
+                    <a  download= {`resuemen - ${currentDate}.pdf}`}  href={instance.url || ''}>
                         Descargar PDF
                     </a>
                 </Button>

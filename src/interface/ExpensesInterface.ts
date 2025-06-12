@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { HistoryResumen } from '../pages/home/interfaceHome';
+import { FixedExpenseInputs } from '../components/intercafeComponents';
 
 export interface Expenses {
     id        ?: string,
@@ -9,6 +10,7 @@ export interface Expenses {
     spent_type : string,
     user_1     : string,
     user_2     : string,
+    total     ?: number
   }
   
   export interface MyContextProviderProps {
@@ -30,13 +32,14 @@ export interface ExpensesResumenItem {
     spent_type: string;
     total     : number;
     user     ?: string;
+    monto    ?: number;
   }
   
   
   export type ExpensesResumen = ExpensesResumenItem[];
   
   export interface GraficoProps {
-    resumen: ExpensesResumen | HistoryResumen[] ;
+    resumen: ExpensesResumen | HistoryResumen[] | (Expenses | FixedExpenseInputs)[] ;
     title: string;
   }
   

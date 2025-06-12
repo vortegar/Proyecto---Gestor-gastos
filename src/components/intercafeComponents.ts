@@ -51,6 +51,7 @@ export type FixedExpenseInputs = {
   id        ?: number;
   spent_type : string;
   total      : number;
+  monto     ?: number;
 };
 
 export type ExtraItemsColumns = {

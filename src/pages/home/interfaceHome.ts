@@ -16,8 +16,9 @@ export interface ResumenI {
     total       : string;
   }
   export interface HistoryResumen {
-    id          ?: number;
+    id         ?: number;
     spent_type  : string;
     user       ?: string;
     total       : number;
+    monto      ?: number;
   }
